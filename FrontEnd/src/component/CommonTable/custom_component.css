@@ -1,0 +1,10 @@
+.common-table-with-100 {
+  width: 100%;
+}
+.rdt_Table .rdt_TableHead .rdt_TableHeadRow {
+  background-color: transparent !important;
+  font-size: 13px !important;
+  color: #12aaeb !important;
+  font-weight: 700;
+  text-transform: uppercase;
+}
