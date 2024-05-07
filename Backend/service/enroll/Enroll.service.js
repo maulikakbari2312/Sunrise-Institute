@@ -226,7 +226,13 @@ Best regards,
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {
-
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');
+            return {
+                status: 500,
+                message: "Internal Server Error",
+            };
         }
 
 
@@ -892,7 +898,13 @@ Best regards,
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {
-
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');
+            return {
+                status: 500,
+                message: "Internal Server Error",
+            };
         }
         await paymentSlip.save();
 
@@ -1072,7 +1084,13 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {
-
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');
+            return {
+                status: 500,
+                message: "Internal Server Error",
+            };
         }
 
         await paymentSlip.save();
@@ -1182,7 +1200,13 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {
-
+            console.log('====================================');
+            console.log(error);
+            console.log('====================================');
+            return {
+                status: 500,
+                message: "Internal Server Error",
+            };
         }
         await paymentSlip.save();
 
