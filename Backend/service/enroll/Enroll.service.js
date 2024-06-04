@@ -222,7 +222,7 @@ Best regards,
 *Sunrise Institute*
 `;
             const encodedMsg = encodeURIComponent(enrollMsg);
-            const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=media&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${enroll?.fileName}&instance_id=${enroll.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : enroll.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&Access_token=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=media&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${enroll?.fileName}&instance_id=${enroll.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : enroll.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&access_token=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {
@@ -894,7 +894,7 @@ Best regards,
 *Sunrise Institute*
 `;
             const encodedMsg = encodeURIComponent(enrollMsg);
-            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${encodedMsg}&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${msgData.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : msgData.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&Access_token=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${encodedMsg}&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${msgData.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : msgData.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&access_token=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {
@@ -1080,7 +1080,7 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         }
         const msgData = await enrollModel.findOne({ tokenId: token });
         try {
-            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${''}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${msgData.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : msgData.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&Access_token=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${''}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${msgData.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : msgData.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&access_token=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {
@@ -1196,7 +1196,7 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         });
         const msgData = await enrollModel.findOne({ tokenId: data?.tokenId });
         try {
-            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${''}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${msgData.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : msgData.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&Access_token=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${''}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${msgData.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : msgData.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&access_token=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {

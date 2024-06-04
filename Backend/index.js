@@ -79,7 +79,7 @@ Best regards,
 *Sunrise Institute*`;
         }
         const encodedMsg = encodeURIComponent(birthdayMsg);
-        const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${enroll.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : enroll.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&Access_token=${process.env.ACCESS_TOKEN}`;
+        const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${enroll.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : enroll.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&access_token=${process.env.ACCESS_TOKEN}`;
         // Make the HTTP POST request to send the birthday message
         const response = await axios.post(url);
 

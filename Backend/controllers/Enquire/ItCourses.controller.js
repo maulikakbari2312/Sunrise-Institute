@@ -1,7 +1,7 @@
 const { verifyUser } = require("../../common/utils");
 const itCoursesService = require("../../service/Enquire/ItCourses.service");
 exports.createItCourses = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -35,7 +35,7 @@ exports.createItCourses = async (req, res) => {
 };
 
 exports.getItCourses = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -64,7 +64,7 @@ exports.getItCourses = async (req, res) => {
 };
 
 exports.getFilteritCourses = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -93,7 +93,7 @@ exports.getFilteritCourses = async (req, res) => {
 };
 
 exports.editItCourses = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -125,7 +125,7 @@ exports.editItCourses = async (req, res) => {
 };
 
 exports.editStatusItCourses = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -160,7 +160,7 @@ exports.editStatusItCourses = async (req, res) => {
 };
 
 exports.deleteItCourses = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {

@@ -1,7 +1,7 @@
 const { verifyUser } = require("../../common/utils");
 const reminder = require("../../service/enroll/reminderDate.service");
 exports.createReminder = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         const isAdmin = req.params.admin
@@ -35,7 +35,7 @@ exports.createReminder = async (req, res) => {
 };
 
 exports.getReminder = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -64,7 +64,7 @@ exports.getReminder = async (req, res) => {
 };
 
 exports.deleteReminder = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {

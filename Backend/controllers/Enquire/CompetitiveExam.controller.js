@@ -1,7 +1,7 @@
 const { verifyUser } = require("../../common/utils");
 const competitiveExamService = require("../../service/Enquire/CompetitiveExam.service");
 exports.createCompetitiveExam = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -35,7 +35,7 @@ exports.createCompetitiveExam = async (req, res) => {
 };
 
 exports.getCompetitiveExam = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -63,7 +63,7 @@ exports.getCompetitiveExam = async (req, res) => {
     }
 };
 exports.getFilterCompetitiveExam = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -95,7 +95,7 @@ exports.getFilterCompetitiveExam = async (req, res) => {
 };
 
 exports.editCompetitiveExam = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -127,7 +127,7 @@ exports.editCompetitiveExam = async (req, res) => {
 };
 
 exports.editStatusCompetitiveExam = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -162,7 +162,7 @@ exports.editStatusCompetitiveExam = async (req, res) => {
 };
 
 exports.deleteCompetitiveExam = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {

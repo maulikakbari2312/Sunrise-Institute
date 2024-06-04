@@ -1,7 +1,7 @@
 const { verifyUser } = require("../../common/utils");
 const immigrationService = require("../../service/Enquire/Immigration.service");
 exports.createImmigration = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         const isAdmin = req.params.admin
@@ -35,7 +35,7 @@ exports.createImmigration = async (req, res) => {
 };
 
 exports.getImmigration = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -63,7 +63,7 @@ exports.getImmigration = async (req, res) => {
     }
 };
 exports.getFilterImmigration = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -92,7 +92,7 @@ exports.getFilterImmigration = async (req, res) => {
 };
 
 exports.editImmigration = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -123,7 +123,7 @@ exports.editImmigration = async (req, res) => {
     }
 };
 exports.editStatusImmigration = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -156,7 +156,7 @@ exports.editStatusImmigration = async (req, res) => {
 };
 
 exports.deleteImmigration = async (req, res) => {
-    const headers = req.headers["Access_token"];
+    const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {

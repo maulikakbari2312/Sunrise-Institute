@@ -35,24 +35,14 @@ const decodeToken = (token) => {
 
 const verifyUser = async (token) => {
     try {
-        console.log('token',token)
         const decoded = jwt.verify(token, process.env.SECRET);
-        console.log('decoded',decoded)
         // Check if the decoded information exists in the loginData database
-        const user = await logInDetail.findOne({ email: decoded.email });
-        const userCheck = await LoginTokenDetails.findOne({ email: decoded.email, token: token });
-        console.log('compareUserKeys(decoded, user)',compareUserKeys(decoded, user));
-        console.log('userCheck',userCheck);
+        const user = await logInDetail.findOne({ email: decoded?.email });
+        const userCheck = await LoginTokenDetails.findOne({ email: decoded?.email, token: token });
         if (user && compareUserKeys(decoded, user) && userCheck) {
             return true;
         } else {
-            return {
-                token:token,
-                decoded:decoded,
-                compareUserKeys:compareUserKeys(decoded, user),
-                userCheck:userCheck,
-                user:user
-            };
+            return false
         }
     } catch (err) {
         console.log('====================================');
