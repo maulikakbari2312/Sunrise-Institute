@@ -1,7 +1,7 @@
 const { verifyUser } = require("../../common/utils");
 const branchStaffService = require("../../service/Branch/Branch.service");
 exports.getBranchStaff = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {

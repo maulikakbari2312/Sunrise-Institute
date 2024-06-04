@@ -7,7 +7,7 @@ const path = require('path');
 exports.createEnroll = async (req, res) => {
     try {
         // Extract access token from headers
-        const accessToken = req.headers["access_token"];
+        const accessToken = req.headers["Access_token"];
         if (!accessToken) {
             return res.status(401).json({ message: "Access token is missing" });
         }
@@ -64,7 +64,7 @@ exports.createEnroll = async (req, res) => {
 };
 
 exports.settleEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         const isAdmin = req.params.admin
@@ -101,7 +101,7 @@ exports.settleEnroll = async (req, res) => {
 };
 
 exports.getDemoEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -129,7 +129,7 @@ exports.getDemoEnroll = async (req, res) => {
     }
 };
 exports.createDemoEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         const isAdmin = req.params.admin
@@ -166,7 +166,7 @@ exports.createDemoEnroll = async (req, res) => {
 };
 
 exports.getEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -194,7 +194,7 @@ exports.getEnroll = async (req, res) => {
     }
 };
 exports.getBookNumber = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -222,7 +222,7 @@ exports.getBookNumber = async (req, res) => {
     }
 };
 exports.getPaymentSlip = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -250,7 +250,7 @@ exports.getPaymentSlip = async (req, res) => {
     }
 };
 exports.editBookNumber = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         const type = req.params.type
@@ -287,7 +287,7 @@ exports.editBookNumber = async (req, res) => {
     }
 };
 exports.findSettleEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -315,7 +315,7 @@ exports.findSettleEnroll = async (req, res) => {
     }
 };
 exports.getFilterEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -343,7 +343,7 @@ exports.getFilterEnroll = async (req, res) => {
     }
 };
 exports.downloadEnrollData = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -412,7 +412,7 @@ exports.downloadEnrollData = async (req, res) => {
 };
 
 exports.getCourseCompletionStudent = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -440,7 +440,7 @@ exports.getCourseCompletionStudent = async (req, res) => {
     }
 };
 exports.getFilterCourseCompletionStudent = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -468,7 +468,7 @@ exports.getFilterCourseCompletionStudent = async (req, res) => {
     }
 };
 exports.settlePaymentData = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -496,7 +496,7 @@ exports.settlePaymentData = async (req, res) => {
     }
 };
 exports.findCheckFilterEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -528,7 +528,7 @@ exports.findCheckFilterEnroll = async (req, res) => {
     }
 };
 exports.findFilterEnrollPayment = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -557,7 +557,7 @@ exports.findFilterEnrollPayment = async (req, res) => {
     }
 };
 exports.getCheckEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -589,7 +589,7 @@ exports.getCheckEnroll = async (req, res) => {
     }
 };
 exports.getPartialPayment = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -621,7 +621,7 @@ exports.getPartialPayment = async (req, res) => {
 };
 
 exports.editEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -673,7 +673,7 @@ exports.editEnroll = async (req, res) => {
 };
 
 exports.editEnrollPayment = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -725,7 +725,7 @@ exports.editEnrollPayment = async (req, res) => {
     }
 };
 exports.payPartialPayment = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -777,7 +777,7 @@ exports.payPartialPayment = async (req, res) => {
     }
 };
 exports.editStatusEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -809,7 +809,7 @@ exports.editStatusEnroll = async (req, res) => {
 };
 
 exports.deleteEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -839,7 +839,7 @@ exports.deleteEnroll = async (req, res) => {
     }
 };
 exports.deleteDemoEnroll = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await verifyUser(headers);
     if (uservalid == true) {
         try {

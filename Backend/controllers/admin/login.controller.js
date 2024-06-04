@@ -7,7 +7,7 @@ const LoginTokenDetails = require("../../model/admin/LoginTokenDetails.model");
 
 exports.signUp = async (req, res) => {
     try {
-        const headers = req.headers["access_token"];
+        const headers = req.headers["Access_token"];
         const tokenData = await decodeToken(headers);
         if (!tokenData) {
             const response = commonService.response(
@@ -49,7 +49,7 @@ exports.signUp = async (req, res) => {
 };
 
 exports.getUsers = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await commonService.verifyUser(headers);
     if (uservalid == true) {
         try {
@@ -169,7 +169,7 @@ exports.logIn = async (req, res) => {
 };
 
 exports.editUser = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["Access_token"];
     const uservalid = await commonService.verifyUser(headers);
     if (uservalid == true) {
         try {
