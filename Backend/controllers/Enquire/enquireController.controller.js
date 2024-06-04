@@ -150,6 +150,6 @@ exports.getSendEnquire = async (req, res) => {
         }
     }
     else {
-        res.status(401).json({ message: "User Not Valid" });
+        res.status(401).json(uservalid);
     }
 };

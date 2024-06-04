@@ -4,7 +4,7 @@ const multer = require("multer");
 const path = require("path");
 const logInDetail = require("../model/admin/login.model");
 const LoginTokenDetails = require("../model/admin/LoginTokenDetails.model");
-const createOneTimeToken = (user, secretKey) => {
+const createOneTimeToken = async (user, secretKey) => {
     try {
         return jwt.sign(
             {
@@ -35,14 +35,24 @@ const decodeToken = (token) => {
 
 const verifyUser = async (token) => {
     try {
+        console.log('token',token)
         const decoded = jwt.verify(token, process.env.SECRET);
+        console.log('decoded',decoded)
         // Check if the decoded information exists in the loginData database
         const user = await logInDetail.findOne({ email: decoded.email });
         const userCheck = await LoginTokenDetails.findOne({ email: decoded.email, token: token });
+        console.log('compareUserKeys(decoded, user)',compareUserKeys(decoded, user));
+        console.log('userCheck',userCheck);
         if (user && compareUserKeys(decoded, user) && userCheck) {
             return true;
         } else {
-            return false;
+            return {
+                token:token,
+                decoded:decoded,
+                compareUserKeys:compareUserKeys(decoded, user),
+                userCheck:userCheck,
+                user:user
+            };
         }
     } catch (err) {
         console.log('====================================');
@@ -52,7 +62,7 @@ const verifyUser = async (token) => {
     }
 };
 
-const compareUserKeys = (decodedUser, dbUser) => {
+const compareUserKeys = async (decodedUser, dbUser) => {
     const keysToCheck = ['name', 'email', 'phoneNumber', 'password', 'role'];
 
     const commonKeys = Object.keys(decodedUser).filter(key => keysToCheck.includes(key));
