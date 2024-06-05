@@ -150,7 +150,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                 'Content-type': 'application/json',
                 'access_token': localStorage.getItem('token')
             }
-            if (url == '/api/enroll/pay-installments' && selected?.modelData?.page === 'pendingInstallments') {
+            if (url === '/api/enroll/pay-installments' && selected?.modelData?.page === 'pendingInstallments') {
                 const invoice = document.getElementById('invoice_digital');
                 const fileName = `${values?.name}-${isCounterNumber?.paymentNumber}.pdf`;
                 var opt = {
@@ -221,7 +221,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                 }
             } else {
                 if (!selected.isEdit) {
-                    postApi(apiUrl, (selected?.modelData?.page == 'pendingInstallments' ? { ...body, enrollDate: new Date() } : values), headers)
+                    postApi(apiUrl, (selected?.modelData?.page === 'pendingInstallments' ? { ...body, enrollDate: new Date() } : values), headers)
                         .then(async (response) => {
                             // You can access the response data using apiOtpResponse in your component
                             toast.success(response?.message || "New Data ADD successful!");

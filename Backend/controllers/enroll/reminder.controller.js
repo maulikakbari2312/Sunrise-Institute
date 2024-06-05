@@ -3,7 +3,7 @@ const reminder = require("../../service/enroll/reminderDate.service");
 exports.createReminder = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         const isAdmin = req.params.admin
         const isBranch = req.params.branch
         try {
@@ -37,7 +37,7 @@ exports.createReminder = async (req, res) => {
 exports.getReminder = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -66,7 +66,7 @@ exports.getReminder = async (req, res) => {
 exports.deleteReminder = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch

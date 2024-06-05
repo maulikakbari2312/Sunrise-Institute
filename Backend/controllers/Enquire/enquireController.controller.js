@@ -3,7 +3,7 @@ const enquireService = require("../../service/Enquire/Enquire.service");
 exports.getEnquire = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -32,7 +32,7 @@ exports.getEnquire = async (req, res) => {
 exports.deleteSendEnquire = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch
@@ -62,7 +62,7 @@ exports.deleteSendEnquire = async (req, res) => {
 exports.editSendEnquire = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch
@@ -92,7 +92,7 @@ exports.editSendEnquire = async (req, res) => {
 exports.createSendEnquire = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         const isAdmin = req.params.admin
         const isBranch = req.params.branch
         try {
@@ -128,7 +128,7 @@ exports.getSendEnquire = async (req, res) => {
     const staff = req.body.staff;
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;

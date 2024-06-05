@@ -3,7 +3,7 @@ const branchStaffService = require("../../service/Branch/Branch.service");
 exports.getBranchStaff = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;

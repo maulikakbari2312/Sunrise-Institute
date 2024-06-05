@@ -3,7 +3,7 @@ const itCoursesService = require("../../service/Enquire/ItCourses.service");
 exports.createItCourses = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -37,7 +37,7 @@ exports.createItCourses = async (req, res) => {
 exports.getItCourses = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -66,7 +66,7 @@ exports.getItCourses = async (req, res) => {
 exports.getFilteritCourses = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -95,7 +95,7 @@ exports.getFilteritCourses = async (req, res) => {
 exports.editItCourses = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -127,7 +127,7 @@ exports.editItCourses = async (req, res) => {
 exports.editStatusItCourses = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -162,7 +162,7 @@ exports.editStatusItCourses = async (req, res) => {
 exports.deleteItCourses = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;

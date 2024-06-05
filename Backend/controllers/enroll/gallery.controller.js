@@ -36,7 +36,7 @@ exports.createGallery = async (req, res) => {
 exports.getGallery = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -86,7 +86,7 @@ exports.getGalleryunvalid = async (req, res) => {
 exports.editGallery = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch
@@ -119,7 +119,7 @@ exports.editGallery = async (req, res) => {
 exports.deleteGallery = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch

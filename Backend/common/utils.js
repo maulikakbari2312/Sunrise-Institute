@@ -24,7 +24,7 @@ const createOneTimeToken = async (user, secretKey) => {
     }
 };
 
-const decodeToken = (token) => {
+const decodeToken = async (token) => {
     try {
         const decode = jwt.verify(token, process.env.SECRET);
         return decode;
@@ -35,11 +35,10 @@ const decodeToken = (token) => {
 
 const verifyUser = async (token) => {
     try {
-        const decoded = jwt.verify(token, process.env.SECRET);
+        const decoded = await decodeToken(token);
         // Check if the decoded information exists in the loginData database
         const user = await logInDetail.findOne({ email: decoded?.email });
-        const userCheck = await LoginTokenDetails.findOne({ email: decoded?.email, token: token });
-        if (user && compareUserKeys(decoded, user) && userCheck) {
+        if (user) {
             return true;
         } else {
             return false

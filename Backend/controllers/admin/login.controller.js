@@ -51,7 +51,7 @@ exports.signUp = async (req, res) => {
 exports.getUsers = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await commonService.verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             let userDetails = await loginData.findUserRoles();
 
@@ -171,7 +171,7 @@ exports.logIn = async (req, res) => {
 exports.editUser = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await commonService.verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const token = req.params.tokenId;
             const editUserData = await loginData.editUserDetail(req.body, token);

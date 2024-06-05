@@ -66,7 +66,7 @@ exports.createEnroll = async (req, res) => {
 exports.settleEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         const isAdmin = req.params.admin
         const isBranch = req.params.branch
         try {
@@ -103,7 +103,7 @@ exports.settleEnroll = async (req, res) => {
 exports.getDemoEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -131,7 +131,7 @@ exports.getDemoEnroll = async (req, res) => {
 exports.createDemoEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         const isAdmin = req.params.admin
         const isBranch = req.params.branch
         try {
@@ -168,7 +168,7 @@ exports.createDemoEnroll = async (req, res) => {
 exports.getEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -196,7 +196,7 @@ exports.getEnroll = async (req, res) => {
 exports.getBookNumber = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -224,7 +224,7 @@ exports.getBookNumber = async (req, res) => {
 exports.getPaymentSlip = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -252,7 +252,7 @@ exports.getPaymentSlip = async (req, res) => {
 exports.editBookNumber = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         const type = req.params.type
         const isAdmin = req.params.admin
         const isBranch = req.params.branch
@@ -289,7 +289,7 @@ exports.editBookNumber = async (req, res) => {
 exports.findSettleEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -317,7 +317,7 @@ exports.findSettleEnroll = async (req, res) => {
 exports.getFilterEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -345,7 +345,7 @@ exports.getFilterEnroll = async (req, res) => {
 exports.downloadEnrollData = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -414,7 +414,7 @@ exports.downloadEnrollData = async (req, res) => {
 exports.getCourseCompletionStudent = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -442,7 +442,7 @@ exports.getCourseCompletionStudent = async (req, res) => {
 exports.getFilterCourseCompletionStudent = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -470,7 +470,7 @@ exports.getFilterCourseCompletionStudent = async (req, res) => {
 exports.settlePaymentData = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -498,7 +498,7 @@ exports.settlePaymentData = async (req, res) => {
 exports.findCheckFilterEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -530,7 +530,7 @@ exports.findCheckFilterEnroll = async (req, res) => {
 exports.findFilterEnrollPayment = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -559,7 +559,7 @@ exports.findFilterEnrollPayment = async (req, res) => {
 exports.getCheckEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -591,7 +591,7 @@ exports.getCheckEnroll = async (req, res) => {
 exports.getPartialPayment = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -623,7 +623,7 @@ exports.getPartialPayment = async (req, res) => {
 exports.editEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch
@@ -675,7 +675,7 @@ exports.editEnroll = async (req, res) => {
 exports.editEnrollPayment = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch
@@ -727,7 +727,7 @@ exports.editEnrollPayment = async (req, res) => {
 exports.payPartialPayment = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch
@@ -779,7 +779,7 @@ exports.payPartialPayment = async (req, res) => {
 exports.editStatusEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch
@@ -811,7 +811,7 @@ exports.editStatusEnroll = async (req, res) => {
 exports.deleteEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch
@@ -841,7 +841,7 @@ exports.deleteEnroll = async (req, res) => {
 exports.deleteDemoEnroll = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch

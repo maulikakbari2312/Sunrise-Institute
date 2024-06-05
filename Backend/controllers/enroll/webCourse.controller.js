@@ -35,7 +35,7 @@ exports.createWebCourse = async (req, res) => {
 exports.getWebCourse = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
             const isBranch = req.params.branch;
@@ -85,7 +85,7 @@ exports.getWebCourseunvalid = async (req, res) => {
 exports.ediWebCourse = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch
@@ -118,7 +118,7 @@ exports.ediWebCourse = async (req, res) => {
 exports.deleteWebCourse = async (req, res) => {
     const headers = req.headers["access_token"];
     const uservalid = await verifyUser(headers);
-    if (uservalid == true) {
+    if (uservalid === true) {
         try {
             const isAdmin = req.params.admin
             const isBranch = req.params.branch
