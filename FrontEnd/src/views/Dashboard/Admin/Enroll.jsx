@@ -469,7 +469,7 @@ function Enroll() {
                                 body: JSON.stringify(values),
                                 headers: {
                                     'Content-type': 'application/json',
-                                    'access_token': localStorage.getItem('token')
+                                    'authorization': localStorage.getItem('token')
                                 }
                             });
 

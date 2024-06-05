@@ -1,7 +1,7 @@
 const { verifyUser } = require("../../common/utils");
 const enquireService = require("../../service/Enquire/Enquire.service");
 exports.getEnquire = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -30,7 +30,7 @@ exports.getEnquire = async (req, res) => {
 };
 
 exports.deleteSendEnquire = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -60,7 +60,7 @@ exports.deleteSendEnquire = async (req, res) => {
 
 
 exports.editSendEnquire = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -90,7 +90,7 @@ exports.editSendEnquire = async (req, res) => {
 };
 
 exports.createSendEnquire = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         const isAdmin = req.params.admin
@@ -126,8 +126,11 @@ exports.createSendEnquire = async (req, res) => {
 
 exports.getSendEnquire = async (req, res) => {
     const staff = req.body.staff;
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
+    console.log("==headers===",headers);
+    // const token = headers.split(' ')[1]; 
     const uservalid = await verifyUser(headers);
+    console.log("==uservalid==",uservalid);
     if (uservalid === true) {
         try {
             const isAdmin = req.params.admin;
@@ -150,6 +153,6 @@ exports.getSendEnquire = async (req, res) => {
         }
     }
     else {
-        res.status(401).json(uservalid);
+        res.status(401).json({ message: "User Not Valid" });
     }
 };

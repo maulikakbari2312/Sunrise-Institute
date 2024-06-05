@@ -2,7 +2,7 @@ const { verifyUser } = require("../../common/utils");
 const enrollService = require("../../service/enroll/gallery.service");
 exports.createWebCourse = async (req, res) => {
     try {
-        const accessToken = req.headers["access_token"];
+        const accessToken = req.headers["authorization"];
         if (!accessToken) {
             return res.status(401).json({ message: "Access token is missing" });
         }
@@ -33,7 +33,7 @@ exports.createWebCourse = async (req, res) => {
     }
 };
 exports.getWebCourse = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -83,7 +83,7 @@ exports.getWebCourseunvalid = async (req, res) => {
 };
 
 exports.ediWebCourse = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -116,7 +116,7 @@ exports.ediWebCourse = async (req, res) => {
 };
 
 exports.deleteWebCourse = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {

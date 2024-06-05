@@ -3,7 +3,7 @@ const courseService = require("../../service/admin/Course.service");
 exports.createCourse = async (req, res) => {
     const isAdmin = req.params.admin
     const isBranch = req.params.branch
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -34,7 +34,7 @@ exports.createCourse = async (req, res) => {
 };
 
 exports.getCourse = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -61,7 +61,7 @@ exports.getCourse = async (req, res) => {
     }
 };
 exports.getfilterCourse = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -89,7 +89,7 @@ exports.getfilterCourse = async (req, res) => {
 };
 
 exports.editCourse = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -121,7 +121,7 @@ exports.editCourse = async (req, res) => {
 };
 
 exports.deleteCourse = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {

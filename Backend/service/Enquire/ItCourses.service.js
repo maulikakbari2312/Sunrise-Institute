@@ -63,7 +63,7 @@ WE HOPE YOU GET GREAT EXPERIENCE WITH US AND WE ARE ALWAYS THERE FOR GUIDANCE AN
 
 *THANK YOU FOR CHOOSING OUR INSTITUTE*.`;
             const encodedMsg = encodeURIComponent(enrollMsg);
-            const url = `${process.env.WHATSAPP_URL}?number=91${itCourses.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${isBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : isBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&access_token=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${itCourses.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${isBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : isBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&authorization=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {

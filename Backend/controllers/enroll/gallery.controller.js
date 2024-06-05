@@ -3,7 +3,7 @@ const enrollService = require("../../service/enroll/gallery.service");
 
 exports.createGallery = async (req, res) => {
     try {
-        const accessToken = req.headers["access_token"];
+        const accessToken = req.headers["authorization"];
         if (!accessToken) {
             return res.status(401).json({ message: "Access token is missing" });
         }
@@ -34,7 +34,7 @@ exports.createGallery = async (req, res) => {
     }
 };
 exports.getGallery = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -84,7 +84,7 @@ exports.getGalleryunvalid = async (req, res) => {
 };
 
 exports.editGallery = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {
@@ -117,7 +117,7 @@ exports.editGallery = async (req, res) => {
 };
 
 exports.deleteGallery = async (req, res) => {
-    const headers = req.headers["access_token"];
+    const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
         try {

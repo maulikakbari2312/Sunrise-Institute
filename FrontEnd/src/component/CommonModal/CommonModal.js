@@ -148,7 +148,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
             // Make the callback function inside .then() async
             headers = {
                 'Content-type': 'application/json',
-                'access_token': localStorage.getItem('token')
+                'authorization': localStorage.getItem('token')
             }
             if (url === '/api/enroll/pay-installments' && selected?.modelData?.page === 'pendingInstallments') {
                 const invoice = document.getElementById('invoice_digital');

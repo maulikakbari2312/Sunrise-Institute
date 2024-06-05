@@ -13,7 +13,7 @@ export const useApi = () => {
     try {
       let headers = {
         'Content-type': 'application/json',
-        'access_token': localStorage.getItem('token')
+        'authorization': localStorage.getItem('token')
       }
       const config = {
         headers,
@@ -70,7 +70,7 @@ export const useApi = () => {
   const postApi = async (url, data,) => {
     let headers = {
       'Content-type': 'application/json',
-      'access_token': localStorage.getItem('token')
+      'authorization': localStorage.getItem('token')
     }
     try {
       let requestData = data;
@@ -119,7 +119,7 @@ export const useApi = () => {
   const putApi = async (url, data) => {
     let headers = {
       'Content-type': 'application/json',
-      'access_token': localStorage.getItem('token')
+      'authorization': localStorage.getItem('token')
     }
     try {
       let requestData = data;
@@ -175,7 +175,7 @@ export const useApi = () => {
   const patchApi = async (url, data) => {
     let headers = {
       'Content-type': 'application/json',
-      'access_token': localStorage.getItem('token')
+      'authorization': localStorage.getItem('token')
     }
     try {
       let requestData = data;
@@ -193,7 +193,7 @@ export const useApi = () => {
   const deleteApi = async (url) => {
     let headers = {
       'Content-type': 'application/json',
-      'access_token': localStorage.getItem('token')
+      'authorization': localStorage.getItem('token')
     }
     try {
       const response = await axios.delete(`${url}/${isAdmin}/${isBranch}`, { headers });
