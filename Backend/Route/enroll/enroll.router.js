@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const enrollController = require("../../controllers/enroll/Enroll.controller");
 const galleryController = require("../../controllers/enroll/gallery.controller");
+const contactController = require("../../controllers/enroll/Contact.controller");
 const webCourseController = require("../../controllers/enroll/webCourse.controller");
 const commonUpload = require("../../common/utils")
 
@@ -34,6 +35,10 @@ router.get("/find-gallery/:admin/:branch", galleryController.getGallery);
 router.get("/find-gallery", galleryController.getGalleryunvalid);
 router.put("/edit-gallery/:tokenId/:admin/:branch", galleryController.editGallery);
 router.delete("/delete-gallery/:tokenId/:admin/:branch", galleryController.deleteGallery);
+
+router.post("/create-contact", contactController.createContact);
+router.get("/find-contact/:admin/:branch", contactController.getContact);
+router.delete("/delete-contact/:tokenId/:admin/:branch", contactController.deleteContact);
 
 router.post("/create-web-course/:admin/:branch", webCourseController.createWebCourse);
 router.get("/find-web-course/:admin/:branch", webCourseController.getWebCourse);

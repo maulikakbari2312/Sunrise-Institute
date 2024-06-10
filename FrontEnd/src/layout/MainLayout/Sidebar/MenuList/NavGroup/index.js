@@ -33,7 +33,7 @@ const NavGroup = ({ item }) => {
       setOpen('admin')
     } else if (currentPath == '/admin/create-course' || currentPath == '/admin/CreateAdmin') {
       setOpen('master')
-    } else if (currentPath == '/web/course' || currentPath == '/web/gallery') {
+    } else if (currentPath == '/web/course' || currentPath == '/web/gallery' || currentPath == '/web/contact') {
       setOpen('sunriseWeb')
     } else {
       setOpen('/')

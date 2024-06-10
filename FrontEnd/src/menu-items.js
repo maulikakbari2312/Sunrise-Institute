@@ -13,6 +13,7 @@ import WebIcon from '@mui/icons-material/Web';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import PhotoSizeSelectActualIcon from '@mui/icons-material/PhotoSizeSelectActual';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
@@ -32,6 +33,7 @@ const icons = {
   WebIcon: WebIcon,
   PhotoSizeSelectActualIcon: PhotoSizeSelectActualIcon,
   NoteAltIcon: NoteAltIcon,
+  ContactPhoneIcon: ContactPhoneIcon,
 };
 
 const NavigationItems = () => {
@@ -211,6 +213,13 @@ const NavigationItems = () => {
               type: 'item',
               url: '/web/course',
               icon: icons['NoteAltIcon'],
+            },
+            {
+              id: '/web/contact',
+              title: 'Web Contact',
+              type: 'item',
+              url: '/web/contact',
+              icon: icons['ContactPhoneIcon'],
             },
           ]
         },

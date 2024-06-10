@@ -20,6 +20,7 @@ const CreateCourse = Loadable(lazy(() => import('../views/Dashboard/Admin/Create
 const PartialPayment = Loadable(lazy(() => import('../views/Dashboard/Payment/PartialPayment')));
 const WebCourse = Loadable(lazy(() => import('../views/Dashboard/Web/WebCourse')));
 const Gallery = Loadable(lazy(() => import('../views/Dashboard/Web/Gallery')));
+const Contact = Loadable(lazy(() => import('../views/Dashboard/Web/Contact')));
 
 const MainRoutes = () => {
   const user = useSelector(state => state.user.isAdmin);
@@ -88,6 +89,10 @@ const MainRoutes = () => {
       (isUser === "master") && {
         path: '/web/course',
         element: <WebCourse />
+      },
+      (isUser === "master") && {
+        path: '/web/contact',
+        element: <Contact />
       },
       (isUser === "master") && {
         path: '/admin/create-course',

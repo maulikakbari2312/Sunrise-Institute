@@ -17,8 +17,10 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: false }));
 app.use(express.static('public'));
 app.use("/Images", express.static("./Images"))
+
 const corsOptions = {
-    origin: process.env.FRONTEND_PORT,
+    // origin: process.env.FRONTEND_PORT,
+    origin: ['https://www.admin.sunriseinstitute.net', 'https://www.sunriseinstitute.net'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,

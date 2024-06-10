@@ -273,7 +273,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     modelData?.page !== 'PaymentSlipBook' &&
     modelData?.page !== 'CourseCompletionStudent' &&
     modelData?.page !== 'PaymentReport' &&
-    modelData?.page !== 'SettlePayment'
+    modelData?.page !== 'SettlePayment' &&
+    modelData?.page !== 'Contact'
   ) {
     columns.push({
       name: 'Action',
@@ -294,6 +295,17 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
           </>}
           {(modelData?.page === 'Enroll' && row?.user?.payInstallment != row?.user?.installment) && <PointOfSaleIcon onClick={() => handleAdvancePayment(row)} />}
           {modelData?.page === 'Enroll' && isUser === 'master' && <HourglassBottomIcon onClick={() => handleSettleEdit(row)} />}
+        </Box>
+      )
+    });
+  }
+
+  if (modelData?.page === 'Contact') {
+    columns.push({
+      name: 'Action',
+      cell: (row) => (
+        <Box display="flex" justifyContent="space-between" width="60px">
+          <DeleteIcon onClick={() => handleDelete(row)} />
         </Box>
       )
     });
