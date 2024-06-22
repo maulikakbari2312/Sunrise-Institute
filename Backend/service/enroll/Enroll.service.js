@@ -741,7 +741,7 @@ exports.findCheckFilterEnroll = async (body, isAdmin, isBranch) => {
 
 exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
     try {
-        const copyData = { ...data }
+        const copyData = { ...data };
         if (copyData.paymentMethod == 'UPI' || copyData.paymentMethod == 'Bank Transfer') {
             if (copyData.paymentDetails == '') {
                 return {
@@ -750,25 +750,34 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
                 };
             }
         }
-        // Convert totalFees and pendingFees to numbers
+
+        const enrollStudentCourse = await enrollModel.findOne({ tokenId: token });
         const fees = await courseModel.find({ courseName: data.course });
+        if (!fees || fees.length === 0) {
+            return {
+                status: 404,
+                message: "Course not found.",
+            };
+        }
 
-        // Assuming that fees is an array of results, you may need to pick the right one
         const selectedCourse = fees[0];
+        if (data.course == enrollStudentCourse.course) {
+            selectedCourse.fees = enrollStudentCourse.totalFees;
+        }
 
-        // Handle NaN in totalFees and discount
-        const totalFeeswithoutd = (isNaN(parseFloat(selectedCourse.fees)) ? 0 : parseFloat(selectedCourse.fees))
-        const totalFees = (isNaN(parseFloat(selectedCourse.fees)) ? 0 : parseFloat(selectedCourse.fees)) - (isNaN(parseFloat(data.discount)) ? 0 : parseFloat(data.discount)) || 0;
-        const payFees = isNaN(parseFloat(data.payFees)) ? 0 : parseFloat(data.payFees);
-        data.totalFees = isNaN(totalFeeswithoutd) ? 0 : totalFeeswithoutd;
+        const totalFeesWithoutDiscount = parseFloat(selectedCourse.fees) || 0;
+        const discount = parseFloat(data.discount) || 0;
+        const totalFees = totalFeesWithoutDiscount - discount;
+        const payFees = parseFloat(data.payFees) || 0;
 
-        // Handle NaN in installmentAmount
-        const installmentAmount = ((totalFees / (parseFloat(data.installment) || 0)));
-        data.installmentAmount = (isNaN(installmentAmount) ? 0 : installmentAmount).toFixed(2);
+        data.totalFees = totalFeesWithoutDiscount;
 
-        // Calculate pendingFees based on totalFees and payFees
+        const installmentCount = parseFloat(data.installment) || 1;
+        const installmentAmount = (totalFees / installmentCount).toFixed(2);
+        data.installmentAmount = isNaN(installmentAmount) ? 0 : installmentAmount;
+
         const pendingFees = (totalFees - payFees).toFixed(2);
-        if (Number(pendingFees) <= 0 && Number(pendingFees) !== 0) {
+        if (Number(pendingFees) < 0) {
             return {
                 status: 400,
                 message: "Pending fees cannot be negative. Please check the payment amount.",
