@@ -389,8 +389,22 @@ exports.settleEnroll = async (enroll, isAdmin, isBranch) => {
 };
 exports.createDemoEnroll = async (enroll, isAdmin, isBranch) => {
     try {
+        const alreadyEnoll = await enrollModel.findOne({ tokenId: enroll.tokenId });
+        if (alreadyEnoll) {
+            return {
+                status: 404,
+                message: 'Unable to Change Status',
+            };
+        }
+        const alreadyDemoEnroll = await DemoEnrollDetail.findOne({ tokenId: enroll.tokenId });
+        if (alreadyDemoEnroll) {
+            return {
+                status: 404,
+                message: 'Unable to Change Status',
+            };
+        }
         const createDemoDetail = new DemoEnrollDetail(enroll);
-        const detail = await createDemoDetail.save();
+        await createDemoDetail.save();
 
         return {
             status: 200,
