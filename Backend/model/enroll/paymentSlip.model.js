@@ -62,10 +62,6 @@ const paymentSlip = new mongoose.Schema({
         type: String,
         required: [true, "Enquire Type is required"],
     },
-    gstBranch: {
-        type: String,
-        required: [true, "Enquire Type is required"],
-    },
     filterNone: {
         type: Boolean,
         default: false
@@ -73,7 +69,19 @@ const paymentSlip = new mongoose.Schema({
     tokenId: {
         type: String,
         required: [true, "user is required"],
-    }
+    },
+    studentGst: {
+        type: String,
+    },
+    grossPayment: {
+        type: Number,
+    },
+    sGst: {
+        type: Number,
+    },
+    cGst: {
+        type: Number,
+    },
 });
 
 const paymentSlipDetail = new mongoose.model("paymentSlipDetail", paymentSlip);

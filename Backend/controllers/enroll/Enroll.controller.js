@@ -373,7 +373,10 @@ exports.downloadEnrollData = async (req, res) => {
                     'installment',
                     'payInstallment',
                     'enquireBranch',
-                    'gstBranch',
+                    'studentGst',
+                    'grossPayment',
+                    'sGst',
+                    'cGst',
                 ]
                 // Add headers
                 worksheet.addRow(headers);

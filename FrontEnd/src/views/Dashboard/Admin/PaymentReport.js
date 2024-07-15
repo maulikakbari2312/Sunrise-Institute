@@ -71,8 +71,11 @@ function PaymentReport() {
                 modelNone: true,
             },
             {
-                name: "GST Branch",
+                name: "Student Gst",
                 type: "text",
+                isNotRequired: true,
+                modelNone: true,
+                // displayNone: true,
             },
             {
                 name: "Installment Date",
@@ -136,7 +139,7 @@ function PaymentReport() {
                     initialValues={{
                         startDate: '',
                         endDate: '',
-                        gstBranch: '',
+                        // gstBranch: '',
                         enquireBranch: '',
                         payAmount: false,
                         paymentMethod: ''
@@ -227,7 +230,7 @@ function PaymentReport() {
                                         {/* Add other InputFields for additional form fields */}
                                     </Grid>
                                 }
-                                {isUser === "master" &&
+                                {/* {isUser === "master" &&
                                     <Grid item xs={12} lg={3} sm={6} md={4} >
                                         <Field
                                             name='gstBranch'
@@ -256,7 +259,7 @@ function PaymentReport() {
                                             )}
                                         />
                                     </Grid>
-                                }
+                                } */}
                                 <Grid item xs={12} lg={3} sm={6} md={4} style={{
                                     display: 'flex',
                                     justifyContent: 'center',
@@ -363,9 +366,18 @@ function PaymentReport() {
                                     </Grid>
                                     <Grid item lg={3} sm={6} xs={12}>
                                         <ReportCard
-                                            primary={((data?.totalPayAmount * 18) / 100)?.toFixed(2)?.toString()}
+                                            primary={(data?.cGst)?.toFixed(2)?.toString()}
                                             color={theme.palette.secondary.main}
-                                            footerData="Total GST Amount"
+                                            footerData="Total CGST Amount"
+                                            iconPrimary={ThumbUpIcon}
+                                            iconFooter={TrendingUpIcon}
+                                        />
+                                    </Grid>
+                                    <Grid item lg={3} sm={6} xs={12}>
+                                        <ReportCard
+                                            primary={(data?.sGst)?.toFixed(2)?.toString()}
+                                            color={theme.palette.secondary.main}
+                                            footerData="Total SGST Amount"
                                             iconPrimary={ThumbUpIcon}
                                             iconFooter={TrendingUpIcon}
                                         />

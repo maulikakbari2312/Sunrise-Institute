@@ -110,23 +110,11 @@ function Enroll() {
                 displayNone: true,
             },
             {
-                name: "GST Branch",
-                type: "selectBox",
-                options: [
-                    {
-                        label: "Abrama, Mota Varachha",
-                        value: "Abrama, Mota Varachha"
-                    },
-                    {
-                        label: "Sita Nagar",
-                        value: "Sita Nagar"
-                    },
-                    {
-                        label: "ABC, Mota Varachha",
-                        value: "ABC, Mota Varachha"
-                    }
-                ],
-                displayNone: true,
+                name: "Student Gst",
+                type: "text",
+                isNotRequired: true,
+                modelNone: true,
+                // displayNone: true,
             },
             {
                 name: "Enquire Branch",
@@ -215,7 +203,7 @@ function Enroll() {
                     installmentDate: '',
                     discount: '',
                     payFees: '',
-                    gstBranch: '',
+                    // gstBranch: '',
                     enquireBranch: '',
                     enquireType: '',
                 }}
@@ -397,7 +385,7 @@ function Enroll() {
                                 </Grid>
                             }
 
-                            <Grid item xs={12} lg={3} sm={6} md={4}>
+                            {/* <Grid item xs={12} lg={3} sm={6} md={4}>
                                 <Field
                                     name="gstBranch"
                                     render={({ form }) => (
@@ -427,7 +415,7 @@ function Enroll() {
                                         />
                                     )}
                                 />
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                         <Grid container justifyContent="flex-end" marginTop={2}>
                             <Button type="submit" disabled={btnDisable} variant="contained" color="primary" sx={{ marginRight: 2 }}>

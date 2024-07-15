@@ -59,24 +59,6 @@ function CourseCompletionStudent() {
                 modelNone: true
             },
             {
-                name: "GST Branch",
-                type: "selectBox",
-                options: [
-                    {
-                        label: "Abrama, Mota Varachha",
-                        value: "Abrama, Mota Varachha"
-                    },
-                    {
-                        label: "Sita Nagar",
-                        value: "Sita Nagar"
-                    },
-                    {
-                        label: "ABC, Mota Varachha",
-                        value: "ABC, Mota Varachha"
-                    }
-                ]
-            },
-            {
                 name: "Installment Date",
                 type: "text",
             },
@@ -163,7 +145,7 @@ function CourseCompletionStudent() {
                     course: '',
                     paymentType: '',
                     installmentDate: '',
-                    gstBranch: '',
+                    // gstBranch: '',
                     enquireBranch: '',
                     enquireType: '',
                 }}

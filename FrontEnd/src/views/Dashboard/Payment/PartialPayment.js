@@ -105,24 +105,24 @@ function PartialPayment() {
                 modelNone: true,
                 displayNone: true,
             },
-            {
-                name: "GST Branch",
-                type: "selectBox",
-                options: [
-                    {
-                        label: "Abrama, Mota Varachha",
-                        value: "Abrama, Mota Varachha"
-                    },
-                    {
-                        label: "Sita Nagar",
-                        value: "Sita Nagar"
-                    },
-                    {
-                        label: "ABC, Mota Varachha",
-                        value: "ABC, Mota Varachha"
-                    }
-                ]
-            },
+            // {
+            //     name: "GST Branch",
+            //     type: "selectBox",
+            //     options: [
+            //         {
+            //             label: "Abrama, Mota Varachha",
+            //             value: "Abrama, Mota Varachha"
+            //         },
+            //         {
+            //             label: "Sita Nagar",
+            //             value: "Sita Nagar"
+            //         },
+            //         {
+            //             label: "ABC, Mota Varachha",
+            //             value: "ABC, Mota Varachha"
+            //         }
+            //     ]
+            // },
             {
                 name: "Enquire Branch",
                 type: "text",
@@ -210,7 +210,7 @@ function PartialPayment() {
                     installmentDate: '',
                     discount: '',
                     payFees: '',
-                    gstBranch: '',
+                    // gstBranch: '',
                     enquireBranch: '',
                     enquireType: '',
                 }}
@@ -392,7 +392,7 @@ function PartialPayment() {
                                 </Grid>
                             }
 
-                            <Grid item xs={12} lg={3} sm={6} md={4}>
+                            {/* <Grid item xs={12} lg={3} sm={6} md={4}>
                                 <Field
                                     name="gstBranch"
                                     render={({ form }) => (
@@ -422,7 +422,7 @@ function PartialPayment() {
                                         />
                                     )}
                                 />
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                         <Grid container justifyContent="flex-end" marginTop={2}>
                             <Button type="submit" disabled={btnDisable} variant="contained" color="primary" sx={{ marginRight: 2 }}>

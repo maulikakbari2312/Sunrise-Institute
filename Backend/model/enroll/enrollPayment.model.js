@@ -78,10 +78,6 @@ const enrollPaymentSchema = new mongoose.Schema({
     payInstallment: {
         type: Number,
     },
-    gstBranch: {
-        type: String,
-        required: [true, "GST Branch is required"],
-    },
     enquireBranch: {
         type: String,
         required: [true, "Enquire Branch is required"],
@@ -116,7 +112,19 @@ const enrollPaymentSchema = new mongoose.Schema({
         type: String,
         required: [true, "User ID is required"],
         unique: true
-    }
+    },
+    studentGst: {
+        type: String,
+    },
+    grossPayment: {
+        type: Number,
+    },
+    sGst: {
+        type: Number,
+    },
+    cGst: {
+        type: Number,
+    },
 });
 
 const EnrollPaymentDetail = new mongoose.model("EnrollPaymentDetail", enrollPaymentSchema);

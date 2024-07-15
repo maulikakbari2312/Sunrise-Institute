@@ -61,9 +61,17 @@ const settlePaymentSlip = new mongoose.Schema({
         type: String,
         required: [true, "Enquire Type is required"],
     },
-    gstBranch: {
+    studentGst: {
         type: String,
-        required: [true, "Enquire Type is required"],
+    },
+    grossPayment: {
+        type: Number,
+    },
+    sGst: {
+        type: Number,
+    },
+    cGst: {
+        type: Number,
     },
     tokenId: {
         type: String,

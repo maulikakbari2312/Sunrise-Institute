@@ -154,7 +154,7 @@ function SettlePayment() {
                     initialValues={{
                         startDate: '',
                         endDate: '',
-                        gstBranch: '',
+                        // gstBranch: '',
                         enquireBranch: '',
                         paymentMethod: ''
                     }}
@@ -245,7 +245,7 @@ function SettlePayment() {
                                         {/* Add other InputFields for additional form fields */}
                                     </Grid>
                                 }
-                                {isUser === "master" &&
+                                {/* {isUser === "master" &&
                                     <Grid item xs={12} lg={3} sm={6} md={4} >
                                         <Field
                                             name='gstBranch'
@@ -274,7 +274,7 @@ function SettlePayment() {
                                             )}
                                         />
                                     </Grid>
-                                }
+                                } */}
 
                             </Grid>
                             <Grid container justifyContent="flex-end" marginTop={2}>

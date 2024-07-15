@@ -85,6 +85,13 @@ function PaymentSlipBook() {
                 type: "text",
             },
             {
+                name: "Student Gst",
+                type: "text",
+                isNotRequired: true,
+                modelNone: true,
+                // displayNone: true,
+            },
+            {
                 name: "Enquire Branch",
                 type: "text",
             },
@@ -142,7 +149,7 @@ function PaymentSlipBook() {
                     initialValues={{
                         startDate: '',
                         endDate: '',
-                        gstBranch: '',
+                        // gstBranch: '',
                         enquireBranch: '',
                         paymentMethod: '',
                         paymentSlipNumber: ''
@@ -233,7 +240,7 @@ function PaymentSlipBook() {
                                         {/* Add other InputFields for additional form fields */}
                                     </Grid>
                                 }
-                                {isUser === "master" &&
+                                {/* {isUser === "master" &&
                                     <Grid item xs={12} lg={3} sm={6} md={4} >
                                         <Field
                                             name='gstBranch'
@@ -262,7 +269,7 @@ function PaymentSlipBook() {
                                             )}
                                         />
                                     </Grid>
-                                }
+                                } */}
                                 <Grid item xs={12} lg={3} sm={6} md={4} >
                                     <Field
                                         name='paymentMethod'

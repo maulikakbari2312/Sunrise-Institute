@@ -583,7 +583,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     payFees: selected?.isEdit ? selected?.selectData?.user?.payFees?.toFixed(2) : '',
     partialPayment: selected?.isEdit ? selected?.selectData?.user?.partialPayment?.toFixed(2) : 0,
     payInstallment: selected?.isEdit ? selected?.selectData?.user?.payInstallment : '',
-    gstBranch: selected?.isEdit ? selected?.selectData?.user?.gstBranch : rowData?.branch,
+    studentGst: selected?.isEdit ? selected?.selectData?.user?.studentGst : rowData?.studentGst,
     paymentMethod:
       selected?.isEdit && selected?.modelData?.page != 'partialPayment' ? selected?.selectData?.user?.paymentMethod?.[0] || '' : '',
     paymentReceiver: localStorage.getItem('name'),
@@ -604,7 +604,6 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     totalFees: Yup.string().required('Total Fees is required'),
     paymentType: Yup.string().required('Payment Type is required'),
     installmentDate: Yup.string().required('Installment Date is required'),
-    gstBranch: Yup.string().required('GST Branch is required'),
     paymentMethod: Yup.string().required('Payment Method Type is required')
   });
   const validationSchemaAdvance = Yup.object().shape({
@@ -613,7 +612,6 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     totalFees: Yup.string().required('Total Fees is required'),
     paymentType: Yup.string().required('Payment Type is required'),
     installmentDate: Yup.string().required('Installment Date is required'),
-    gstBranch: Yup.string().required('GST Branch is required'),
     paymentMethod: Yup.string().required('Payment Method Type is required'),
     duePendingInstallment: Yup.string().required('Due Pending Installment Type is required'),
   });
@@ -1725,31 +1723,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                       }}
                     >
                       <Field
-                        name="gstBranch"
+                        name="studentGst"
                         render={({ form }) => (
                           <Field
-                            name="gstBranch"
+                            name='studentGst'
                             render={({ field, form }) => (
-                              <CustomSelectComponent
-                                name="gstBranch"
-                                label="Enter GST Branch"
-                                placeholder={`Enter GST Branch`}
+                              <InputField
+                                name="studentGst"
+                                label="Enter Student GST"
+                                placeholder="Enter Student GST"
                                 form={form}
                                 field={field}
-                                options={[
-                                  {
-                                    label: 'Abrama, Mota Varachha',
-                                    value: 'Abrama, Mota Varachha'
-                                  },
-                                  {
-                                    label: 'Sita Nagar',
-                                    value: 'Sita Nagar'
-                                  },
-                                  {
-                                    label: 'ABC, Mota Varachha',
-                                    value: 'ABC, Mota Varachha'
-                                  }
-                                ]}
+                                type='text'
                               />
                             )}
                           />
@@ -5078,7 +5063,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         />
                       </Box>
                     )}
-                    <Box
+                    {/* <Box
                       sx={{
                         width: '100%',
                         marginRight: '0px',
@@ -5131,7 +5116,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                           />
                         )}
                       />
-                    </Box>
+                    </Box> */}
                   </Box>
                 </DialogContent>
                 <div className="col-md-12" style={{ display: 'none' }}>

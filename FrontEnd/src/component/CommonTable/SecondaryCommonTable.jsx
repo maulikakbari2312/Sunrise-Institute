@@ -467,7 +467,6 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
         discount: selected?.isEdit ? selected?.selectData?.user?.discount : '',
         payFees: selected?.isEdit ? selected?.selectData?.user?.payFees?.toFixed(2) : '',
         payInstallment: selected?.isEdit ? selected?.selectData?.user?.payInstallment : '',
-        gstBranch: selected?.isEdit ? selected?.selectData?.user?.gstBranch : rowData?.branch,
         partialPayment: selected?.isEdit ? selected?.selectData?.user?.partialPayment : 0,
         paymentMethod: selected?.isEdit ? selected?.selectData?.user?.paymentMethod?.[0] || '' : '',
         paymentReceiver: localStorage.getItem('name'),
@@ -476,6 +475,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
         tokenId: selected?.isEdit ? selected?.selectData?.user?.tokenId : rowData?.tokenId,
         enquireType: selected?.isEdit ? selected?.selectData?.user?.enquireType : type,
         enquireDate: selected?.isEdit ? selected?.selectData?.user?.enquireDate : rowData?.enquireDate,
+        studentGst: selected?.isEdit ? selected?.selectData?.user?.studentGst : rowData?.studentGst,
     };
     const validationSchema = Yup.object().shape({
         name: Yup.string().min(2, 'Too Short!').required('Name is required'),
@@ -483,7 +483,6 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
         totalFees: Yup.string().required('Total Fees is required'),
         paymentType: Yup.string().required('Payment Type is required'),
         installmentDate: Yup.string().required('Installment Date is required'),
-        gstBranch: Yup.string().required('GST Branch is required'),
         paymentMethod: Yup.string().required('Payment Method Type is required'),
     });
 
@@ -1369,29 +1368,18 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                             }}
                                         >
                                             <Field
-                                                name="gstBranch"
+                                                name="studentGst"
                                                 render={({ form }) => (
                                                     <Field
-                                                        name='gstBranch'
+                                                        name='studentGst'
                                                         render={({ field, form }) => (
-                                                            <CustomSelectComponent
-                                                                name='gstBranch'
-                                                                label='Enter GST Branch'
-                                                                placeholder={`Enter GST Branch`}
+                                                            <InputField
+                                                                name="studentGst"
+                                                                label="Enter Student GST"
+                                                                placeholder="Enter Student GST"
                                                                 form={form}
                                                                 field={field}
-                                                                options={[{
-                                                                    label: "Abrama, Mota Varachha",
-                                                                    value: "Abrama, Mota Varachha"
-                                                                },
-                                                                {
-                                                                    label: "Sita Nagar",
-                                                                    value: "Sita Nagar"
-                                                                },
-                                                                {
-                                                                    label: "ABC, Mota Varachha",
-                                                                    value: "ABC, Mota Varachha"
-                                                                }]}
+                                                                type='text'
                                                             />
                                                         )}
                                                     />
