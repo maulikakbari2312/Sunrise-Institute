@@ -373,7 +373,6 @@ exports.downloadEnrollData = async (req, res) => {
                     'installment',
                     'payInstallment',
                     'enquireBranch',
-                    'studentGst',
                     'grossPayment',
                     'sGst',
                     'cGst',

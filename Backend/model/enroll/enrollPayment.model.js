@@ -113,9 +113,6 @@ const enrollPaymentSchema = new mongoose.Schema({
         required: [true, "User ID is required"],
         unique: true
     },
-    studentGst: {
-        type: String,
-    },
     grossPayment: {
         type: Number,
     },

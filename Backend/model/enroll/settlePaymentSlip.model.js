@@ -61,9 +61,6 @@ const settlePaymentSlip = new mongoose.Schema({
         type: String,
         required: [true, "Enquire Type is required"],
     },
-    studentGst: {
-        type: String,
-    },
     grossPayment: {
         type: Number,
     },

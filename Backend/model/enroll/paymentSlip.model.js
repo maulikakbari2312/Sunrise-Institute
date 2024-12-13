@@ -70,9 +70,6 @@ const paymentSlip = new mongoose.Schema({
         type: String,
         required: [true, "user is required"],
     },
-    studentGst: {
-        type: String,
-    },
     grossPayment: {
         type: Number,
     },

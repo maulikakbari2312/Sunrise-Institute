@@ -186,7 +186,6 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
         // Save the updated document
 
         const newPaymentSlip = {};
-        newPaymentSlip.studentGst = copyEnroll?.studentGst ? copyEnroll?.studentGst : '';
         newPaymentSlip.grossPayment = payFees - (0.18 * payFees);
         newPaymentSlip.sGst = 0.09 * payFees;
         newPaymentSlip.cGst = 0.09 * payFees;
@@ -366,7 +365,6 @@ exports.settleEnroll = async (enroll, isAdmin, isBranch) => {
         newPaymentSlip.grossPayment = findSettleEnrollStudent.payFees - (0.18 * findSettleEnrollStudent.payFees);
         newPaymentSlip.sGst = 0.09 * findSettleEnrollStudent.payFees;
         newPaymentSlip.cGst = 0.09 * findSettleEnrollStudent.payFees;
-        newPaymentSlip.studentGst = findSettleEnrollStudent.studentGst ? findSettleEnrollStudent.studentGst : '';
         newPaymentSlip.enquireType = findSettleEnrollStudent?.enquireType;
         newPaymentSlip.tokenId = findSettleEnrollStudent?.tokenId;
         const paymentSlip = new paymentSlipDetail({
@@ -913,7 +911,6 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.installmentAmount = data.installmentAmount;
         newPaymentSlip.paymentMethod = copyData.paymentMethod;
         newPaymentSlip.enquireBranch = isBranch;
-        newPaymentSlip.studentGst = data.studentGst ? data.studentGst : '';
         newPaymentSlip.grossPayment = payFees - (0.18 * payFees);
         newPaymentSlip.sGst = 0.09 * payFees;
         newPaymentSlip.cGst = 0.09 * payFees;
@@ -1095,7 +1092,6 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.paymentMethod = copyEnroll.paymentMethod;
         newPaymentSlip.tokenId = token;
         newPaymentSlip.enquireBranch = isBranch;
-        newPaymentSlip.studentGst = enrollUser?.studentGst ? enrollUser?.studentGst : '';
         newPaymentSlip.grossPayment = copyEnroll.payInstallmentFees - (0.18 * copyEnroll.payInstallmentFees);
         newPaymentSlip.sGst = 0.09 * copyEnroll.payInstallmentFees;
         newPaymentSlip.cGst = 0.09 * copyEnroll.payInstallmentFees;
@@ -1237,7 +1233,6 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.paymentMethod = data.paymentMethod;
         newPaymentSlip.tokenId = data.tokenId;
         newPaymentSlip.enquireBranch = isBranch;
-        newPaymentSlip.studentGst = enrollUser?.studentGst ? enrollUser?.studentGst : '';
         newPaymentSlip.grossPayment = copyEnroll.partialPayment - (0.18 * copyEnroll.partialPayment);
         newPaymentSlip.sGst = 0.09 * copyEnroll.partialPayment;
         newPaymentSlip.cGst = 0.09 * copyEnroll.partialPayment;

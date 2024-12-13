@@ -7,3 +7,23 @@
 /FrontEnd/node_modules
 /FrontEnd/build
 /FrontEnd/.env
+
+# Ignore node_modules and build directories in BackEnd
+BackEnd/node_modules/
+BackEnd/build/
+
+# Ignore node_modules and build directories in FrontEnd
+FrontEnd/node_modules/
+FrontEnd/build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Build output
+dist/
+build/

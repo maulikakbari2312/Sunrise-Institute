@@ -475,7 +475,6 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
         tokenId: selected?.isEdit ? selected?.selectData?.user?.tokenId : rowData?.tokenId,
         enquireType: selected?.isEdit ? selected?.selectData?.user?.enquireType : type,
         enquireDate: selected?.isEdit ? selected?.selectData?.user?.enquireDate : rowData?.enquireDate,
-        studentGst: selected?.isEdit ? selected?.selectData?.user?.studentGst : rowData?.studentGst,
     };
     const validationSchema = Yup.object().shape({
         name: Yup.string().min(2, 'Too Short!').required('Name is required'),
@@ -1341,47 +1340,6 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                         form={form}
                                                         type="date"
                                                         valueDate={form?.values?.installmentDate}
-                                                    />
-                                                )}
-                                            />
-                                        </Box>
-                                        <Box
-                                            sx={{
-                                                width: "100%",
-                                                marginRight: "0px",
-                                                "@media (min-width: 600px)": {
-                                                    width: "47%",
-                                                    marginRight: "4px",
-                                                },
-                                                "@media (min-width: 960px)": {
-                                                    width: "47%",
-                                                    marginRight: "4.5px",
-                                                },
-                                                "@media (min-width: 1280px)": {
-                                                    width: "47%",
-                                                    marginRight: "5px",
-                                                },
-                                                "@media (min-width: 1536px)": {
-                                                    width: "47%",
-                                                    marginRight: "5px",
-                                                },
-                                            }}
-                                        >
-                                            <Field
-                                                name="studentGst"
-                                                render={({ form }) => (
-                                                    <Field
-                                                        name='studentGst'
-                                                        render={({ field, form }) => (
-                                                            <InputField
-                                                                name="studentGst"
-                                                                label="Enter Student GST"
-                                                                placeholder="Enter Student GST"
-                                                                form={form}
-                                                                field={field}
-                                                                type='text'
-                                                            />
-                                                        )}
                                                     />
                                                 )}
                                             />

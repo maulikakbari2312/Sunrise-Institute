@@ -583,7 +583,6 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     payFees: selected?.isEdit ? selected?.selectData?.user?.payFees?.toFixed(2) : '',
     partialPayment: selected?.isEdit ? selected?.selectData?.user?.partialPayment?.toFixed(2) : 0,
     payInstallment: selected?.isEdit ? selected?.selectData?.user?.payInstallment : '',
-    studentGst: selected?.isEdit ? selected?.selectData?.user?.studentGst : rowData?.studentGst,
     paymentMethod:
       selected?.isEdit && selected?.modelData?.page != 'partialPayment' ? selected?.selectData?.user?.paymentMethod?.[0] || '' : '',
     paymentReceiver: localStorage.getItem('name'),
@@ -1696,47 +1695,6 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                             form={form}
                             type="date"
                             valueDate={form?.values?.installmentDate}
-                          />
-                        )}
-                      />
-                    </Box>
-                    <Box
-                      sx={{
-                        width: '100%',
-                        marginRight: '0px',
-                        '@media (min-width: 600px)': {
-                          width: '47%',
-                          marginRight: '4px'
-                        },
-                        '@media (min-width: 960px)': {
-                          width: '47%',
-                          marginRight: '4.5px'
-                        },
-                        '@media (min-width: 1280px)': {
-                          width: '47%',
-                          marginRight: '5px'
-                        },
-                        '@media (min-width: 1536px)': {
-                          width: '47%',
-                          marginRight: '5px'
-                        }
-                      }}
-                    >
-                      <Field
-                        name="studentGst"
-                        render={({ form }) => (
-                          <Field
-                            name='studentGst'
-                            render={({ field, form }) => (
-                              <InputField
-                                name="studentGst"
-                                label="Enter Student GST"
-                                placeholder="Enter Student GST"
-                                form={form}
-                                field={field}
-                                type='text'
-                              />
-                            )}
                           />
                         )}
                       />
