@@ -255,6 +255,7 @@ const ProfileSection = () => {
       .min(10, 'Mobile number must be 10 digits')
       .max(10, 'Mobile number must be 10 digits'),
     address: Yup.string().required('Address is required'),
+    state: Yup.string().required('State is required'),
     passport: Yup.string().required('Passport is required'),
     education: Yup.string().required('Education are required'),
     interestedCountry: Yup.array().min(1, 'Please select at least one option').required('Please select at least one option'),
@@ -297,6 +298,7 @@ const ProfileSection = () => {
       .min(10, 'Mobile number must be 10 digits')
       .max(10, 'Mobile number must be 10 digits'),
     address: Yup.string().required('Address is required'),
+    state: Yup.string().required('State is required'),
     education: Yup.string().required('Education are required'),
     enquiryTokenBy: Yup.string().required('Enquiry Token By are required'),
     reference: Yup.array().min(1, 'Please select at least one option').required('Please select at least one option'),
@@ -561,6 +563,7 @@ const ProfileSection = () => {
                 parentMobileNumber: selectedEnquire?.parentMobileNumber || '',
                 email: selectedEnquire?.email || '',
                 address: selectedEnquire?.address || '',
+                state: selectedEnquire?.state || '',
                 passport: selectedEnquire?.passport || '',
                 education: selectedEnquire?.education || '',
                 bachelor: selectedEnquire?.bachelor || '',
@@ -687,6 +690,18 @@ const ProfileSection = () => {
                             <CustomTextAreaComponents
                               name="address"
                               placeholder="Enter Addresss"
+                              form={form}
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} lg={3} sm={6} md={4} >
+                        <Field
+                          name="state"
+                          render={({ form }) => (
+                            <CustomTextAreaComponents
+                              name="state"
+                              placeholder="Enter State"
                               form={form}
                             />
                           )}
@@ -990,6 +1005,8 @@ const ProfileSection = () => {
                   parentMobileNumber: selectedEnquire?.parentMobileNumber || '',
                   email: selectedEnquire?.email || '',
                   address: selectedEnquire?.address || '',
+                  state: selectedEnquire?.state || '',
+                  state:selectedEnquire?.state || '',
                   education: selectedEnquire?.education || '',
                   bachelor: selectedEnquire?.bachelor || '',
                   master: selectedEnquire?.master || '',
@@ -1112,6 +1129,19 @@ const ProfileSection = () => {
                               <CustomTextAreaComponents
                                 name="address"
                                 placeholder="Enter Addresss"
+                                form={form}
+
+                              />
+                            )}
+                          />
+                        </Grid>
+                        <Grid item xs={12} lg={3} sm={6} md={4} >
+                          <Field
+                            name="state"
+                            render={({ form }) => (
+                              <CustomTextAreaComponents
+                                name="state"
+                                placeholder="Enter State"
                                 form={form}
 
                               />
@@ -1375,6 +1405,7 @@ const ProfileSection = () => {
                     parentMobileNumber: selectedEnquire?.parentMobileNumber || '',
                     email: selectedEnquire?.email || '',
                     address: selectedEnquire?.address || '',
+                    state: selectedEnquire?.state || '',
                     education: selectedEnquire?.education || '',
                     reference: selectedEnquire?.reference || [],
                     percentageCgpi: selectedEnquire?.percentageCgpi || '',
@@ -1492,6 +1523,19 @@ const ProfileSection = () => {
                                 <CustomTextAreaComponents
                                   name="address"
                                   placeholder="Enter Addresss"
+                                  form={form}
+
+                                />
+                              )}
+                            />
+                          </Grid>
+                          <Grid item xs={12} lg={3} sm={6} md={4} >
+                            <Field
+                              name="state"
+                              render={({ form }) => (
+                                <CustomTextAreaComponents
+                                  name="state"
+                                  placeholder="Enter State"
                                   form={form}
 
                                 />

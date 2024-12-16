@@ -108,6 +108,10 @@ const enrollPaymentSchema = new mongoose.Schema({
     paymentMethod: {
         type: Array,
     },
+    state: {
+        type: String,
+        required: [true, "State is required"],
+    },
     tokenId: {
         type: String,
         required: [true, "User ID is required"],

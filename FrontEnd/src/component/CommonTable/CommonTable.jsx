@@ -758,7 +758,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
         installmentDate: formattedDate,
         dob: rowData?.dob,
         email: rowData?.email,
-        mobileNumber: rowData?.mobileNumber
+        mobileNumber: rowData?.mobileNumber,
+        state: rowData?.state,
       };
       if (selected?.isEdit) {
         const invoice = document.getElementById('invoice_digital');

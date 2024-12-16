@@ -39,6 +39,10 @@ const itCoursesSchema = new mongoose.Schema({
         type: String,
         required: [true, "Address is required"],
     },
+    state: {
+        type: String,
+        required: [true, "State is required"],
+    },
     education: {
         type: String,
         required: [true, "Education is required"],

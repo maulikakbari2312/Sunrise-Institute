@@ -75,6 +75,10 @@ function ImmigrationReport() {
                 type: "text"
             },
             {
+                name: "State",
+                type: "text"
+            },
+            {
                 name: "Passport",
                 type: "redio"
             },

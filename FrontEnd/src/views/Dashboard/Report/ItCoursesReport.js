@@ -75,6 +75,10 @@ function ItCoursesReport() {
                 type: "text"
             },
             {
+                name: "State",
+                type: "text"
+            },
+            {
                 name: "Suggested Course",
                 type: "multiSelect"
             },

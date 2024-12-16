@@ -93,6 +93,7 @@ function CompetitiveExam() {
             .min(10, 'Mobile number must be 10 digits')
             .max(10, 'Mobile number must be 10 digits'),
         address: Yup.string().required('Address is required'),
+        state: Yup.string().required('State is required'),
         education: Yup.string().required('Education are required'),
         reference: Yup.array().min(1, 'Please select at least one option').required('Please select at least one option'),
         enquiryTokenBy: Yup.string().required('Enquiry Token By are required'),
@@ -209,6 +210,7 @@ function CompetitiveExam() {
                         parentMobileNumber: selected.isEdit ? selected?.selectData?.user?.parentMobileNumber || '' : '',
                         email: selected.isEdit ? selected?.selectData?.user?.email || '' : '',
                         address: selected.isEdit ? selected?.selectData?.user?.address || '' : '',
+                        state: selected.isEdit ? selected?.selectData?.user?.state || '' : '',
                         education: selected.isEdit ? selected?.selectData?.user?.education || '' : '',
                         bachelor: selected.isEdit ? selected?.selectData?.user?.bachelor || '' : '',
                         master: selected.isEdit ? selected?.selectData?.user?.master || '' : '',
@@ -376,6 +378,19 @@ function CompetitiveExam() {
                                             <CustomTextAreaComponents
                                                 name="address"
                                                 placeholder="Enter Addresss"
+                                                form={form}
+
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} lg={3} sm={6} md={4} >
+                                    <Field
+                                        name="state"
+                                        render={({ form }) => (
+                                            <CustomTextAreaComponents
+                                                name="state"
+                                                placeholder="Enter state"
                                                 form={form}
 
                                             />

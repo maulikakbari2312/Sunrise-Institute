@@ -75,6 +75,10 @@ function CompetitiveExamReport() {
                 type: "text"
             },
             {
+                name: "State",
+                type: "text"
+            },
+            {
                 name: "Education",
                 type: "text"
             },

@@ -585,7 +585,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
             const date = new Date(values?.installmentDate);
             const formattedDate = date.toISOString().split('T')[0];
 
-            const formattedValues = { ...values, installmentDate: formattedDate, dob: rowData?.dob, email: rowData?.email, mobileNumber: rowData?.mobileNumber };
+            const formattedValues = { ...values, installmentDate: formattedDate, dob: rowData?.dob, email: rowData?.email, mobileNumber: rowData?.mobileNumber, state: rowData?.state, };
             if (selected?.isEdit) {
                 const invoice = document.getElementById('invoice_digital');
                 const fileName = `${values?.name}-${isCounterNumber?.paymentNumber}.pdf`;

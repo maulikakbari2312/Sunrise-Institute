@@ -39,6 +39,10 @@ const immigrationSchema = new mongoose.Schema({
         type: String,
         required: [true, "Address is required"],
     },
+    state: {
+        type: String,
+        required: [true, "State is required"],
+    },
     passport: {
         type: String,
         required: [true, "Passport is required"],

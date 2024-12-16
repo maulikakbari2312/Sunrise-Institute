@@ -204,6 +204,7 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
         newPaymentSlip.paymentMethod = copyEnroll.paymentMethod;
         newPaymentSlip.tokenId = copyEnroll.tokenId;
         newPaymentSlip.enquireBranch = isBranch;
+        newPaymentSlip.state = copyEnroll.state;
         newPaymentSlip.enquireType = copyEnroll.enquireType;
         if (copyEnroll.paymentType == 'fullFees') {
             newPaymentSlip.payInstallment = 1;
@@ -367,6 +368,7 @@ exports.settleEnroll = async (enroll, isAdmin, isBranch) => {
         newPaymentSlip.cGst = 0.09 * findSettleEnrollStudent.payFees;
         newPaymentSlip.enquireType = findSettleEnrollStudent?.enquireType;
         newPaymentSlip.tokenId = findSettleEnrollStudent?.tokenId;
+        newPaymentSlip.state = findSettleEnrollStudent.state;
         const paymentSlip = new paymentSlipDetail({
             ...newPaymentSlip,
         });
@@ -916,6 +918,7 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.cGst = 0.09 * payFees;
         newPaymentSlip.enquireType = data.enquireType;
         newPaymentSlip.tokenId = token;
+        newPaymentSlip.state = copyData.state;
         if (copyData.paymentType == 'fullFees') {
             newPaymentSlip.payInstallment = 1;
         }
@@ -1084,6 +1087,7 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.payInstallment = copyEnroll.duePendingInstallment || (copyEnroll.duePendingInstallment == '' || copyEnroll.duePendingInstallment == 0 || copyEnroll.duePendingInstallment == '0') ? 'Partial Payment' : 0;
         newPaymentSlip.paymentReceiver = copyEnroll.paymentReceiver;
         newPaymentSlip.paymentSlipNumber = counterNumbers.paymentNumber;
+        newPaymentSlip.state = copyEnroll.state;
         newPaymentSlip.payInstallmentNumbers = Array.from(
             { length: copyEnroll.duePendingInstallment },
             (_, index) => index + payInstallment + 1
@@ -1236,6 +1240,7 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.grossPayment = copyEnroll.partialPayment - (0.18 * copyEnroll.partialPayment);
         newPaymentSlip.sGst = 0.09 * copyEnroll.partialPayment;
         newPaymentSlip.cGst = 0.09 * copyEnroll.partialPayment;
+        newPaymentSlip.state = 0.09 * copyEnroll.state;
         newPaymentSlip.enquireType = enrollUser?.enquireType;
         const paymentSlip = new paymentSlipDetail({
             ...newPaymentSlip,

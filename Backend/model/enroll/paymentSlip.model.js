@@ -62,6 +62,10 @@ const paymentSlip = new mongoose.Schema({
         type: String,
         required: [true, "Enquire Type is required"],
     },
+    state: {
+        type: String,
+        required: [true, "State is required"],
+    },
     filterNone: {
         type: Boolean,
         default: false
