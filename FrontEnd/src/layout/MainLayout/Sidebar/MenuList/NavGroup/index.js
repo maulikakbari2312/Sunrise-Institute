@@ -31,7 +31,7 @@ const NavGroup = ({ item }) => {
       setOpen('student')
     } else if (currentPath == '/admin/settlement-report' || currentPath == '/admin/payment-report' || currentPath == '/payment-slip') {
       setOpen('admin')
-    } else if (currentPath == '/admin/create-course' || currentPath == '/admin/CreateAdmin') {
+    } else if (currentPath == '/admin/create-course' || currentPath == '/admin/CreateAdmin' || currentPath == '/admin/create-branch') {
       setOpen('master')
     } else if (currentPath == '/web/course' || currentPath == '/web/gallery' || currentPath == '/web/contact') {
       setOpen('sunriseWeb')

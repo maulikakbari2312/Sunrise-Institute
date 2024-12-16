@@ -21,7 +21,7 @@ const PartialPayment = Loadable(lazy(() => import('../views/Dashboard/Payment/Pa
 const WebCourse = Loadable(lazy(() => import('../views/Dashboard/Web/WebCourse')));
 const Gallery = Loadable(lazy(() => import('../views/Dashboard/Web/Gallery')));
 const Contact = Loadable(lazy(() => import('../views/Dashboard/Web/Contact')));
-
+const CreateBranch = Loadable(lazy(() => import('../views/Dashboard/Admin/CreateBranch')));
 const MainRoutes = () => {
   const user = useSelector(state => state.user.isAdmin);
   const [isUser, setIsUser] = useState(user);
@@ -97,6 +97,10 @@ const MainRoutes = () => {
       (isUser === "master") && {
         path: '/admin/create-course',
         element: <CreateCourse />
+      },
+      (isUser === "master") && {
+        path: '/admin/create-branch',
+        element: <CreateBranch />
       },
       ((isUser === true || isUser === "true" || isUser === "master")) && {
         path: '/admin/payment-report',

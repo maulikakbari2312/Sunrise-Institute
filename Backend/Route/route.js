@@ -5,6 +5,7 @@ exports.setUp = function (app) {
     const enquire = require("./Enquire/enquire.router");
     const login = require("./admin/login.router");
     const course = require("./admin/course.router");
+    const branchData = require("./admin/branch.router");
     const enroll = require("./enroll/enroll.router");
     const remainder = require("./enroll/reminderDate.router");
     const branch = require("./branch/branch.router");
@@ -17,5 +18,6 @@ exports.setUp = function (app) {
     app.use("/api/admin", login);
     app.use("/api/admin", course);
     app.use("/api/branch", branch);
+    app.use("/api/admin", branchData);
 };
 module.exports = exports;

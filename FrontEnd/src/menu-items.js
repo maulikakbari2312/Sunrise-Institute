@@ -14,6 +14,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import PhotoSizeSelectActualIcon from '@mui/icons-material/PhotoSizeSelectActual';
 import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
+import BusinessIcon from '@mui/icons-material/Business';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
@@ -34,6 +35,7 @@ const icons = {
   PhotoSizeSelectActualIcon: PhotoSizeSelectActualIcon,
   NoteAltIcon: NoteAltIcon,
   ContactPhoneIcon: ContactPhoneIcon,
+  BusinessIcon: BusinessIcon
 };
 
 const NavigationItems = () => {
@@ -191,6 +193,13 @@ const NavigationItems = () => {
               type: 'item',
               url: '/admin/create-course',
               icon: icons['ClassIcon'],
+            },
+            {
+              id: '/admin/create-branch',
+              title: 'Add Branch',
+              type: 'item',
+              url: '/admin/create-branch',
+              icon: icons['BusinessIcon'],
             },
           ]
         },
