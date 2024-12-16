@@ -4,6 +4,8 @@ const competitiveExamModel = require("../../model/Enquire/CompetitiveExam.model"
 const enrollModel = require("../../model/enroll/enrollPayment.model");
 const CompleteEnrollDetail = require("../../model/enroll/completeEnroll.model");
 const DemoEnrollDetail = require("../../model/enroll/demoEnroll.medel");
+const branchModel = require("../../model/admin/Branch.modal");
+
 function convertDateFormat(inputDate) {
     // Split the input date into year, month, and day
     var dateParts = inputDate.split('-');
@@ -35,7 +37,13 @@ exports.createCompetitiveExamDetail = async (competitiveExam, isAdmin, isBranch)
         competitiveExam.branch = isBranch;
         competitiveExam.enquire = 'CompetitiveExam';
         competitiveExam.dob = convertDateFormat(competitiveExam.dob);
+        const getBranch = await branchModel.find();
 
+        // Find the branch object that matches the enrolled branch
+        const matchedBranch = getBranch.find(branch => branch.branchName === isBranch);
+
+        // If a match is found, use the whatsappKEY (instance_id) from the matched branch
+        const instanceId = matchedBranch ? matchedBranch.whatsappKEY : process.env.INSTANCE_ID_DEFAULT;  // Default if no match
         const createCompetitiveExamDetail = new competitiveExamModel(competitiveExam);
         try {
             const enrollMsg = `*GREETING FROM SUNRISE INSTITUTE*
@@ -60,7 +68,7 @@ WE HOPE YOU GET GREAT EXPERIENCE WITH US AND WE ARE ALWAYS THERE FOR GUIDANCE AN
 
 *THANK YOU FOR CHOOSING OUR INSTITUTE*.`;
             const encodedMsg = encodeURIComponent(enrollMsg);
-            const url = `${process.env.WHATSAPP_URL}?number=91${competitiveExam.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${isBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : isBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&authorization=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${competitiveExam.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
 

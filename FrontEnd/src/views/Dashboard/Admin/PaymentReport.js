@@ -16,7 +16,7 @@ import { gridSpacing } from 'config';
 
 function PaymentReport() {
     const theme = useTheme();
-    const { postApi } = useApi();
+    const { postApi, getApi } = useApi();
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -87,6 +87,7 @@ function PaymentReport() {
             },
         ]
     }
+    const [branchData, setBranchData] = useState([]);
 
     const fetchData = async () => {
         // setIsLoading(true);
@@ -94,6 +95,14 @@ function PaymentReport() {
             const url = `${process.env.REACT_APP_HOST}/api/enroll/findFilterEnrollPayment`
             const response = await postApi(url, {});
             setData(response?.pageItems);
+            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchResponse = await getApi(branchUrl);
+            const branchData = branchResponse?.pageItems.map(branch => ({
+                label: branch.branchName,
+                value: branch.branchName,
+                ...branch
+            }));
+            setBranchData(branchData);
             setIsFetch(false);
             setIsLoading(false);
         } catch (error) {
@@ -210,56 +219,13 @@ function PaymentReport() {
                                                     placeholder={`Enter Enquire Branch`}
                                                     form={form}
                                                     field={field}
-                                                    options={[
-                                                        {
-                                                            label: "Abrama, Mota Varachha",
-                                                            value: "Abrama, Mota Varachha"
-                                                        },
-                                                        {
-                                                            label: "Sita Nagar",
-                                                            value: "Sita Nagar"
-                                                        },
-                                                        {
-                                                            label: "ABC, Mota Varachha",
-                                                            value: "ABC, Mota Varachha"
-                                                        }
-                                                    ]}
+                                                    options={branchData}
                                                 />
                                             )}
                                         />
                                         {/* Add other InputFields for additional form fields */}
                                     </Grid>
                                 }
-                                {/* {isUser === "master" &&
-                                    <Grid item xs={12} lg={3} sm={6} md={4} >
-                                        <Field
-                                            name='gstBranch'
-                                            render={({ field, form }) => (
-                                                <CustomSelectComponent
-                                                    name='gstBranch'
-                                                    label='GST Branch'
-                                                    placeholder={`Enter GST Branch`}
-                                                    form={form}
-                                                    field={field}
-                                                    options={[
-                                                        {
-                                                            label: "Abrama, Mota Varachha",
-                                                            value: "Abrama, Mota Varachha"
-                                                        },
-                                                        {
-                                                            label: "Sita Nagar",
-                                                            value: "Sita Nagar"
-                                                        },
-                                                        {
-                                                            label: "ABC, Mota Varachha",
-                                                            value: "ABC, Mota Varachha"
-                                                        }
-                                                    ]}
-                                                />
-                                            )}
-                                        />
-                                    </Grid>
-                                } */}
                                 <Grid item xs={12} lg={3} sm={6} md={4} style={{
                                     display: 'flex',
                                     justifyContent: 'center',

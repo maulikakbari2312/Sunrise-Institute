@@ -36,12 +36,24 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
     const [btnDisable, setBtnDisable] = useState(false);
     const [isCounterNumber, setIsCounterNumber] = useState({});
     const isBranch = useSelector((state) => state.user?.userBranch);
+    const [branchData, setBranchData] = useState([]);
+    const [isMatchBranch, setIsMatchBranch] = useState({});
     const name = localStorage.getItem('name');
 
     const conterNumber = async () => {
         try {
             const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers`);
             setIsCounterNumber(response?.pageItems);
+            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchResponse = await getApi(branchUrl);
+            const branchData = branchResponse?.pageItems.map(branch => ({
+                label: branch.branchName,
+                value: branch.branchName,
+                ...branch
+            }));
+            setBranchData(branchData);
+            const matchedBranch = branchData.find(branch => branch.branchName === isBranch);
+            setIsMatchBranch(matchedBranch);
         } catch (error) {
             toast.error(error?.message || "Please Try After Sometime");
         }
@@ -1382,7 +1394,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-detail">
                                                                     <div className="nav-title">Mobile No:</div>
                                                                     <div className="nav-data">{
-                                                                        (isBranch === 'Sita Nagar') ? '+91 99252 53632' : (isBranch === 'ABC, Mota Varachha') ? '+91 99786 26333' : ' +91 99796 86333'
+                                                                        isMatchBranch?.branchPhoneNumber
                                                                     }</div>
                                                                 </div>
                                                                 <div className="nav-detail">
@@ -1479,7 +1491,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                 </div>
                                                 <div className='footer-divider-form'></div>
                                                 <div className='branch-address'>
-                                                    {(isBranch === 'Sita Nagar') ? '202-203, Shanti Nagar 1, near Sitanagar Chowk, Punagam, Varachha, Surat, Gujarat' : (isBranch === 'ABC, Mota Varachha') ? '411-412, Angel Business Center, ABC Circle, Mota Varachha, Surat, Gujarat' : '410-413, Shantiniketan Flora Business Hub, beside Sanskartirth Gyanpith School, Abrama Rd, Mota Varachha, Surat, Gujarat'}
+                                                    {isMatchBranch?.branchAddress}
                                                 </div>
                                             </div>
                                         </div>
@@ -1517,7 +1529,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-detail">
                                                                     <div className="nav-title">Mobile No:</div>
                                                                     <div className="nav-data">{
-                                                                        (isBranch === 'Sita Nagar') ? '+91 99252 53632' : (isBranch === 'ABC, Mota Varachha') ? '+91 99786 26333' : ' +91 99796 86333'
+                                                                        isMatchBranch?.branchPhoneNumber
                                                                     }</div>
                                                                 </div>
                                                                 <div className="nav-detail">
@@ -1614,7 +1626,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                 </div>
                                                 <div className='footer-divider-form'></div>
                                                 <div className='branch-address'>
-                                                    {(isBranch === 'Sita Nagar') ? '202-203, Shanti Nagar 1, near Sitanagar Chowk, Punagam, Varachha, Surat, Gujarat' : (isBranch === 'ABC, Mota Varachha') ? '411-412, Angel Business Center, ABC Circle, Mota Varachha, Surat, Gujarat' : '410-413, Shantiniketan Flora Business Hub, beside Sanskartirth Gyanpith School, Abrama Rd, Mota Varachha, Surat, Gujarat'}
+                                                    {isMatchBranch?.branchAddress}
                                                 </div>
                                             </div>
                                         </div>
@@ -1669,7 +1681,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-detail">
                                                                     <div className="nav-title">Mobile No:</div>
                                                                     <div className="nav-data">{
-                                                                        (isBranch === 'Sita Nagar') ? '+91 99252 53632' : (isBranch === 'ABC, Mota Varachha') ? '+91 99786 26333' : ' +91 99796 86333'
+                                                                        isMatchBranch?.branchPhoneNumber
                                                                     }</div>
                                                                 </div>
                                                                 <div className="nav-detail">
@@ -1766,7 +1778,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                 </div>
                                                 <div className='footer-divider-form'></div>
                                                 <div className='branch-address'>
-                                                    {(isBranch === 'Sita Nagar') ? '202-203, Shanti Nagar 1, near Sitanagar Chowk, Punagam, Varachha, Surat, Gujarat' : (isBranch === 'ABC, Mota Varachha') ? '411-412, Angel Business Center, ABC Circle, Mota Varachha, Surat, Gujarat' : '410-413, Shantiniketan Flora Business Hub, beside Sanskartirth Gyanpith School, Abrama Rd, Mota Varachha, Surat, Gujarat'}
+                                                {isMatchBranch?.branchAddress}
                                                 </div>
                                             </div>
                                         </div>
@@ -1804,7 +1816,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-detail">
                                                                     <div className="nav-title">Mobile No:</div>
                                                                     <div className="nav-data">{
-                                                                        (isBranch === 'Sita Nagar') ? '+91 99252 53632' : (isBranch === 'ABC, Mota Varachha') ? '+91 99786 26333' : ' +91 99796 86333'
+                                                                        isMatchBranch?.branchPhoneNumber
                                                                     }</div>
                                                                 </div>
                                                                 <div className="nav-detail">
@@ -1908,7 +1920,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                 </div>
                                                 <div className='footer-divider-form'></div>
                                                 <div className='branch-address'>
-                                                    {(isBranch === 'Sita Nagar') ? '202-203, Shanti Nagar 1, near Sitanagar Chowk, Punagam, Varachha, Surat, Gujarat' : (isBranch === 'ABC, Mota Varachha') ? '411-412, Angel Business Center, ABC Circle, Mota Varachha, Surat, Gujarat' : '410-413, Shantiniketan Flora Business Hub, beside Sanskartirth Gyanpith School, Abrama Rd, Mota Varachha, Surat, Gujarat'}
+                                                {isMatchBranch?.branchAddress}
                                                 </div>
                                             </div>
                                         </div>

@@ -11,6 +11,7 @@ const DemoEnrollDetail = require("../../model/enroll/demoEnroll.medel");
 const SettleEnrollDetail = require("../../model/enroll/settleEnroll.model");
 const counterNumbersDetail = require("../../model/counter/counter.model");
 const paymentSlipDetail = require("../../model/enroll/paymentSlip.model");
+const branchModel = require("../../model/admin/Branch.modal");
 const moment = require('moment-timezone');
 // Load timezone data
 require('moment-timezone');
@@ -55,6 +56,13 @@ function convertDate1(dateString) {
 }
 
 exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
+    const getBranch = await branchModel.find();
+
+    // Find the branch object that matches the enrolled branch
+    const matchedBranch = getBranch.find(branch => branch.branchName === enroll.enquireBranch);
+
+    // If a match is found, use the whatsappKEY (instance_id) from the matched branch
+    const instanceId = matchedBranch ? matchedBranch.whatsappKEY : process.env.INSTANCE_ID_DEFAULT;  // Default if no match
     try {
         // Include isBranch in the enroll object
         const copyEnroll = { ...enroll };
@@ -227,7 +235,7 @@ Best regards,
 *Sunrise Institute*
 `;
             const encodedMsg = encodeURIComponent(enrollMsg);
-            const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=media&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${enroll?.fileName}&instance_id=${enroll.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : enroll.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&authorization=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=media&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${enroll?.fileName}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {
@@ -765,6 +773,14 @@ exports.findCheckFilterEnroll = async (body, isAdmin, isBranch) => {
 };
 
 exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
+    const getBranch = await branchModel.find();
+    const msgData = await enrollModel.findOne({ tokenId: token });
+
+    // Find the branch object that matches the enrolled branch
+    const matchedBranch = getBranch.find(branch => branch.branchName === msgData.enquireBranch);
+
+    // If a match is found, use the whatsappKEY (instance_id) from the matched branch
+    const instanceId = matchedBranch ? matchedBranch.whatsappKEY : process.env.INSTANCE_ID_DEFAULT;  // Default if no match
     try {
         const copyData = { ...data };
         if (copyData.paymentMethod == 'UPI' || copyData.paymentMethod == 'Bank Transfer') {
@@ -925,7 +941,6 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
         const paymentSlip = new paymentSlipDetail({
             ...newPaymentSlip,
         });
-        const msgData = await enrollModel.findOne({ tokenId: token });
         try {
             const enrollMsg = `Dear *${msgData?.name}*,
 Congratulations on joining Sunrise Institute! We're thrilled to have you on board. Get ready for an enriching journey for your *${data?.course}*. Our team is here to support you every step of the way.
@@ -934,7 +949,7 @@ Best regards,
 *Sunrise Institute*
 `;
             const encodedMsg = encodeURIComponent(enrollMsg);
-            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${encodedMsg}&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${msgData.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : msgData.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&authorization=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${encodedMsg}&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {
@@ -978,6 +993,14 @@ Best regards,
 };
 
 exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
+    const msgData = await enrollModel.findOne({ tokenId: token });
+    const getBranch = await branchModel.find();
+
+    // Find the branch object that matches the enrolled branch
+    const matchedBranch = getBranch.find(branch => branch.branchName === msgData.enquireBranch);
+
+    // If a match is found, use the whatsappKEY (instance_id) from the matched branch
+    const instanceId = matchedBranch ? matchedBranch.whatsappKEY : process.env.INSTANCE_ID_DEFAULT;  // Default if no match
     const copyEnroll = { ...data };
     try {
         if (copyEnroll.paymentMethod == 'UPI' || copyEnroll.paymentMethod == 'Bank Transfer') {
@@ -1123,9 +1146,8 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
                 message: 'Record Already Exists',
             };
         }
-        const msgData = await enrollModel.findOne({ tokenId: token });
         try {
-            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${''}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${msgData.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : msgData.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&authorization=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${''}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {
@@ -1165,6 +1187,14 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
 
 exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
     const copyEnroll = { ...data };
+    const msgData = await enrollModel.findOne({ tokenId: data?.tokenId });
+    const getBranch = await branchModel.find();
+
+    // Find the branch object that matches the enrolled branch
+    const matchedBranch = getBranch.find(branch => branch.branchName === msgData.enquireBranch);
+
+    // If a match is found, use the whatsappKEY (instance_id) from the matched branch
+    const instanceId = matchedBranch ? matchedBranch.whatsappKEY : process.env.INSTANCE_ID_DEFAULT;  // Default if no match
     try {
         if (copyEnroll.paymentMethod == 'UPI' || copyEnroll.paymentMethod == 'Bank Transfer') {
             if (copyEnroll.paymentDetails == '') {
@@ -1245,9 +1275,8 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         const paymentSlip = new paymentSlipDetail({
             ...newPaymentSlip,
         });
-        const msgData = await enrollModel.findOne({ tokenId: data?.tokenId });
         try {
-            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${''}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${msgData.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : msgData.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&authorization=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${''}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {

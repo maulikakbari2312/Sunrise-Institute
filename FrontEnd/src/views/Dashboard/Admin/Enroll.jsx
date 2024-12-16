@@ -22,6 +22,7 @@ function Enroll() {
     const [isUser, setIsUser] = useState(user);
     const isBranch = useSelector((state) => state.user?.userBranch);
     const isAdmin = useSelector((state) => state.user?.isAdmin);
+    const [branchData, setBranchData] = useState([]);
 
     useEffect(() => {
         setIsUser(user);
@@ -136,6 +137,14 @@ function Enroll() {
             const url = `${process.env.REACT_APP_HOST}/api/enroll/findEnroll`
             const response = await getApi(url);
             setData(response?.pageItems);
+            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchResponse = await getApi(branchUrl);
+            const branchData = branchResponse?.pageItems.map(branch => ({
+                label: branch.branchName,
+                value: branch.branchName,
+                ...branch
+            }));
+            setBranchData(branchData);
             setIsFetch(false);
             setIsLoading(false);
             dispatch(totalRowsCount(response?.total || 0));
@@ -365,18 +374,7 @@ function Enroll() {
                                                         placeholder={`Enter Enquire Branch`}
                                                         form={form}
                                                         field={field}
-                                                        options={[{
-                                                            label: "Abrama, Mota Varachha",
-                                                            value: "Abrama, Mota Varachha"
-                                                        },
-                                                        {
-                                                            label: "Sita Nagar",
-                                                            value: "Sita Nagar"
-                                                        },
-                                                        {
-                                                            label: "ABC, Mota Varachha",
-                                                            value: "ABC, Mota Varachha"
-                                                        }]}
+                                                        options={branchData}
                                                     />
                                                 )}
                                             />
@@ -384,38 +382,6 @@ function Enroll() {
                                     />
                                 </Grid>
                             }
-
-                            {/* <Grid item xs={12} lg={3} sm={6} md={4}>
-                                <Field
-                                    name="gstBranch"
-                                    render={({ form }) => (
-                                        <Field
-                                            name='gstBranch'
-                                            render={({ field, form }) => (
-                                                <CustomSelectComponent
-                                                    name='gstBranch'
-                                                    label='Enter GST Branch'
-                                                    placeholder={`Enter GST Branch`}
-                                                    form={form}
-                                                    field={field}
-                                                    options={[{
-                                                        label: "Abrama, Mota Varachha",
-                                                        value: "Abrama, Mota Varachha"
-                                                    },
-                                                    {
-                                                        label: "Sita Nagar",
-                                                        value: "Sita Nagar"
-                                                    },
-                                                    {
-                                                        label: "ABC, Mota Varachha",
-                                                        value: "ABC, Mota Varachha"
-                                                    }]}
-                                                />
-                                            )}
-                                        />
-                                    )}
-                                />
-                            </Grid> */}
                         </Grid>
                         <Grid container justifyContent="flex-end" marginTop={2}>
                             <Button type="submit" disabled={btnDisable} variant="contained" color="primary" sx={{ marginRight: 2 }}>

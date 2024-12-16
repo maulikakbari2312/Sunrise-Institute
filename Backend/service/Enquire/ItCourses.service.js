@@ -8,6 +8,8 @@ const axios = require('axios');
 const SettleEnrollDetail = require("../../model/enroll/settleEnroll.model");
 const paymentSlipDetail = require("../../model/enroll/paymentSlip.model");
 const settlePaymentSlipDetail = require("../../model/enroll/settlePaymentSlip.model");
+const branchModel = require("../../model/admin/Branch.modal");
+
 function formatTime(dateTime) {
     const hours = dateTime.getUTCHours();
     const minutes = dateTime.getUTCMinutes();
@@ -40,6 +42,13 @@ exports.createItCoursesDetail = async (itCourses, isAdmin, isBranch) => {
         itCourses.enquire = 'ItCourses';
         itCourses.dob = convertDateFormat(itCourses.dob);
         const createItCoursesDetail = new itCoursesModel(itCourses);
+        const getBranch = await branchModel.find();
+
+        // Find the branch object that matches the enrolled branch
+        const matchedBranch = getBranch.find(branch => branch.branchName === isBranch);
+
+        // If a match is found, use the whatsappKEY (instance_id) from the matched branch
+        const instanceId = matchedBranch ? matchedBranch.whatsappKEY : process.env.INSTANCE_ID_DEFAULT;  // Default if no match
         try {
             const enrollMsg = `*GREETING FROM SUNRISE INSTITUTE*
 
@@ -63,7 +72,7 @@ WE HOPE YOU GET GREAT EXPERIENCE WITH US AND WE ARE ALWAYS THERE FOR GUIDANCE AN
 
 *THANK YOU FOR CHOOSING OUR INSTITUTE*.`;
             const encodedMsg = encodeURIComponent(enrollMsg);
-            const url = `${process.env.WHATSAPP_URL}?number=91${itCourses.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${isBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : isBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&authorization=${process.env.ACCESS_TOKEN}`;
+            const url = `${process.env.WHATSAPP_URL}?number=91${itCourses.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
             await axios.post(url);
         } catch (error) {

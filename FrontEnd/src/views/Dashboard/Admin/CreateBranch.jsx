@@ -56,6 +56,10 @@ function CreateBranch() {
                 name: "PAN",
                 type: "text",
             },
+            {
+                name: "Whatsapp KEY",
+                type: "text",
+            },
         ]
     }
 

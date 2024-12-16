@@ -34,6 +34,10 @@ const branchSchema = new mongoose.Schema({
         type: String,
         required: [true, "PAN is required"],
     },
+    whatsappKEY: {
+        type: String,
+        required: [true, "Whatsapp KEY is required"]
+    },
     tokenId: {
         type: String,
         default: () => uuidv4(),

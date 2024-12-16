@@ -28,6 +28,7 @@ function ItCoursesReport() {
     const selected = useSelector((state) => state.selected);
     const sendEnquire = useSelector((state) => state.sendEnquire);
     const [isFetch, setIsFetch] = useState(false);
+    const [branchData, setBranchData] = useState([]);
     const putUrl = "/api/itCourses/editItCourses"
     const deleteUrl = "/api/itCourses/deleteItCourses"
     const model = {
@@ -122,6 +123,14 @@ function ItCoursesReport() {
             const url = `${process.env.REACT_APP_HOST}/api/itCourses/findItCourses`
             const response = await getApi(url);
             setData(response?.pageItems);
+            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchResponse = await getApi(branchUrl);
+            const branchData = branchResponse?.pageItems.map(branch => ({
+                label: branch.branchName,
+                value: branch.branchName,
+                ...branch
+            }));
+            setBranchData(branchData);
             setIsFetch(false);
             setIsLoading(false);
         } catch (error) {
@@ -413,18 +422,7 @@ function ItCoursesReport() {
                                                             placeholder={`Enter Enquire Branch`}
                                                             form={form}
                                                             field={field}
-                                                            options={[{
-                                                                label: "Abrama, Mota Varachha",
-                                                                value: "Abrama, Mota Varachha"
-                                                            },
-                                                            {
-                                                                label: "Sita Nagar",
-                                                                value: "Sita Nagar"
-                                                            },
-                                                            {
-                                                                label: "ABC, Mota Varachha",
-                                                                value: "ABC, Mota Varachha"
-                                                            }]}
+                                                            options={branchData}
                                                         />
                                                     )}
                                                 />

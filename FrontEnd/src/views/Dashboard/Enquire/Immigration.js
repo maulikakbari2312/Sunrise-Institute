@@ -24,6 +24,9 @@ function Immigration() {
     const { socket } = useSocket();
     const navigate = useNavigate();
     const { postApi, putApi, getApi } = useApi();
+    const [branchData, setBranchData] = useState([]);
+    const [isMatchBranch, setIsMatchBranch] = useState({});
+    const isBranch = useSelector((state) => state.user?.userBranch);
     function formatDate(inputDate) {
         // Split the input date string by dashes
         var parts = inputDate.split('-');
@@ -47,6 +50,16 @@ function Immigration() {
             if (responseBranchStaff?.pageItems && Array.isArray(responseBranchStaff.pageItems)) {
                 setBanchStaff(responseBranchStaff.pageItems);
             }
+            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchResponse = await getApi(branchUrl);
+            const branchData = branchResponse?.pageItems.map(branch => ({
+                label: branch.branchName,
+                value: branch.branchName,
+                ...branch
+            }));
+            setBranchData(branchData);
+            const matchedBranch = branchData.find(branch => branch.branchName === isBranch);
+            setIsMatchBranch(matchedBranch);
             setIsLoading(false);
         } catch (error) {
             // setIsLoading(true);
@@ -115,7 +128,6 @@ function Immigration() {
     // Assuming values, course, and headers are defined elsewhere
     let uniqueToken = generateUniqueToken();
     const [formData, setFormData] = useState({});
-    const isBranch = useSelector((state) => state.user?.userBranch);
 
     const handlePrint = (data) => {
         // Check if payment method is UPI or Bank Transfer
@@ -728,7 +740,7 @@ function Immigration() {
                                                             <div className="nav-detail">
                                                                 <div className="nav-title">Mobile No:</div>
                                                                 <div className="nav-data">{
-                                                                    (isBranch === 'Sita Nagar') ? '+91 99252 53632' : (isBranch === 'ABC, Mota Varachha') ? '+91 99786 26333' : ' +91 99796 86333'
+                                                                    isMatchBranch?.branchPhoneNumber
                                                                 }</div>
                                                             </div>
                                                             <div className="nav-detail">
@@ -800,7 +812,7 @@ function Immigration() {
                                         <div className="row">
                                             <div className='footer-divider-form'></div>
                                             <div className='branch-address'>
-                                                {(isBranch === 'Sita Nagar') ? '202-203, Shanti Nagar 1, near Sitanagar Chowk, Punagam, Varachha, Surat, Gujarat' : (isBranch === 'ABC, Mota Varachha') ? '411-412, Angel Business Center, ABC Circle, Mota Varachha, Surat, Gujarat' : '410-413, Shantiniketan Flora Business Hub, beside Sanskartirth Gyanpith School, Abrama Rd, Mota Varachha, Surat, Gujarat'}
+                                                {isMatchBranch?.branchAddress}
                                             </div>
                                         </div>
                                     </div>

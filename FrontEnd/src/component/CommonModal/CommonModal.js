@@ -23,9 +23,21 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
     const isBranch = useSelector((state) => state.user?.userBranch);
     const name = localStorage.getItem('name');
     const [selectedCourse, setSelectedCourse] = useState(null);
+    const [branchData, setBranchData] = useState([]);
+    const [isMatchBranch, setIsMatchBranch] = useState({});
     const conterNumber = async () => {
         try {
             const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers`);
+            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchResponse = await getApi(branchUrl);
+            const branchData = branchResponse?.pageItems.map(branch => ({
+                label: branch.branchName,
+                value: branch.branchName,
+                ...branch
+            }));
+            setBranchData(branchData);
+            const matchedBranch = branchData.find(branch => branch.branchName === isBranch);
+            setIsMatchBranch(matchedBranch);
             setIsCounterNumber(response?.pageItems);
         } catch (error) {
             toast.error(error?.message || "Please Try After Sometime");
@@ -625,9 +637,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
                                                         <div className="nav-detail">
                                                             <div className="nav-title">Mobile No:</div>
-                                                            <div className="nav-data">{
-                                                                (isBranch === 'Sita Nagar') ? '+91 99252 53632' : (isBranch === 'ABC, Mota Varachha') ? '+91 99786 26333' : ' +91 99796 86333'
-                                                            }</div>
+                                                            <div className="nav-data">{isMatchBranch?.branchPhoneNumber}</div>
                                                         </div>
                                                         <div className="nav-detail">
                                                             <div className="nav-title" style={{ width: '61px' }}>Email Id:</div>
@@ -723,7 +733,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                         </div>
                                         <div className='footer-divider-form'></div>
                                         <div className='branch-address'>
-                                            {(isBranch === 'Sita Nagar') ? '202-203, Shanti Nagar 1, near Sitanagar Chowk, Punagam, Varachha, Surat, Gujarat' : (isBranch === 'ABC, Mota Varachha') ? '411-412, Angel Business Center, ABC Circle, Mota Varachha, Surat, Gujarat' : '410-413, Shantiniketan Flora Business Hub, beside Sanskartirth Gyanpith School, Abrama Rd, Mota Varachha, Surat, Gujarat'}
+                                            {isMatchBranch?.branchPhoneNumber}
                                         </div>
                                     </div>
                                 </div>
@@ -760,9 +770,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
                                                         <div className="nav-detail">
                                                             <div className="nav-title">Mobile No:</div>
-                                                            <div className="nav-data">{
-                                                                (isBranch === 'Sita Nagar') ? '+91 99252 53632' : (isBranch === 'ABC, Mota Varachha') ? '+91 99786 26333' : ' +91 99796 86333'
-                                                            }</div>
+                                                            <div className="nav-data">{isMatchBranch?.branchPhoneNumber}</div>
                                                         </div>
                                                         <div className="nav-detail">
                                                             <div className="nav-title" style={{ width: '61px' }}>Email Id:</div>
@@ -858,7 +866,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                         </div>
                                         <div className='footer-divider-form'></div>
                                         <div className='branch-address'>
-                                            {(isBranch === 'Sita Nagar') ? '202-203, Shanti Nagar 1, near Sitanagar Chowk, Punagam, Varachha, Surat, Gujarat' : (isBranch === 'ABC, Mota Varachha') ? '411-412, Angel Business Center, ABC Circle, Mota Varachha, Surat, Gujarat' : '410-413, Shantiniketan Flora Business Hub, beside Sanskartirth Gyanpith School, Abrama Rd, Mota Varachha, Surat, Gujarat'}
+                                            {isMatchBranch?.branchAddress}
                                         </div>
                                     </div>
                                 </div>
@@ -913,7 +921,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                                         <div className="nav-detail">
                                                             <div className="nav-title">Mobile No:</div>
                                                             <div className="nav-data">{
-                                                                (isBranch === 'Sita Nagar') ? '+91 99252 53632' : (isBranch === 'ABC, Mota Varachha') ? '+91 99786 26333' : ' +91 99796 86333'
+                                                                isMatchBranch?.branchPhoneNumber
                                                             }</div>
                                                         </div>
                                                         <div className="nav-detail">
@@ -1017,7 +1025,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                         </div>
                                         <div className='footer-divider-form'></div>
                                         <div className='branch-address'>
-                                            {(isBranch === 'Sita Nagar') ? '202-203, Shanti Nagar 1, near Sitanagar Chowk, Punagam, Varachha, Surat, Gujarat' : (isBranch === 'ABC, Mota Varachha') ? '411-412, Angel Business Center, ABC Circle, Mota Varachha, Surat, Gujarat' : '410-413, Shantiniketan Flora Business Hub, beside Sanskartirth Gyanpith School, Abrama Rd, Mota Varachha, Surat, Gujarat'}
+                                            {isMatchBranch?.branchAddress}
                                         </div>
                                     </div>
                                 </div>

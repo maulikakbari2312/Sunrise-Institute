@@ -49,6 +49,7 @@ const Default = () => {
 
   const selected = useSelector((state) => state.selected);
   const [isFetch, setIsFetch] = useState(false);
+  const [branchData, setBranchData] = useState([]);
   const putUrl = '/api/enroll/pay-installments';
   const deleteUrl = '/api/admin/deleteCourse';
   const handlePartialPayment = (e, form) => {
@@ -270,6 +271,14 @@ const Default = () => {
       setDataBase(responseDataBase?.pageItems);
       const demoUrl = `${process.env.REACT_APP_HOST}/api/enroll/findDemoEnroll`;
       const demoResponse = await getApi(demoUrl);
+      const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+      const branchResponse = await getApi(branchUrl);
+      const branchData = branchResponse?.pageItems.map(branch => ({
+        label: branch.branchName,
+        value: branch.branchName,
+        ...branch
+      }));
+      setBranchData(branchData);
       setDemoData(demoResponse?.pageItems);
       setTotalPendingInstallmentAmount(response?.pageItems?.length > 0 ? response?.totalPendingInstallmentAmount : 0)
       setIsFetch(false);
@@ -471,18 +480,7 @@ const Default = () => {
                                 placeholder={`Enter Enquire Branch`}
                                 form={form}
                                 field={field}
-                                options={[{
-                                  label: "Abrama, Mota Varachha",
-                                  value: "Abrama, Mota Varachha"
-                                },
-                                {
-                                  label: "Sita Nagar",
-                                  value: "Sita Nagar"
-                                },
-                                {
-                                  label: "ABC, Mota Varachha",
-                                  value: "ABC, Mota Varachha"
-                                }]}
+                                options={branchData}
                               />
                             )}
                           />

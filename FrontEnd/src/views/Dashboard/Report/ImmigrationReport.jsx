@@ -21,7 +21,7 @@ function ImmigrationReport() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.isAdmin);
     const [isUser, setIsUser] = useState(user);
-
+    const [branchData, setBranchData] = useState([]);
     useEffect(() => {
         setIsUser(user);
     }, [user]);
@@ -120,6 +120,14 @@ function ImmigrationReport() {
             const url = `${process.env.REACT_APP_HOST}/api/immigration/findImmigration`
             const response = await getApi(url);
             setData(response?.pageItems);
+            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchResponse = await getApi(branchUrl);
+            const branchData = branchResponse?.pageItems.map(branch => ({
+                label: branch.branchName,
+                value: branch.branchName,
+                ...branch
+            }));
+            setBranchData(branchData);
             setIsFetch(false);
             setIsLoading(false);
         } catch (error) {
@@ -476,18 +484,7 @@ function ImmigrationReport() {
                                                             placeholder={`Enter Enquire Branch`}
                                                             form={form}
                                                             field={field}
-                                                            options={[{
-                                                                label: "Abrama ,Mota Varachha",
-                                                                value: "Abrama ,Mota Varachha"
-                                                            },
-                                                            {
-                                                                label: "Sita Nagar",
-                                                                value: "Sita Nagar"
-                                                            },
-                                                            {
-                                                                label: "ABC, Mota Varachha",
-                                                                value: "ABC, Mota Varachha"
-                                                            }]}
+                                                            options={branchData}
                                                         />
                                                     )}
                                                 />

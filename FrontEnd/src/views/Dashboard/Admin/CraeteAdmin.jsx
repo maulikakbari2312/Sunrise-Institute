@@ -14,7 +14,7 @@ function CraeteAdmin() {
     const [isError, setIsError] = useState(false);
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
-
+    const [branchData, setBranchData] = useState([]);
     const selected = useSelector((state) => state.selected);
     const [isFetch, setIsFetch] = useState(false);
     const postUrl = "/api/admin/signUp"
@@ -47,20 +47,7 @@ function CraeteAdmin() {
             {
                 name: "Branch",
                 type: "selectBox",
-                options: [
-                    {
-                        label: "Abrama, Mota Varachha",
-                        value: "Abrama, Mota Varachha"
-                    },
-                    {
-                        label: "Sita Nagar",
-                        value: "Sita Nagar"
-                    },
-                    {
-                        label: "ABC, Mota Varachha",
-                        value: "ABC, Mota Varachha"
-                    }
-                ]
+                options: branchData
             }
         ]
     }
@@ -72,6 +59,23 @@ function CraeteAdmin() {
             const url = `${process.env.REACT_APP_HOST}/api/admin/UserList`
             const response = await getApi(url);
             setData(response?.pageItems);
+            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchResponse = await getApi(branchUrl);
+            const branchData = branchResponse?.pageItems.map(branch => ({
+                label: branch.branchName,
+                value: branch.branchName,
+                ...branch
+            }));
+            setBranchData(branchData);
+            dispatch(modelData({
+                ...model,
+                fieldData: model.fieldData.map(field =>
+                    field.name === 'Branch' ? {
+                        ...field,
+                        options: branchData
+                    } : field
+                )
+            }));
             setIsFetch(false);
             dispatch(totalRowsCount(response?.total || 0));
         } catch (error) {
