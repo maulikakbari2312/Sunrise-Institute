@@ -18,6 +18,10 @@ const courseSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Fees For is required"],
     },
+    hsn:{
+        type: String,
+        required: [true, "HSN is required"],
+    },
     tokenId: {
         type: String,
         default: () => uuidv4(),

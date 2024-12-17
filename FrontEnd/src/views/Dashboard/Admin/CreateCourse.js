@@ -52,6 +52,10 @@ function CreateCourse() {
                 name: "Fees",
                 type: "number",
             },
+            {
+                name: "HSN",
+                type: "text",
+            },
         ]
     }
 
