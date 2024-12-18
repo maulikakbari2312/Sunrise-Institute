@@ -22,6 +22,7 @@ function Enroll() {
     const [isUser, setIsUser] = useState(user);
     const isBranch = useSelector((state) => state.user?.userBranch);
     const isAdmin = useSelector((state) => state.user?.isAdmin);
+    const state = useSelector((state) => state.selected?.selectData?.user);
     const [branchData, setBranchData] = useState([]);
 
     useEffect(() => {
@@ -224,7 +225,7 @@ function Enroll() {
                         try {
                             const filteredValues = filterEmptyValues(values);
                             const url = `${process.env.REACT_APP_HOST}/api/enroll/findFilterEnroll`
-                            const response = await postApi(url, filteredValues);
+                            const response = await postApi(url, { ...filteredValues, state: state?.state });
                             setData(response?.pageItems);
                             setIsFetch(false);
                             // setIsLoading(false)

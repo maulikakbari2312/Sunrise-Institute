@@ -194,31 +194,24 @@ exports.getEnroll = async (req, res) => {
     }
 };
 exports.getBookNumber = async (req, res) => {
-    const headers = req.headers["authorization"];
-    const uservalid = await verifyUser(headers);
-    if (uservalid === true) {
-        try {
-            const isAdmin = req.params.admin;
-            const isBranch = req.params.branch;
-            const findEnroll = await enrollService.findBookNumber(isAdmin, isBranch);
-            const response = {
-                pageItems: findEnroll,
-                message: `Total ${findEnroll.length || 0} available`,
-            };
-            res.status(200).send(response);
-        } catch (error) {
-            if (error.name === "ValidationError") {
-                const errorMessages = Object.values(error.errors).map(
-                    (err) => err.message
-                );
-                res.status(400).json({ errorMessages });
-            } else {
-                res.status(500).json({ error: "Internal Server Error" });
-            }
+    try {
+        const isCN = req.params.isCN;
+        const isBranch = req.params.branch;
+        const findEnroll = await enrollService.findBookNumber(isBranch, isCN);
+        const response = {
+            pageItems: findEnroll,
+            message: `Total ${findEnroll.length || 0} available`,
+        };
+        res.status(200).send(response);
+    } catch (error) {
+        if (error.name === "ValidationError") {
+            const errorMessages = Object.values(error.errors).map(
+                (err) => err.message
+            );
+            res.status(400).json({ errorMessages });
+        } else {
+            res.status(500).json({ error: "Internal Server Error" });
         }
-    }
-    else {
-        res.status(401).json({ message: "User Not Valid" });
     }
 };
 exports.getPaymentSlip = async (req, res) => {
@@ -250,17 +243,12 @@ exports.getPaymentSlip = async (req, res) => {
     }
 };
 exports.editBookNumber = async (req, res) => {
-    const headers = req.headers["authorization"];
-    const uservalid = await verifyUser(headers);
-    if (uservalid === true) {
-        const type = req.params.type
-        const isAdmin = req.params.admin
-        const isBranch = req.params.branch
+        const isCN = req.params.isCN;
+        const isBranch = req.params.branch;
         try {
             const enrollData = await enrollService.editBookNumber(
-                type,
-                isAdmin,
-                isBranch
+                isBranch,
+                isCN
             );
 
             if (!enrollData) {
@@ -281,10 +269,6 @@ exports.editBookNumber = async (req, res) => {
                 res.status(500).json({ error: "Internal Server Error" });
             }
         }
-    }
-    else {
-        res.status(401).json({ message: "User Not Valid" });
-    }
 };
 exports.findSettleEnroll = async (req, res) => {
     const headers = req.headers["authorization"];

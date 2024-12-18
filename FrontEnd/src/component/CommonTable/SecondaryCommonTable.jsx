@@ -42,7 +42,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
 
     const conterNumber = async () => {
         try {
-            const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers`);
+            const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers/false`);
             setIsCounterNumber(response?.pageItems);
             const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
             const branchResponse = await getApi(branchUrl);
@@ -94,7 +94,6 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                         const courseTypes = response.pageItems.map(course => course.courseName);
                         setCourse(courseTypes);
                     }
-                    conterNumber();
 
                 } catch (error) {
                     toast.error(error?.message || "Please Try After Sometime");
@@ -106,7 +105,6 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
     }, []);
     useEffect(() => {
         try {
-            conterNumber();
             if (isPaymentDialogOpen && selected?.isEdit === true) {
                 let url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/${selected?.selectData?.user?.enquireType}`;
                 (async () => {
@@ -638,7 +636,6 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                             setIsPaymentDialogOpen(false);
                             setSubmitting(false);
                             resetForm();
-                            conterNumber();
                             setBtnDisable(false); // Enable buttons after API call completes (success or failure)
                         })
                         .catch((error) => {
@@ -710,8 +707,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                         setIsFetch(true);
                                         setSubmitting(false);
                                         resetForm();
-                                        setBtnDisable(false); // Enable buttons after API call completes (success or failure)
-                                        conterNumber();
+                                        setBtnDisable(false);
                                         setIsPaymentDialogOpen(false);
                                     })
                                     .catch((error) => {

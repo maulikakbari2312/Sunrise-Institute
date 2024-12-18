@@ -27,7 +27,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
     const [isMatchBranch, setIsMatchBranch] = useState({});
     const conterNumber = async () => {
         try {
-            const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers`);
+            const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers/false`);
             const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
             const branchResponse = await getApi(branchUrl);
             const branchData = branchResponse?.pageItems.map(branch => ({
@@ -85,9 +85,6 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
             }
         }
     }, [selected, isDialogOpen]);
-    useEffect(() => {
-        conterNumber();
-    }, []);
     useEffect(() => {
         setUserData(modelData);
         setIsPaymentDetails(null);
@@ -151,7 +148,8 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                 email: selected?.selectData?.user?.email,
                 mobileNumber: selected?.selectData?.user?.mobileNumber,
                 enquireDate: selected?.selectData?.user?.enquireDate,
-                payFeesDate: new Date().toISOString().slice(0, 10)
+                payFeesDate: new Date().toISOString().slice(0, 10),
+                state: selected?.selectData?.user?.state
             };
         }
         try {
@@ -203,7 +201,6 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                 setSubmitting(false);
                                 resetForm();
                                 setIsPaymentDetails(null);
-                                conterNumber();
                                 setBtnDisable(false); // Enable buttons after API call completes (success or failure)
                             })
                             .catch((error) => {
@@ -222,7 +219,6 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                 setSubmitting(false);
                                 resetForm();
                                 setIsPaymentDetails(null);
-                                conterNumber();
                                 setBtnDisable(false); // Enable buttons after API call completes (success or failure)
                             })
                             .catch((error) => {
@@ -244,7 +240,6 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                             setSubmitting(false);
                             resetForm();
                             setIsPaymentDetails(null);
-                            conterNumber();
                             setBtnDisable(false); // Enable buttons after API call completes (success or failure)
                         })
                         .catch((error) => {
@@ -263,7 +258,6 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                             setSubmitting(false);
                             resetForm();
                             setIsPaymentDetails(null);
-                            conterNumber();
                             setBtnDisable(false); // Enable buttons after API call completes (success or failure)
                         })
                         .catch((error) => {

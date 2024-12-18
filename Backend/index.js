@@ -17,10 +17,11 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: false }));
 app.use(express.static('public'));
 app.use("/Images", express.static("./Images"))
+const branchModel = require("./model/admin/Branch.modal");
 
 const corsOptions = {
-    // origin: process.env.FRONTEND_PORT,
-    origin: ['https://www.admin.sunriseinstitute.net', 'https://www.sunriseinstitute.net'],
+    origin: process.env.FRONTEND_PORT,
+    // origin: ['https://www.admin.sunriseinstitute.net', 'https://www.sunriseinstitute.net'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
@@ -62,6 +63,14 @@ const getCurrentDate = () => {
 
 const sendMessage = async (enroll, message) => {
     const currentDateDDMMYYYY = getCurrentDate();
+    const getBranch = await branchModel.find();
+
+    // Find the branch object that matches the enrolled branch
+    const matchedBranch = getBranch.find(branch => branch.branchName === enroll.enquireBranch);
+
+    // If a match is found, use the whatsappKEY (instance_id) from the matched branch
+    const instanceId = matchedBranch ? matchedBranch.whatsappKEY : process.env.INSTANCE_ID_DEFAULT;  // Default if no match
+
     try {
         let birthdayMsg = '';
         if (message?.msgType == 'birthdayMsg') {
@@ -81,7 +90,7 @@ Best regards,
 *Sunrise Institute*`;
         }
         const encodedMsg = encodeURIComponent(birthdayMsg);
-        const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${enroll.enquireBranch == 'Abrama, Mota Varachha' ? process.env.INSTANCE_ID_ABRAMA : enroll.enquireBranch == 'Sita Nagar' ? process.env.INSTANCE_ID_SITANAGER : process.env.INSTANCE_ID_ABC}&authorization=${process.env.ACCESS_TOKEN}`;
+        const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
         // Make the HTTP POST request to send the birthday message
         const response = await axios.post(url);
 

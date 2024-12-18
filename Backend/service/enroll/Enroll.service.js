@@ -64,6 +64,7 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
     // If a match is found, use the whatsappKEY (instance_id) from the matched branch
     const instanceId = matchedBranch ? matchedBranch.whatsappKEY : process.env.INSTANCE_ID_DEFAULT;  // Default if no match
     try {
+        const data = await this.findBookNumber(isBranch, false);
         // Include isBranch in the enroll object
         const copyEnroll = { ...enroll };
         if (copyEnroll.paymentMethod == 'UPI' || copyEnroll.paymentMethod == 'Bank Transfer') {
@@ -188,9 +189,8 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
         const counterNumbers = counterNumberArrays[0];
 
         counterNumbers.enrollNumber += 1;
-        counterNumbers.paymentNumber += 1;
         enroll.enrollNumber = counterNumbers.enrollNumber;
-        enroll.paymentSlipNumber = [counterNumbers.paymentNumber];
+        enroll.paymentSlipNumber = [`${Object.keys(data)[0]}/${Object.values(data)[0]}`];
         // Save the updated document
 
         const newPaymentSlip = {};
@@ -205,7 +205,7 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
         newPaymentSlip.paymentDetails = (copyEnroll.paymentMethod == 'UPI' || copyEnroll.paymentMethod == 'Bank Transfer') ? copyEnroll.paymentDetails : 'Cash';
         newPaymentSlip.payInstallment = copyEnroll.payInstallment;
         newPaymentSlip.paymentReceiver = copyEnroll.paymentReceiver;
-        newPaymentSlip.paymentSlipNumber = counterNumbers.paymentNumber;
+        newPaymentSlip.paymentSlipNumber = `${Object.keys(data)[0]}/${Object.values(data)[0]}`;
         newPaymentSlip.payInstallmentNumbers = Array.from({ length: copyEnroll.payInstallment }, (_, index) => index + 1);
         newPaymentSlip.payInstallmentDate = [...userInstallmentDate];
         newPaymentSlip.installmentAmount = enroll.installmentAmount;
@@ -247,12 +247,11 @@ Best regards,
                 message: "Internal Server Error",
             };
         }
-
-
         const paymentSlip = new paymentSlipDetail({
             ...newPaymentSlip,
         });
         await paymentSlip.save();
+        await this.editBookNumber(isBranch, false);
         await counterNumbers.save();
         const createEnrollDetail = new enrollModel(enroll);
         await createEnrollDetail.save();
@@ -272,19 +271,23 @@ Best regards,
     }
 };
 
-exports.editBookNumber = async (type) => {
+exports.editBookNumber = async (isBranch, isCN = false) => {
     try {
         // Find the counter numbers detail
         const findSettleEnroll = await counterNumbersDetail.find();
         const counterNumbers = findSettleEnroll[0];
-
-        // Increase the corresponding number based on the type
-        if (type === 'paymentNumber') {
-            counterNumbers.paymentNumber += 1;
-        } else if (type === 'enrollNumber') {
-            counterNumbers.enrollNumber += 1;
-        } else if (type === 'enquireNumber') {
-            counterNumbers.enquireNumber += 1;
+        if (isBranch == "Abrama, Mota Varachha") {
+            if (isCN) {
+                counterNumbers.sfCn += 1;
+            } else {
+                 counterNumbers.sf += 1;
+            }
+        } else if (isBranch == "ABC, Mota Varachha") {
+            if (isCN) {
+                counterNumbers.abcCn += 1;
+            } else {
+                bc: counterNumbers.abc += 1;
+            }
         }
 
         // Save the updated document
@@ -307,6 +310,7 @@ exports.editBookNumber = async (type) => {
 
 exports.settleEnroll = async (enroll, isAdmin, isBranch) => {
     try {
+        const data = await this.findBookNumber(isBranch, true);
         const findSettleEnrollStudent = await enrollModel.findOne({ tokenId: enroll?.token });
         if (!findSettleEnrollStudent) {
             return {
@@ -322,7 +326,6 @@ exports.settleEnroll = async (enroll, isAdmin, isBranch) => {
             settlementDate: new Date(),
         });
 
-        // await paymentSlipDetail.deleteMany({ "paymentSlipNumber": { $in: findSettleEnrollStudent.paymentSlipNumber } });
         findSettleEnrollStudent.totalFees = (isNaN(parseFloat(enroll.payFees)) ? 0 : parseFloat(enroll.payFees));
         findSettleEnrollStudent.installment = 1;
         findSettleEnrollStudent.allInstallmentDate = [];
@@ -349,7 +352,7 @@ exports.settleEnroll = async (enroll, isAdmin, isBranch) => {
         const counterNumbers = counterNumberArrays[0];
 
         counterNumbers.paymentNumber += 1;
-        findSettleEnrollStudent.paymentSlipNumber = [counterNumbers.paymentNumber];
+        findSettleEnrollStudent.paymentSlipNumber = `${Object.keys(data)[0]}/cn/${Object.values(data)[0]}`;
         await paymentSlipDetail.updateMany(
             { tokenId: findSettleEnrollStudent.tokenId },
             { $set: { filterNone: true } }
@@ -365,7 +368,7 @@ exports.settleEnroll = async (enroll, isAdmin, isBranch) => {
         newPaymentSlip.paymentDetails = 'Cash';
         newPaymentSlip.payInstallment = findSettleEnrollStudent.payInstallment;
         newPaymentSlip.paymentReceiver = enroll?.paymentReceiver;
-        newPaymentSlip.paymentSlipNumber = counterNumbers.paymentNumber;
+        newPaymentSlip.paymentSlipNumber = `${Object.keys(data)[0]}/cn/${Object.values(data)[0]}`;
         newPaymentSlip.payInstallmentNumbers = [1];
         newPaymentSlip.payInstallmentDate = findSettleEnrollStudent.userInstallmentDate;
         newPaymentSlip.installmentAmount = findSettleEnrollStudent.installmentAmount.toFixed(2);
@@ -382,7 +385,6 @@ exports.settleEnroll = async (enroll, isAdmin, isBranch) => {
         });
         await settleEnrollDetail.save();
         await paymentSlip.save();
-        await counterNumbers.save();
         await enrollModel.deleteOne({ tokenId: enroll?.token });
         // Save the updated document
 
@@ -391,7 +393,7 @@ exports.settleEnroll = async (enroll, isAdmin, isBranch) => {
             ...findSettleEnrollStudent.toObject(),
         });
         await completeEnrollDetail.save();
-
+        await this.editBookNumber(isBranch, true);
         return {
             status: 200,
             message: message.IMMIGRATION_DATA_UPDATED,
@@ -782,6 +784,7 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
     // If a match is found, use the whatsappKEY (instance_id) from the matched branch
     const instanceId = matchedBranch ? matchedBranch.whatsappKEY : process.env.INSTANCE_ID_DEFAULT;  // Default if no match
     try {
+        const bookNumber = await this.findBookNumber(isBranch, false);
         const copyData = { ...data };
         if (copyData.paymentMethod == 'UPI' || copyData.paymentMethod == 'Bank Transfer') {
             if (copyData.paymentDetails == '') {
@@ -830,7 +833,7 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
         const counterNumbers = counterNumberArrays[0];
 
         counterNumbers.paymentNumber += 1;
-        data.paymentSlipNumber = [counterNumbers.paymentNumber];
+        data.paymentSlipNumber = [`${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`];
         // Save the updated document
         // await counterNumbers.save();
         // Calculate nextInstallmentDate, allInstallmentDate, totalPendingInstallment, pendingInstallmentDate, and duePendingInstallment
@@ -872,7 +875,6 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
             }
         }
         const enrollStudent = await enrollModel.findOne({ tokenId: token });
-        await paymentSlipDetail.deleteMany({ "paymentSlipNumber": { $in: enrollStudent.paymentSlipNumber } });
         // Store nextInstallmentDate in the specified format
         const parts = enrollStudent?.enrollDate?.split('/'); // Split the string into day, month, and year parts
         const day = parseInt(parts[0], 10); // Convert day part to integer
@@ -923,7 +925,7 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.paymentDetails = (copyData.paymentMethod == 'UPI' || copyData.paymentMethod == 'Bank Transfer') ? copyData.paymentDetails : 'Cash';
         newPaymentSlip.payInstallment = copyData.payInstallment;
         newPaymentSlip.paymentReceiver = copyData.paymentReceiver;
-        newPaymentSlip.paymentSlipNumber = counterNumbers.paymentNumber;
+        newPaymentSlip.paymentSlipNumber = `${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`;
         newPaymentSlip.payInstallmentNumbers = Array.from({ length: copyData.payInstallment }, (_, index) => index + 1);
         newPaymentSlip.payInstallmentDate = [...userInstallmentDate];
         newPaymentSlip.installmentAmount = data.installmentAmount;
@@ -962,8 +964,7 @@ Best regards,
             };
         }
         await paymentSlip.save();
-
-        await counterNumbers.save();
+        await this.editBookNumber(isBranch, false);
         const editEnroll = await enrollModel.findOneAndUpdate(
             { tokenId: token },
             data,
@@ -1021,6 +1022,7 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         };
     }
     try {
+        const bookNumber = await this.findBookNumber(isBranch, false);
         const enrollDataBase = await enrollModel.find({ tokenId: token });
         const enrollUser = enrollDataBase[0];
 
@@ -1033,14 +1035,14 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         const counterNumbers = counterNumberArrays[0];
 
         counterNumbers.paymentNumber += 1;
-        if (enrollUser.paymentSlipNumber?.includes(counterNumbers.paymentNumber)) {
+        if (enrollUser.paymentSlipNumber?.includes(`${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`)) {
             // If not included, return 404 status with a message
             return {
                 status: 404,
                 message: "Counter payment number not found in payment slip numbers.",
             };
         } else {
-            data.paymentSlipNumber = [...enrollUser.paymentSlipNumber, counterNumbers.paymentNumber];
+            data.paymentSlipNumber = [...enrollUser.paymentSlipNumber, `${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`];
         }
         // Save the updated document
         // await counterNumbers.save();
@@ -1109,7 +1111,7 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.paymentDetails = (copyEnroll.paymentMethod == 'UPI' || copyEnroll.paymentMethod == 'Bank Transfer') ? copyEnroll.paymentDetails : 'Cash';
         newPaymentSlip.payInstallment = copyEnroll.duePendingInstallment || (copyEnroll.duePendingInstallment == '' || copyEnroll.duePendingInstallment == 0 || copyEnroll.duePendingInstallment == '0') ? 'Partial Payment' : 0;
         newPaymentSlip.paymentReceiver = copyEnroll.paymentReceiver;
-        newPaymentSlip.paymentSlipNumber = counterNumbers.paymentNumber;
+        newPaymentSlip.paymentSlipNumber = `${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`;
         newPaymentSlip.state = copyEnroll.state;
         newPaymentSlip.payInstallmentNumbers = Array.from(
             { length: copyEnroll.duePendingInstallment },
@@ -1161,8 +1163,8 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         }
 
         await paymentSlip.save();
+        await this.editBookNumber(isBranch, false);
 
-        await counterNumbers.save();
         // Save the updated data back to the database
         await enrollModel.findOneAndUpdate(
             { tokenId: token },
@@ -1214,6 +1216,7 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         };
     }
     try {
+        const bookNumber = await this.findBookNumber(isBranch, false);
         const enrollDataBase = await enrollModel.find({ tokenId: data.tokenId });
         const enrollUser = enrollDataBase[0];
         const counterNumberArrays = await counterNumbersDetail.find();
@@ -1234,14 +1237,14 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         enrollUser.grossPayment = enrollUser.payFees - (0.18 * enrollUser.payFees);
         enrollUser.sGst = 0.09 * enrollUser.payFees;
         enrollUser.cGst = 0.09 * enrollUser.payFees;
-        if (enrollUser.paymentSlipNumber.includes(counterNumbers.paymentNumber)) {
+        if (enrollUser.paymentSlipNumber.includes(`${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`)) {
             // If not included, return 404 status with a message
             return {
                 status: 404,
                 message: "Counter payment number not found in payment slip numbers.",
             };
         } else {
-            enrollUser.paymentSlipNumber.push(counterNumbers.paymentNumber);
+            enrollUser.paymentSlipNumber.push(`${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`);
         }
         enrollUser.paymentMethod.push(data.paymentMethod);
         const currentDate = new Date();
@@ -1261,7 +1264,7 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.paymentDetails = (data.paymentMethod == 'UPI' || data.paymentMethod == 'Bank Transfer') ? data.paymentDetails : 'Cash';
         newPaymentSlip.payInstallment = 'Partial Payment';
         newPaymentSlip.paymentReceiver = data.paymentReceiver;
-        newPaymentSlip.paymentSlipNumber = counterNumbers.paymentNumber;
+        newPaymentSlip.paymentSlipNumber = `${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`;
         newPaymentSlip.payInstallmentNumbers = ['Partial Payment'];
         newPaymentSlip.installmentAmount = data.installmentAmount.toFixed(2);
         newPaymentSlip.paymentMethod = data.paymentMethod;
@@ -1289,8 +1292,7 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
             };
         }
         await paymentSlip.save();
-
-        await counterNumbers.save();
+        await this.editBookNumber(isBranch, false);
         // Save the updated data back to the database
         await enrollUser.save();
         return {
@@ -1357,10 +1359,8 @@ exports.findEnroll = async (isAdmin, isBranch) => {
         }
     }
 };
-exports.findBookNumber = async (isAdmin, isBranch) => {
+exports.findBookNumber = async (isBranch, isCN = false) => {
     try {
-        let query = {};
-
         const counterNumbers = await counterNumbersDetail.find();
         if (!counterNumbers || counterNumbers.length === 0) {
             return {
@@ -1373,18 +1373,24 @@ exports.findBookNumber = async (isAdmin, isBranch) => {
         // Increment each key value by 1
         // Convert reversedEnroll to a plain JavaScript object
         const reversedEnrollPlain = reversedEnroll.toObject();
-
+        let returnValue = {};
         // Increment each key value by 1
-        for (let key in reversedEnrollPlain) {
-            if (reversedEnrollPlain.hasOwnProperty(key)) {
-                reversedEnrollPlain[key]++;
+        if (isBranch) {
+            if (isBranch == "Abrama, Mota Varachha") {
+                if (isCN) {
+                    returnValue = { sfCn: reversedEnrollPlain.sfCn += 1 };
+                } else {
+                    returnValue = { sf: reversedEnrollPlain.sf += 1 };
+                }
+            } else if (isBranch == "ABC, Mota Varachha") {
+                if (isCN) {
+                    returnValue = { abcCn: reversedEnrollPlain.abcCn += 1 };
+                } else {
+                    returnValue = { abc: reversedEnrollPlain.abc += 1 };
+                }
             }
         }
-
-        // Convert reversedEnrollPlain back to a mongoose document
-        const reversedEnrollModified = new counterNumbersDetail(reversedEnrollPlain);
-        reversedEnrollModified._id = reversedEnroll?._id;
-        return reversedEnrollModified;
+        return returnValue;
 
     } catch (error) {
         console.log('====================================');

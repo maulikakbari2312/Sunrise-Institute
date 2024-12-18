@@ -53,7 +53,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
   const [isMatchBranch, setIsMatchBranch] = useState({});
   const conterNumber = async () => {
     try {
-      const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers`);
+      const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers/false`);
       setIsCounterNumber(response?.pageItems);
     } catch (error) {
       toast.error(error?.message || 'Please Try After Sometime');
@@ -107,7 +107,6 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
   }, []);
   useEffect(() => {
     try {
-      conterNumber();
       if ((isPaymentDialogOpen && selected?.isEdit === true) || (ispartialPaymentOpen && selected?.isEdit === true) || (isAdvancePaymentDialogOpen && selected?.isEdit === true) || (isSettleDialogOpen && selected?.isEdit === true)) {
         let url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/${selected?.selectData?.user?.enquireType}`;
         (async () => {
@@ -292,7 +291,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
       name: 'Action',
       cell: (row) => (
         <Box display="flex" justifyContent="space-between" width="60px">
-          {modelData?.page !== 'pendingInstallments' && modelData?.page !== 'partialPayment' && (
+          {modelData?.page !== 'pendingInstallments' && modelData?.page !== 'partialPayment' && modelData?.page !== "Enroll" && (
             <>
               <EditIcon onClick={() => handleEdit(row)} />
               {modelData?.page !== 'Enroll' &&
@@ -615,7 +614,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     totalFees: Yup.string().required('Total Fees is required'),
     paymentType: Yup.string().required('Payment Type is required'),
     installmentDate: Yup.string().required('Installment Date is required'),
-    paymentMethod: Yup.string().required('Payment Method Type is required')
+    paymentMethod: Yup.string().required('Payment Method Type is required'),
+    payInstallment: Yup.string().required('Pay Installment Type is required'),
   });
   const validationSchemaAdvance = Yup.object().shape({
     name: Yup.string().min(2, 'Too Short!').required('Name is required'),
@@ -815,7 +815,6 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
               setIsPaymentDialogOpen(false);
               setSubmitting(false);
               resetForm();
-              conterNumber();
               setBtnDisable(false); // Enable buttons after API call completes (success or failure)
             })
             .catch((error) => {
@@ -887,8 +886,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     setIsFetch(true);
                     setSubmitting(false);
                     resetForm();
-                    setBtnDisable(false); // Enable buttons after API call completes (success or failure)
-                    conterNumber();
+                    setBtnDisable(false);
                     setIsPaymentDialogOpen(false);
                   })
                   .catch((error) => {
@@ -958,7 +956,6 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
             setIsSettleDialogOpen(false);
             setIspartialPaymentOpen(false);
             setSubmitting(false);
-            conterNumber();
             resetForm();
             setBtnDisable(false); // Enable buttons after API call completes (success or failure)
           })
@@ -1006,7 +1003,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
   };
   const handleAdvanceaymentSubmit = async (values, { setSubmitting, resetForm }) => {
     setBtnDisable(true);
-    const formattedValues = { ...values, dob: rowData?.dob, email: rowData?.email, mobileNumber: rowData?.mobileNumber };
+    const formattedValues = { ...values, dob: rowData?.dob, email: rowData?.email, mobileNumber: rowData?.mobileNumber, state: selected?.selectData?.user?.state };
     try {
       const date = new Date();
       const formattedDate = date.toISOString().slice(0, 10);
@@ -1046,7 +1043,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
           email: selected?.selectData?.user?.email,
           mobileNumber: selected?.selectData?.user?.mobileNumber,
           enquireDate: selected?.selectData?.user?.enquireDate,
-          payFeesDate: new Date().toISOString().slice(0, 10)
+          payFeesDate: new Date().toISOString().slice(0, 10),
+          state: selected?.selectData?.user?.state
         })
           .then(async (response) => {
             toast.success(response?.message || 'New Data ADD successful!');
@@ -1056,7 +1054,6 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
             handleDialogClose();
             setIsSettleDialogOpen(false);
             setSubmitting(false);
-            conterNumber();
             handlePaymentDialogClose();
             resetForm();
             setBtnDisable(false); // Enable buttons after API call completes (success or failure)
@@ -1088,7 +1085,6 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
           handleDialogClose();
           setIsSettleDialogOpen(false);
           setSubmitting(false);
-          conterNumber();
           resetForm();
           setBtnDisable(false); // Enable buttons after API call completes (success or failure)
         })

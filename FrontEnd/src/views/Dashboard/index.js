@@ -222,6 +222,13 @@ const Default = () => {
         type: "text"
       },
       {
+        name: "State",
+        pageShow: 'showDemo',
+        modelNone: true,
+        isNotRequired: true,
+        type: "text"
+      },
+      {
         name: "Suggested Course",
         pageShow: 'showDemo',
         modelNone: true,
