@@ -20,8 +20,8 @@ app.use("/Images", express.static("./Images"))
 const branchModel = require("./model/admin/Branch.modal");
 
 const corsOptions = {
-    origin: process.env.FRONTEND_PORT,
-    // origin: ['https://www.admin.sunriseinstitute.net', 'https://www.sunriseinstitute.net'],
+    // origin: process.env.FRONTEND_PORT,
+    origin: ['https://www.admin.sunriseinstitute.net', 'https://www.sunriseinstitute.net'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
