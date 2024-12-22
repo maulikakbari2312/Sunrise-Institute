@@ -62,7 +62,7 @@ function CreateCourse() {
     const fetchData = async () => {
         setIsLoading(false);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/admin/courseList`
+            const url = `/api/admin/courseList`
             const response = await getApi(url);
             setData(response?.pageItems);
             setIsFetch(false);

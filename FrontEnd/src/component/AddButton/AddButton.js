@@ -21,7 +21,7 @@ function AddButton({ url, setIsFetch }) {
 
     const conterNumber = async () => {
         try {
-            const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers/false`);
+            const response = await getApi(`/api/enroll/find-book-numbers/false`);
             const data = response?.pageItems;
             setFileDataNames(`${Object.keys(data)[0]}-${Object.values(data)[0]}`);
             return `${Object.keys(data)[0]}-${Object.values(data)[0]}`;

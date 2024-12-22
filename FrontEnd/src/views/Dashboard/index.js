@@ -269,16 +269,16 @@ const Default = () => {
     setBtnDisable(false);
     // setIsLoading(true);
     try {
-      const url = `${process.env.REACT_APP_HOST}/api/enroll/check-installments`;
+      const url = `/api/enroll/check-installments`;
       const response = await getApi(url);
       setData(response?.pageItems);
-      const urlDataBase = `${process.env.REACT_APP_HOST}/api/enquire/findEnquire`;
+      const urlDataBase = `/api/enquire/findEnquire`;
       setTotalPendingInstallmentAmount(0);
       const responseDataBase = await getApi(urlDataBase);
       setDataBase(responseDataBase?.pageItems);
-      const demoUrl = `${process.env.REACT_APP_HOST}/api/enroll/findDemoEnroll`;
+      const demoUrl = `/api/enroll/findDemoEnroll`;
       const demoResponse = await getApi(demoUrl);
-      const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+      const branchUrl = `/api/admin/branchList`
       const branchResponse = await getApi(branchUrl);
       const branchData = branchResponse?.pageItems.map(branch => ({
         label: branch.branchName,
@@ -425,7 +425,7 @@ const Default = () => {
                 // setIsLoading(true);
                 try {
                   const filteredValues = filterEmptyValues(values);
-                  const url = `${process.env.REACT_APP_HOST}/api/enroll/findCheckFilterEnroll`
+                  const url = `/api/enroll/findCheckFilterEnroll`
                   const response = await postApi(url, filteredValues);
                   setData(response?.pageItems);
                   setTotalPendingInstallmentAmount(response?.totalPendingInstallmentAmount || 0);

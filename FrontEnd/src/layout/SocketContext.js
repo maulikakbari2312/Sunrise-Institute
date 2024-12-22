@@ -9,10 +9,11 @@ export const SocketProvider = ({ children }) => {
     const [receivedMessage, setReceivedMessage] = useState(null);
     const [socket, setSocket] = useState(null);
     const userEmail = localStorage.getItem('email');
+    const cm = localStorage.getItem('cm');
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const socketMemo = io(process.env.REACT_APP_HOST);
+        const socketMemo = io((cm == "true" || cm == true) ? process.env.REACT_APP_HOST : process.env.REACT_APP_HOST_SECOND);
         setSocket(socketMemo);
 
         // Guard against accessing 'on' when socket is null

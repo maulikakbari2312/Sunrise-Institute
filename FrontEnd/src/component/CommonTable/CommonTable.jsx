@@ -55,7 +55,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
 
   const conterNumber = async (cn = false) => {
     try {
-      const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers/${cn}`);
+      const response = await getApi(`/api/enroll/find-book-numbers/${cn}`);
       const data = response?.pageItems;
       setFileDataNames(`${Object.keys(data)[0]}-${Object.values(data)[0]}`);
       return `${Object.keys(data)[0]}-${Object.values(data)[0]}`;
@@ -77,19 +77,19 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     try {
       let url = '';
       if (selected?.modelData?.page == 'ImmigrationReport') {
-        url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/Immigration`;
+        url = `/api/admin/findcourse/Immigration`;
         setType('Immigration');
       } else if (selected?.modelData?.page == 'CompetitiveExamReport') {
-        url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/CompetitiveExam`;
+        url = `/api/admin/findcourse/CompetitiveExam`;
         setType('CompetitiveExam');
       } else if (selected?.modelData?.page == 'ItCoursesReport') {
-        url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/ItCourses`;
+        url = `/api/admin/findcourse/ItCourses`;
         setType('ItCourses');
       } else {
         setType('Immigration');
-        url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/Immigration`;
+        url = `/api/admin/findcourse/Immigration`;
       }
-      const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`;
+      const branchUrl = `/api/admin/branchList`;
       (async () => {
         try {
           const response = await getApi(url);
@@ -118,7 +118,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
   useEffect(() => {
     try {
       if ((isPaymentDialogOpen && selected?.isEdit === true) || (ispartialPaymentOpen && selected?.isEdit === true) || (isAdvancePaymentDialogOpen && selected?.isEdit === true) || (isSettleDialogOpen && selected?.isEdit === true)) {
-        let url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/${selected?.selectData?.user?.enquireType}`;
+        let url = `/api/admin/findcourse/${selected?.selectData?.user?.enquireType}`;
         (async () => {
           try {
             await conterNumber(isSettleDialogOpen ? true : false);
@@ -208,7 +208,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     dispatch(selectData(row));
   };
   const handleSettleEdit = async (row) => {
-    const url = `${process.env.REACT_APP_HOST}/api/enroll/settle-payment-data`;
+    const url = `/api/enroll/settle-payment-data`;
     await postApi(url, { tokenId: row?.user?.tokenId }).then((res) => {
       setSettlePaymentData(res?.pageItems);
     });
@@ -381,7 +381,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
   const handleDeleteApi = () => {
     setBtnDisable(true);
     try {
-      const apiUrl = `${process.env.REACT_APP_HOST}${deleteUrl}`;
+      const apiUrl = `${deleteUrl}`;
       let tokenId = selected.selectData.user.tokenId;
       deleteApi(`${apiUrl}/${tokenId}`)
         .then(async (response) => {
@@ -678,7 +678,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
         dispatch(selectData(row));
         setBtnDisable(false); // Enable buttons after API call completes (success or failure)
       } else if (e.target.value === 'demo') {
-        const apiUrl = `${process.env.REACT_APP_HOST}/api/enroll/demoEnrollDetail`;
+        const apiUrl = `/api/enroll/demoEnrollDetail`;
         const body = {
           tokenId: row?.user?.tokenId,
           demoDate: new Date().toISOString()
@@ -698,7 +698,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
               } else {
                 statusApiUrl = '/api/immigration/editStatusImmigration';
               }
-              const apiUrl = `${process.env.REACT_APP_HOST}${statusApiUrl}/${row?.user?.tokenId}`;
+              const apiUrl = `${statusApiUrl}/${row?.user?.tokenId}`;
               const body = {
                 status: e.target.value
               };
@@ -734,7 +734,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
           } else {
             statusApiUrl = '/api/immigration/editStatusImmigration';
           }
-          const apiUrl = `${process.env.REACT_APP_HOST}${statusApiUrl}/${row?.user?.tokenId}`;
+          const apiUrl = `${statusApiUrl}/${row?.user?.tokenId}`;
           const body = {
             status: e.target.value
           };
@@ -814,7 +814,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
 
           formattedValues.file = base64data;
           formattedValues.fileName = fileName;
-          putApi(`${process.env.REACT_APP_HOST}/api/enroll/editEnroll/${selected.selectData.user.tokenId}`, formattedValues)
+          putApi(`/api/enroll/editEnroll/${selected.selectData.user.tokenId}`, formattedValues)
             .then(async (response) => {
               toast.success(response?.message || 'New Data ADD successful!');
               dispatch(modelEdit(false));
@@ -867,7 +867,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
           formattedValues.file = base64data;
           formattedValues.fileName = fileName;
 
-          postApi(`${process.env.REACT_APP_HOST}/api/enroll/createEnroll`, formattedValues)
+          postApi(`/api/enroll/createEnroll`, formattedValues)
             .then(async (response) => {
               toast.success(response?.message || 'New Data ADD successful!');
               dispatch(modelEdit(false));
@@ -885,7 +885,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                 } else {
                   statusApiUrl = '/api/immigration/editStatusImmigration';
                 }
-                const apiUrl = `${process.env.REACT_APP_HOST}${statusApiUrl}/${values?.tokenId}`;
+                const apiUrl = `${statusApiUrl}/${values?.tokenId}`;
                 const body = {
                   status: 'enroll',
                   tokenId: rowData.tokenId
@@ -954,7 +954,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
       formattedValues.file = base64data;
       formattedValues.fileName = fileName;
       try {
-        postApi(`${process.env.REACT_APP_HOST}/api/enroll/partial-payment`, {
+        postApi(`/api/enroll/partial-payment`, {
           ...formattedValues,
           enrollDate: new Date(),
           tokenId: selected?.selectData?.user?.tokenId,
@@ -987,7 +987,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     setBtnDisable(true);
     try {
       let date = new Date(values?.reminderDate).toISOString();
-      postApi(`${process.env.REACT_APP_HOST}/api/remainder/createReminder`, {
+      postApi(`/api/remainder/createReminder`, {
         ...values,
         reminderDate: date,
         tokenId: selected?.selectData?.user?.tokenId,
@@ -1049,7 +1049,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
         // console.log('base64data', base64data);
         formattedValues.file = base64data;
         formattedValues.fileName = fileName;
-        putApi(`${process.env.REACT_APP_HOST}/api/enroll/pay-installments/${selected?.selectData?.user?.tokenId}`, {
+        putApi(`/api/enroll/pay-installments/${selected?.selectData?.user?.tokenId}`, {
           ...formattedValues,
           tokenId: selected?.selectData?.user?.tokenId,
           installmentDate: formattedDate,
@@ -1086,7 +1086,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
   const handleSettleSubmit = (values, { setSubmitting, resetForm }) => {
     setBtnDisable(true);
     try {
-      postApi(`${process.env.REACT_APP_HOST}/api/enroll/settle-enroll/true`, {
+      postApi(`/api/enroll/settle-enroll/true`, {
         ...values,
         token: selected?.selectData?.user?.tokenId,
         paymentReceiver: localStorage.getItem('name')

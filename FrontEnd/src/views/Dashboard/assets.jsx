@@ -43,7 +43,7 @@ function ItCourses() {
     const fetchData = async () => {
         setIsLoading(false);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/company/findCompany?limit=${pagination?.pageSize}&offset=${pagination?.currentPage - 1}`
+            const url = `/api/company/findCompany?limit=${pagination?.pageSize}&offset=${pagination?.currentPage - 1}`
             const response = await getApi(url);
             setData(response?.pageItems);
             setIsFetch(false);

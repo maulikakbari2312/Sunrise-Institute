@@ -43,7 +43,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
 
     const conterNumber = async () => {
         try {
-            const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers/false`);
+            const response = await getApi(`/api/enroll/find-book-numbers/false`);
             const data = response?.pageItems;
             setFileDataNames(`${Object.keys(data)[0]}-${Object.values(data)[0]}`);
             return `${Object.keys(data)[0]}-${Object.values(data)[0]}`;
@@ -67,17 +67,17 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
         try {
             let url = ''
             if (selected?.modelData?.page == "ImmigrationReport") {
-                url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/Immigration`
+                url = `/api/admin/findcourse/Immigration`
                 setType('Immigration');
             } else if (selected?.modelData?.page == "CompetitiveExamReport") {
-                url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/CompetitiveExam`
+                url = `/api/admin/findcourse/CompetitiveExam`
                 setType('CompetitiveExam');
             } else if (selected?.modelData?.page == "ItCoursesReport") {
-                url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/ItCourses`
+                url = `/api/admin/findcourse/ItCourses`
                 setType('ItCourses');
             } else {
                 setType('Immigration');
-                url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/Immigration`
+                url = `/api/admin/findcourse/Immigration`
             }
             (async () => {
                 try {
@@ -100,7 +100,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
     useEffect(() => {
         try {
             if (isPaymentDialogOpen && selected?.isEdit === true) {
-                let url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/${selected?.selectData?.user?.enquireType}`;
+                let url = `/api/admin/findcourse/${selected?.selectData?.user?.enquireType}`;
                 (async () => {
                     try {
                         await conterNumber();
@@ -289,7 +289,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
     const handleDeleteApi = () => {
         setBtnDisable(true);
         try {
-            const apiUrl = `${process.env.REACT_APP_HOST}${deleteUrl}`;
+            const apiUrl = `${deleteUrl}`;
             let tokenId = selected.selectData.user.tokenId;
             deleteApi(`${apiUrl}/${tokenId}`)
                 .then(async (response) => {
@@ -506,7 +506,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                 dispatch(selectData(row));
                 setBtnDisable(false);
             } else if (e.target.value === 'demo') {
-                const apiUrl = `${process.env.REACT_APP_HOST}/api/enroll/demoEnrollDetail`;
+                const apiUrl = `/api/enroll/demoEnrollDetail`;
                 const body = {
                     tokenId: row?.user?.tokenId,
                     demoDate: new Date().toString()
@@ -524,7 +524,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                             } else if (row?.user?.enquire == "ItCourses") {
                                 statusApiUrl = '/api/itCourses/editStatusItCourses'
                             }
-                            const apiUrl = `${process.env.REACT_APP_HOST}${statusApiUrl}/${row?.user?.tokenId}`;
+                            const apiUrl = `${statusApiUrl}/${row?.user?.tokenId}`;
                             const body = {
                                 status: e.target.value,
                             };
@@ -560,7 +560,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                     } else if (row?.user?.enquire == "ItCourses") {
                         statusApiUrl = '/api/itCourses/editStatusItCourses'
                     }
-                    const apiUrl = `${process.env.REACT_APP_HOST}${statusApiUrl}/${row?.user?.tokenId}`;
+                    const apiUrl = `${statusApiUrl}/${row?.user?.tokenId}`;
                     const body = {
                         status: e.target.value,
                     };
@@ -627,7 +627,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
 
                     formattedValues.file = base64data;
                     formattedValues.fileName = fileName;
-                    putApi(`${process.env.REACT_APP_HOST}/api/enroll/editEnroll/${selected.selectData.user.tokenId}`, formattedValues)
+                    putApi(`/api/enroll/editEnroll/${selected.selectData.user.tokenId}`, formattedValues)
                         .then(async (response) => {
 
                             toast.success(response?.message || "New Data ADD successful!");
@@ -678,7 +678,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                     formattedValues.file = base64data;
                     formattedValues.fileName = fileName;
 
-                    postApi(`${process.env.REACT_APP_HOST}/api/enroll/createEnroll`, formattedValues)
+                    postApi(`/api/enroll/createEnroll`, formattedValues)
                         .then(async (response) => {
                             toast.success(response?.message || 'New Data ADD successful!');
                             dispatch(modelEdit(false));
@@ -696,7 +696,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                 } else {
                                     statusApiUrl = '/api/immigration/editStatusImmigration';
                                 }
-                                const apiUrl = `${process.env.REACT_APP_HOST}${statusApiUrl}/${values?.tokenId}`;
+                                const apiUrl = `${statusApiUrl}/${values?.tokenId}`;
                                 const body = {
                                     status: 'enroll',
                                     tokenId: rowData.tokenId

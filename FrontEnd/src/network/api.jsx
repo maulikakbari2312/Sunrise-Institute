@@ -8,9 +8,17 @@ export const useApi = () => {
   const modelData = useSelector((state) => state.selected.modelData?.fieldData);
   const isBranch = useSelector((state) => state.user?.userBranch);
   const isAdmin = useSelector((state) => state.user?.isAdmin);
-
   const getApi = async (url, body = null) => {
     try {
+      const cm = localStorage.getItem('cm');
+      if (!url.includes("/api/admin/logIn")) {
+        // Dynamically set the base URL based on the value of `cm`
+        if (cm == "true" || cm === true) {
+          url = `${process.env.REACT_APP_HOST}${url}`;
+        } else {
+          url = `${process.env.REACT_APP_HOST_SECOND}${url}`;
+        }
+      }
       let headers = {
         'Content-type': 'application/json',
         'authorization': localStorage.getItem('token')
@@ -19,7 +27,7 @@ export const useApi = () => {
         headers,
       };
       let editUrl = url;
-      if (url !== `${process.env.REACT_APP_HOST}/api/admin/UserList`) {
+      if (url !== `/api/admin/UserList`) {
         editUrl = `${url}/${isAdmin}/${isBranch}`
       }
 
@@ -72,7 +80,16 @@ export const useApi = () => {
       'Content-type': 'application/json',
       'authorization': localStorage.getItem('token')
     }
+    const cm = localStorage.getItem('cm');
     try {
+      if (!url.includes("/api/admin/logIn")) {
+        // Dynamically set the base URL based on the value of `cm`
+        if (cm == "true" || cm === true) {
+          url = `${process.env.REACT_APP_HOST}${url}`;
+        } else {
+          url = `${process.env.REACT_APP_HOST_SECOND}${url}`;
+        }
+      }
       let requestData = data;
       if (!(data instanceof FormData)) {
         const trimmedData = {};
@@ -103,7 +120,7 @@ export const useApi = () => {
         headers['Content-type'] = 'multipart/form-data'
       }
       let editUrl = url;
-      if (url !== `${process.env.REACT_APP_HOST}/api/admin/logIn` && url !== `${process.env.REACT_APP_HOST} /api/admin/editUserList`) {
+      if (url !== !url.includes(`/api/admin/logIn`) && url !== !url.includes(`/api/admin/editUserList`)) {
         editUrl = `${url}/${isAdmin}/${isBranch}`
       }
       const response = await axios.post(editUrl, requestData, { headers });
@@ -121,7 +138,16 @@ export const useApi = () => {
       'Content-type': 'application/json',
       'authorization': localStorage.getItem('token')
     }
+    const cm = localStorage.getItem('cm');
     try {
+      if (!url.includes("/api/admin/logIn")) {
+        // Dynamically set the base URL based on the value of `cm`
+        if (cm == "true" || cm === true) {
+          url = `${process.env.REACT_APP_HOST}${url}`;
+        } else {
+          url = `${process.env.REACT_APP_HOST_SECOND}${url}`;
+        }
+      }
       let requestData = data;
 
       if (!(data instanceof FormData)) {
@@ -157,7 +183,7 @@ export const useApi = () => {
       let editUrl = url;
 
       // Check if the url does not match the specified values after replacing the UUID
-      if (url.replace(/\/[0-9a-f-]+$/i, '') !== `${process.env.REACT_APP_HOST}/api/admin/logIn` && url.replace(/\/[0-9a-f-]+$/i, '') !== `${process.env.REACT_APP_HOST}/api/admin/editUserList`) {
+      if (url.replace(/\/[0-9a-f-]+$/i, '') !== !url.includes(`/api/admin/logIn`) && url.replace(/\/[0-9a-f-]+$/i, '') !== !url.includes(`/api/admin/editUserList`)) {
         // If the condition is true, append /${isAdmin}/${isBranch} to the editUrl
         editUrl = `${url}/${isAdmin}/${isBranch}`;
       }
@@ -177,7 +203,16 @@ export const useApi = () => {
       'Content-type': 'application/json',
       'authorization': localStorage.getItem('token')
     }
+    const cm = localStorage.getItem('cm');
     try {
+      if (!url.includes("/api/admin/logIn")) {
+        // Dynamically set the base URL based on the value of `cm`
+        if (cm == "true" || cm === true) {
+          url = `${process.env.REACT_APP_HOST}${url}`;
+        } else {
+          url = `${process.env.REACT_APP_HOST_SECOND}${url}`;
+        }
+      }
       let requestData = data;
 
       const response = await axios.patch(`${url}/${isAdmin}/${isBranch}`, requestData, headers);
@@ -191,6 +226,15 @@ export const useApi = () => {
   };
 
   const deleteApi = async (url) => {
+    const cm = localStorage.getItem('cm');
+    if (!url.includes("/api/admin/logIn")) {
+      // Dynamically set the base URL based on the value of `cm`
+      if (cm == "true" || cm === true) {
+        url = `${process.env.REACT_APP_HOST}${url}`;
+      } else {
+        url = `${process.env.REACT_APP_HOST_SECOND}${url}`;
+      }
+    }
     let headers = {
       'Content-type': 'application/json',
       'authorization': localStorage.getItem('token')

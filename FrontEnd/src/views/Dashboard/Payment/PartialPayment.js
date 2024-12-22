@@ -123,10 +123,10 @@ function PartialPayment() {
         setBtnDisable(true);
         // setIsLoading(true);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/enroll/find-partial-payment`
+            const url = `/api/enroll/find-partial-payment`
             const response = await getApi(url);
             setData(response?.pageItems);
-            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchUrl = `/api/admin/branchList`
             const branchResponse = await getApi(branchUrl);
             const branchData = branchResponse?.pageItems.map(branch => ({
                 label: branch.branchName,
@@ -150,7 +150,7 @@ function PartialPayment() {
 
     const fetchCourse = async () => {
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/admin/courseList`
+            const url = `/api/admin/courseList`
             const response = await getApi(url);
             if (response?.pageItems && Array.isArray(response.pageItems)) {
                 const courseTypes = response.pageItems.map(course => course.courseName);
@@ -212,7 +212,7 @@ function PartialPayment() {
                         // setIsLoading(true);
                         try {
                             const filteredValues = filterEmptyValues(values);
-                            const url = `${process.env.REACT_APP_HOST}/api/enroll/find-partial-payment`
+                            const url = `/api/enroll/find-partial-payment`
                             const response = await postApi(url, filteredValues);
                             setData(response?.pageItems);
                             setIsFetch(false);

@@ -101,10 +101,10 @@ function PaymentSlipBook() {
     const fetchData = async () => {
         // setIsLoading(true);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/enroll/find-payment-slip`
+            const url = `/api/enroll/find-payment-slip`
             const response = await postApi(url, {});
             setData(response?.pageItems);
-            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchUrl = `/api/admin/branchList`
             const branchResponse = await getApi(branchUrl);
             const branchData = branchResponse?.pageItems.map(branch => ({
                 label: branch.branchName,
@@ -169,7 +169,7 @@ function PaymentSlipBook() {
                             setBtnDisable(true);
                             try {
                                 const filteredValues = filterEmptyValues(values);
-                                const url = `${process.env.REACT_APP_HOST}/api/enroll/find-payment-slip`
+                                const url = `/api/enroll/find-payment-slip`
                                 const response = await postApi(url, filteredValues);
                                 setData(response?.pageItems);
                                 setIsFetch(false);

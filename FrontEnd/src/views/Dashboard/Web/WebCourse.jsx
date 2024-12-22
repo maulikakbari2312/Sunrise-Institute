@@ -61,7 +61,7 @@ function WebCourse() {
     const fetchData = async () => {
         setIsLoading(false);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/enroll/find-web-course`
+            const url = `/api/enroll/find-web-course`
             const response = await getApi(url);
             setData(response?.pageItems);
             setIsFetch(false);
@@ -139,7 +139,7 @@ function WebCourse() {
         delete modifiedValues.modulesDetails;
         try {
             if (selected?.isEdit) {
-                const url = `${process.env.REACT_APP_HOST}/api/enroll/edit-web-course/${selected?.selectData?.user?.tokenId}`
+                const url = `/api/enroll/edit-web-course/${selected?.selectData?.user?.tokenId}`
                 const response = await putApi(url, modifiedValues);
                 setIsFetch(false);
                 setIsLoading(false)
@@ -154,7 +154,7 @@ function WebCourse() {
                 setIsDetails([]);
                 setIsTitle([]);
             } else {
-                const url = `${process.env.REACT_APP_HOST}/api/enroll/create-web-course`
+                const url = `/api/enroll/create-web-course`
                 const response = await postApi(url, modifiedValues);
                 setIsFetch(false);
                 setIsLoading(false)

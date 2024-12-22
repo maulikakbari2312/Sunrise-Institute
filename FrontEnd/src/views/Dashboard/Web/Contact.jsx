@@ -45,7 +45,7 @@ function Contact() {
     const fetchData = async () => {
         setIsLoading(false);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/enroll/find-contact`
+            const url = `/api/enroll/find-contact`
             const response = await getApi(url);
             setData(response?.pageItems);
             setIsFetch(false);

@@ -106,10 +106,10 @@ function SettlePayment() {
     const fetchData = async () => {
         // setIsLoading(true);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/enroll/find-settle-enroll`
+            const url = `/api/enroll/find-settle-enroll`
             const response = await postApi(url, {});
             setData(response?.pageItems);
-            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchUrl = `/api/admin/branchList`
             const branchResponse = await getApi(branchUrl);
             const branchData = branchResponse?.pageItems.map(branch => ({
                 label: branch.branchName,
@@ -173,7 +173,7 @@ function SettlePayment() {
                             // setIsLoading(true);
                             try {
                                 const filteredValues = filterEmptyValues(values);
-                                const url = `${process.env.REACT_APP_HOST}/api/enroll/find-settle-enroll`
+                                const url = `/api/enroll/find-settle-enroll`
                                 const response = await postApi(url, filteredValues);
                                 setData(response?.pageItems);
                                 setIsFetch(false);

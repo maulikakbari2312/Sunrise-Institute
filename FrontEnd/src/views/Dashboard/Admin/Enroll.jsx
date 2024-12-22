@@ -135,10 +135,10 @@ function Enroll() {
         setBtnDisable(true);
         // // setIsLoading(true);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/enroll/findEnroll`
+            const url = `/api/enroll/findEnroll`
             const response = await getApi(url);
             setData(response?.pageItems);
-            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchUrl = `/api/admin/branchList`
             const branchResponse = await getApi(branchUrl);
             const branchData = branchResponse?.pageItems.map(branch => ({
                 label: branch.branchName,
@@ -162,7 +162,7 @@ function Enroll() {
 
     const fetchCourse = async () => {
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/admin/courseList`
+            const url = `/api/admin/courseList`
             const response = await getApi(url);
             if (response?.pageItems && Array.isArray(response.pageItems)) {
                 const courseTypes = response.pageItems.map(course => course.courseName);
@@ -224,7 +224,7 @@ function Enroll() {
                         // // setIsLoading(true);
                         try {
                             const filteredValues = filterEmptyValues(values);
-                            const url = `${process.env.REACT_APP_HOST}/api/enroll/findFilterEnroll`
+                            const url = `/api/enroll/findFilterEnroll`
                             const response = await postApi(url, { ...filteredValues, state: state?.state });
                             setData(response?.pageItems);
                             setIsFetch(false);
@@ -418,7 +418,7 @@ function Enroll() {
                     onSubmit={async (values, { setSubmitting, resetForm }) => {
                         setBtnDisable(true);
                         try {
-                            const urls = `${process.env.REACT_APP_HOST}/api/enroll/download-enroll-data/${isAdmin}/${isBranch}`;
+                            const urls = `/api/enroll/download-enroll-data/${isAdmin}/${isBranch}`;
                             const response = await fetch(urls, {
                                 method: 'POST',
                                 body: JSON.stringify(values),

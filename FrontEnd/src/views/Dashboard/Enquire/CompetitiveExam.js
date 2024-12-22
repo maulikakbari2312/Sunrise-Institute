@@ -40,18 +40,18 @@ function CompetitiveExam() {
     const fetchData = async () => {
         // setIsLoading(true);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/CompetitiveExam`
+            const url = `/api/admin/findcourse/CompetitiveExam`
             const response = await getApi(url);
             if (response?.pageItems && Array.isArray(response.pageItems)) {
                 const courseTypes = response.pageItems.map(course => course.courseName);
                 setCourse(courseTypes);
             }
-            const urlBranchStaff = `${process.env.REACT_APP_HOST}/api/branch/getBranchStaff`
+            const urlBranchStaff = `/api/branch/getBranchStaff`
             const responseBranchStaff = await getApi(urlBranchStaff);
             if (responseBranchStaff?.pageItems && Array.isArray(responseBranchStaff.pageItems)) {
                 setBanchStaff(responseBranchStaff.pageItems);
             }
-            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchUrl = `/api/admin/branchList`
             const branchResponse = await getApi(branchUrl);
             const branchData = branchResponse?.pageItems.map(branch => ({
                 label: branch.branchName,
@@ -246,7 +246,7 @@ function CompetitiveExam() {
                             const headers = {
                             }
                             if (selected.isEdit) {
-                                const apiUrl = `${process.env.REACT_APP_HOST}/api/competitiveExam/editCompetitiveExam/${selected?.selectData?.user?.tokenId}`;
+                                const apiUrl = `/api/competitiveExam/editCompetitiveExam/${selected?.selectData?.user?.tokenId}`;
                                 putApi(`${apiUrl}`, values, headers)
                                     .then(async (response) => {
                                         // You can access the response data using apiOtpResponse in your component
@@ -266,7 +266,7 @@ function CompetitiveExam() {
                                     });
                             }
                             else {
-                                postApi(`${process.env.REACT_APP_HOST}/api/enquire/createSendEnquire`, { ...values, course: course, type: 'CompetitiveExam', tokenId: uniqueToken }, headers).then(async (response) => {
+                                postApi(`/api/enquire/createSendEnquire`, { ...values, course: course, type: 'CompetitiveExam', tokenId: uniqueToken }, headers).then(async (response) => {
                                     socket.emit('sendMessage', {
                                         to: values.enquiryTokenBy, message: { ...values, course: course, type: 'CompetitiveExam', tokenId: uniqueToken }
                                     });

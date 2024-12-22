@@ -48,12 +48,12 @@ const ProfileSection = () => {
   const [btnDisable, setBtnDisable] = useState();
   const fetchDb = async () => {
     try {
-      const url = `${process.env.REACT_APP_HOST}/api/enquire/findSendEnquire`;
+      const url = `/api/enquire/findSendEnquire`;
       const body = {
         staff: localStorage.getItem('email')
       }
       const response = await postApi(url, body);
-      const urlreminderDate = `${process.env.REACT_APP_HOST}/api/remainder/findReminder`;
+      const urlreminderDate = `/api/remainder/findReminder`;
 
       const responsereminderDate = await getApi(urlreminderDate);
       setReminderDate(responsereminderDate.pageItems);
@@ -176,7 +176,7 @@ const ProfileSection = () => {
       } else {
         url = '/api/itCourses/createItCourses';
       }
-      const apiUrl = `${process.env.REACT_APP_HOST}${url}`;
+      const apiUrl = `${url}`;
       postApi(`${apiUrl}`, { ...body, status: 'pending', tokenId: selectedEnquire?.tokenId }, headers)
         .then(async (response) => {
           // You can access the response data using apiOtpResponse in your component
@@ -193,7 +193,7 @@ const ProfileSection = () => {
           dispatch(modelDelete(false));
           setIsDialogOpen(false);
           setIsDeleteDialogOpen(false);
-          deleteApi(`${process.env.REACT_APP_HOST}/api/enquire/deleteSendEnquire/${selectedEnquire?.tokenId}`)
+          deleteApi(`/api/enquire/deleteSendEnquire/${selectedEnquire?.tokenId}`)
             .then(async (response) => {
               dispatch(removeSendEnquire(selectedEnquire));
               setSubmitting(false);
@@ -222,10 +222,10 @@ const ProfileSection = () => {
     } else {
       url = '/api/enquire/deleteSendEnquire';
     }
-    deleteApi(`${process.env.REACT_APP_HOST}${url}/${selectedEnquire?.tokenId}`)
+    deleteApi(`${url}/${selectedEnquire?.tokenId}`)
       .then(async (response) => {
         if (openReminderDate) {
-          const urlreminderDate = `${process.env.REACT_APP_HOST}/api/remainder/findReminder`;
+          const urlreminderDate = `/api/remainder/findReminder`;
 
           const responsereminderDate = await getApi(urlreminderDate);
           setReminderDate(responsereminderDate.pageItems);

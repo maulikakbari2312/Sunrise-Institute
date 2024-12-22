@@ -41,13 +41,13 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
             try {
                 let url = ''
                 if (selected?.selectData?.user?.enquireType == "Immigration") {
-                    url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/Immigration`
+                    url = `/api/admin/findcourse/Immigration`
                 } else if (selected?.selectData?.user?.enquireType == "CompetitiveExam") {
-                    url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/CompetitiveExam`
+                    url = `/api/admin/findcourse/CompetitiveExam`
                 } else if (selected?.selectData?.user?.enquireType == "ItCourses") {
-                    url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/ItCourses`
+                    url = `/api/admin/findcourse/ItCourses`
                 } else {
-                    url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/Immigration`
+                    url = `/api/admin/findcourse/Immigration`
                 }
                 (async () => {
                     try {
@@ -134,7 +134,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
             };
         }
         try {
-            const apiUrl = `${process.env.REACT_APP_HOST}${url}`;
+            const apiUrl = `${url}`;
             let headers = {};
             // Make the callback function inside .then() async
             headers = {

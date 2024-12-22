@@ -45,7 +45,7 @@ function Gallery() {
     const fetchData = async () => {
         setBtnDisable(true);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/enroll/find-gallery`
+            const url = `/api/enroll/find-gallery`
             const response = await getApi(url);
             setData(response?.pageItems);
             setIsFetch(false);
@@ -82,7 +82,7 @@ function Gallery() {
         setBtnDisable(true);
         try {
             if (selected?.isEdit) {
-                const url = `${process.env.REACT_APP_HOST}/api/enroll/edit-gallery/${selected?.selectData?.user?.tokenId}`
+                const url = `/api/enroll/edit-gallery/${selected?.selectData?.user?.tokenId}`
                 const response = await putApi(url, values);
                 fetchData();
                 setIsFetch(false);
@@ -92,7 +92,7 @@ function Gallery() {
                 setAddGallery(false);
 
             } else {
-                const url = `${process.env.REACT_APP_HOST}/api/enroll/create-gallery`
+                const url = `/api/enroll/create-gallery`
                 const response = await postApi(url, values);
                 fetchData();
                 setIsFetch(false);

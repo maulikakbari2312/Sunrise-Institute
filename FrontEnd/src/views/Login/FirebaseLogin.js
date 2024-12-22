@@ -52,7 +52,13 @@ const FirebaseLogin = ({ ...rest }) => {
     try {
       const headers = {
       }
-      const apiUrl = `${process.env.REACT_APP_HOST}/api/admin/logIn`;
+      let cm = false;
+      if(values.email.startsWith("cm")){
+        cm = true;
+      }else{
+        cm = false;
+      }
+      const apiUrl = `${cm ? process.env.REACT_APP_HOST : process.env.REACT_APP_HOST_SECOND}/api/admin/logIn`;
       postApi(`${apiUrl}`, values, headers)
         .then(async (response) => {
           // You can access the response data using apiOtpResponse in your component
@@ -66,6 +72,7 @@ const FirebaseLogin = ({ ...rest }) => {
           localStorage.setItem('branch', response.isBranch);
           localStorage.setItem('email', response.email);
           localStorage.setItem('name', response.name);
+          localStorage.setItem('cm', cm);
           navigate('/', { replace: true });
           dispatch({ type: actionTypes.MENU_OPEN, isOpen: 'dashboard' });
           setSubmitting(false);

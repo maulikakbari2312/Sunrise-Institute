@@ -56,10 +56,10 @@ function CraeteAdmin() {
     const fetchData = async () => {
         setIsLoading(false);
         try {
-            const url = `${process.env.REACT_APP_HOST}/api/admin/UserList`
+            const url = `/api/admin/UserList`
             const response = await getApi(url);
             setData(response?.pageItems);
-            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
+            const branchUrl = `/api/admin/branchList`
             const branchResponse = await getApi(branchUrl);
             const branchData = branchResponse?.pageItems.map(branch => ({
                 label: branch.branchName,
