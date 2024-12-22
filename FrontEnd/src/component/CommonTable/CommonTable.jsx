@@ -51,14 +51,24 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
   const name = localStorage.getItem('name');
   const [branchData, setBranchData] = useState([]);
   const [isMatchBranch, setIsMatchBranch] = useState({});
-  const conterNumber = async () => {
+  const [fileDataNames, setFileDataNames] = useState('');
+
+  const conterNumber = async (cn = false) => {
     try {
-      const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers/false`);
-      setIsCounterNumber(response?.pageItems);
+      const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers/${cn}`);
+      const data = response?.pageItems;
+      setFileDataNames(`${Object.keys(data)[0]}-${Object.values(data)[0]}`);
+      return `${Object.keys(data)[0]}-${Object.values(data)[0]}`;
     } catch (error) {
-      toast.error(error?.message || 'Please Try After Sometime');
+      toast.error(error?.message || "Please Try After Sometime");
     }
-  };
+  }
+  useEffect(() => {
+    const tempCount = async () => {
+      await conterNumber();
+    }
+  tempCount();
+  }, [isDialogOpen]);
   // craete payment slip?
   useEffect(() => {
     setIsUser(user);
@@ -111,6 +121,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
         let url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/${selected?.selectData?.user?.enquireType}`;
         (async () => {
           try {
+            await conterNumber(isSettleDialogOpen ? true : false);
             const response = await getApi(url);
             setCourseData(response?.pageItems);
             if (response?.pageItems && Array.isArray(response.pageItems)) {
@@ -593,7 +604,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     discount: selected?.isEdit ? selected?.selectData?.user?.discount : '',
     payFees: selected?.isEdit ? selected?.selectData?.user?.payFees?.toFixed(2) : '',
     partialPayment: selected?.isEdit ? selected?.selectData?.user?.partialPayment?.toFixed(2) : 0,
-    payInstallment: selected?.isEdit ? selected?.selectData?.user?.payInstallment : '',
+    payInstallment: selected?.isEdit ? selected?.selectData?.user?.payInstallment : 1,
     paymentMethod:
       selected?.isEdit && selected?.modelData?.page != 'partialPayment' ? selected?.selectData?.user?.paymentMethod?.[0] || '' : '',
     paymentReceiver: localStorage.getItem('name'),
@@ -761,6 +772,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setBtnDisable(true);
+    const fileData = await conterNumber();
     try {
       const date = new Date(values?.installmentDate);
       const formattedDate = date.toISOString().split('T')[0];
@@ -775,7 +787,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
       };
       if (selected?.isEdit) {
         const invoice = document.getElementById('invoice_digital');
-        const fileName = `${values?.name}-${isCounterNumber?.paymentNumber}.pdf`;
+        const fileName = `${fileData}.pdf`;
         var opt = {
           margin: 0,
           filename: fileName,
@@ -824,7 +836,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
         }
       } else {
         const invoice = document.getElementById('invoice_digital');
-        const fileName = `${values?.name}-${isCounterNumber?.paymentNumber}.pdf`;
+        const fileName = `${fileData}.pdf`;
         var opt = {
           margin: 0,
           filename: fileName,
@@ -911,9 +923,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
   };
   const handlepayPartialPaymentSubmit = async (values, { setSubmitting, resetForm }) => {
     setBtnDisable(true);
+    const fileData = await conterNumber();
     const formattedValues = { ...values, dob: rowData?.dob, email: rowData?.email, mobileNumber: rowData?.mobileNumber };
     const invoice = document.getElementById('invoice_digital');
-    const fileName = `${values?.name}-${isCounterNumber?.paymentNumber}.pdf`;
+    const fileName = `${fileData}.pdf`;
     var opt = {
       margin: 0,
       filename: fileName,
@@ -1003,12 +1016,13 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
   };
   const handleAdvanceaymentSubmit = async (values, { setSubmitting, resetForm }) => {
     setBtnDisable(true);
+    const fileData = await conterNumber();
     const formattedValues = { ...values, dob: rowData?.dob, email: rowData?.email, mobileNumber: rowData?.mobileNumber, state: selected?.selectData?.user?.state };
     try {
       const date = new Date();
       const formattedDate = date.toISOString().slice(0, 10);
       const invoice = document.getElementById('invoice_digital');
-      const fileName = `${values?.name}-${isCounterNumber?.paymentNumber}.pdf`;
+      const fileName = `${fileData}.pdf`;
       var opt = {
         margin: 0,
         filename: fileName,
@@ -1072,7 +1086,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
   const handleSettleSubmit = (values, { setSubmitting, resetForm }) => {
     setBtnDisable(true);
     try {
-      postApi(`${process.env.REACT_APP_HOST}/api/enroll/settle-enroll`, {
+      postApi(`${process.env.REACT_APP_HOST}/api/enroll/settle-enroll/true`, {
         ...values,
         token: selected?.selectData?.user?.tokenId,
         paymentReceiver: localStorage.getItem('name')
@@ -1133,9 +1147,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
         });
     }
   };
-  const generatePDF = (data) => {
+  const generatePDF = async (data) => {
     const invoice = document.getElementById('invoice');
-    const fileName = `${data?.name}-${isCounterNumber?.paymentNumber}.pdf`;
+    const fileData = await conterNumber();
+    const fileName = `${fileData}.pdf`;
     var opt = {
       margin: 0,
       filename: fileName,
@@ -1221,7 +1236,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
           </Button>
         </DialogActions>
       </Dialog>
-      <CommonModal isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} url={url} setIsFetch={setIsFetch} />
+      <CommonModal isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} url={url} setIsFetch={setIsFetch} fileDataNames={fileDataNames} />
       <Box>
         <Dialog open={isPaymentDialogOpen} onClose={handlePaymentDialogClose}>
           <DialogTitle>Payment Model</DialogTitle>
@@ -1747,7 +1762,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>
@@ -1968,7 +1983,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>
@@ -2206,7 +2221,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>
@@ -2646,7 +2661,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>
@@ -2918,7 +2933,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>
@@ -3815,7 +3830,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>
@@ -4043,7 +4058,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>
@@ -4288,7 +4303,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>
@@ -5005,7 +5020,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>
@@ -5228,7 +5243,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>
@@ -5468,7 +5483,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                       Receipt No :
                                     </div>
                                     <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
-                                      {isCounterNumber?.paymentNumber}
+                                      {fileDataNames}
                                     </div>
                                   </div>
                                 </div>

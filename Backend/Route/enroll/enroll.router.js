@@ -6,7 +6,7 @@ const webCourseController = require("../../controllers/enroll/webCourse.controll
 const commonUpload = require("../../common/utils")
 
 router.post("/createEnroll/:admin/:branch", enrollController.createEnroll);
-router.post("/settle-enroll/:admin/:branch", enrollController.settleEnroll);
+router.post("/settle-enroll/:isCN/:admin/:branch", enrollController.settleEnroll);
 router.post("/find-settle-enroll/:admin/:branch", enrollController.findSettleEnroll);
 router.get("/findEnroll/:admin/:branch", enrollController.getEnroll);
 router.get("/find-book-numbers/:isCN/:admin/:branch", enrollController.getBookNumber);

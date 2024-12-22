@@ -11,7 +11,7 @@ import Logo from "../../assets/images/logoSunrise.png"
 import SunLogo from "../../assets/images/SunLogo.png"
 import DigitalImage from '../../assets/images/copy.jpg';
 import html2pdf from "html2pdf.js";
-function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
+function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataNames }) {
     const { postApi, putApi, getApi } = useApi();
     const [userData, setUserData] = useState(null); // Local state to store user data
     const [btnDisable, setBtnDisable] = useState(false);
@@ -19,30 +19,11 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
     const modelData = useSelector((state) => state?.selected?.modelData);
     const selected = useSelector((state) => state?.selected);
     const dispatch = useDispatch();
-    const [isCounterNumber, setIsCounterNumber] = useState({});
     const isBranch = useSelector((state) => state.user?.userBranch);
     const name = localStorage.getItem('name');
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [branchData, setBranchData] = useState([]);
     const [isMatchBranch, setIsMatchBranch] = useState({});
-    const conterNumber = async () => {
-        try {
-            const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers/false`);
-            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
-            const branchResponse = await getApi(branchUrl);
-            const branchData = branchResponse?.pageItems.map(branch => ({
-                label: branch.branchName,
-                value: branch.branchName,
-                ...branch
-            }));
-            setBranchData(branchData);
-            const matchedBranch = branchData.find(branch => branch.branchName === isBranch);
-            setIsMatchBranch(matchedBranch);
-            setIsCounterNumber(response?.pageItems);
-        } catch (error) {
-            toast.error(error?.message || "Please Try After Sometime");
-        }
-    }
     function formatDateSplit(inputDate) {
 
         var dateComponents = inputDate?.split('-');
@@ -162,7 +143,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
             }
             if (url === '/api/enroll/pay-installments' && selected?.modelData?.page === 'pendingInstallments') {
                 const invoice = document.getElementById('invoice_digital');
-                const fileName = `${values?.name}-${isCounterNumber?.paymentNumber}.pdf`;
+                const fileName = `${fileDataNames}.pdf`;
                 var opt = {
                     margin: 0,
                     filename: fileName,
@@ -319,7 +300,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
 
     const generatePDF = (data) => {
         const invoice = document.getElementById("invoice");
-        const fileName = `${data?.name}-${isCounterNumber?.paymentNumber}.pdf`;
+        const fileName = `${fileDataNames}.pdf`;
         var opt = {
             margin: 0,
             filename: fileName,
@@ -352,8 +333,6 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
             };
         });
     };
-
-
 
     return (
         <Dialog
@@ -624,7 +603,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                                         <div className="nav-details">
                                                             <div className="nav-detail">
                                                                 <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{isCounterNumber?.paymentNumber}</div>
+                                                                <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -757,7 +736,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                                         <div className="nav-details">
                                                             <div className="nav-detail">
                                                                 <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{isCounterNumber?.paymentNumber}</div>
+                                                                <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -907,7 +886,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch }) {
                                                         <div className="nav-details">
                                                             <div className="nav-detail">
                                                                 <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{isCounterNumber?.paymentNumber}</div>
+                                                                <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -39,21 +39,14 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
     const [branchData, setBranchData] = useState([]);
     const [isMatchBranch, setIsMatchBranch] = useState({});
     const name = localStorage.getItem('name');
+    const [fileDataNames, setFileDataNames] = useState('');
 
     const conterNumber = async () => {
         try {
             const response = await getApi(`${process.env.REACT_APP_HOST}/api/enroll/find-book-numbers/false`);
-            setIsCounterNumber(response?.pageItems);
-            const branchUrl = `${process.env.REACT_APP_HOST}/api/admin/branchList`
-            const branchResponse = await getApi(branchUrl);
-            const branchData = branchResponse?.pageItems.map(branch => ({
-                label: branch.branchName,
-                value: branch.branchName,
-                ...branch
-            }));
-            setBranchData(branchData);
-            const matchedBranch = branchData.find(branch => branch.branchName === isBranch);
-            setIsMatchBranch(matchedBranch);
+            const data = response?.pageItems;
+            setFileDataNames(`${Object.keys(data)[0]}-${Object.values(data)[0]}`);
+            return `${Object.keys(data)[0]}-${Object.values(data)[0]}`;
         } catch (error) {
             toast.error(error?.message || "Please Try After Sometime");
         }
@@ -88,6 +81,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
             }
             (async () => {
                 try {
+                    await conterNumber();
                     const response = await getApi(url);
                     setCourseData(response?.pageItems)
                     if (response?.pageItems && Array.isArray(response.pageItems)) {
@@ -109,6 +103,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                 let url = `${process.env.REACT_APP_HOST}/api/admin/findcourse/${selected?.selectData?.user?.enquireType}`;
                 (async () => {
                     try {
+                        await conterNumber();
                         const response = await getApi(url);
                         setCourseData(response?.pageItems)
                         if (response?.pageItems && Array.isArray(response.pageItems)) {
@@ -128,6 +123,13 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
 
         }
     }, [isPaymentDialogOpen]);
+
+    useEffect(() => {
+        const tempCount = async () => {
+            await conterNumber();
+        }
+        tempCount();
+    }, [isDialogOpen])
 
     const customStyles = {
         rdt_TableCol: {
@@ -476,7 +478,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
         installmentDate: selected?.isEdit && selected?.selectData?.user?.installmentDate ? formatDate(selected?.selectData?.user?.installmentDate) : '',
         discount: selected?.isEdit ? selected?.selectData?.user?.discount : '',
         payFees: selected?.isEdit ? selected?.selectData?.user?.payFees?.toFixed(2) : '',
-        payInstallment: selected?.isEdit ? selected?.selectData?.user?.payInstallment : '',
+        payInstallment: selected?.isEdit ? selected?.selectData?.user?.payInstallment : 1,
         partialPayment: selected?.isEdit ? selected?.selectData?.user?.partialPayment : 0,
         paymentMethod: selected?.isEdit ? selected?.selectData?.user?.paymentMethod?.[0] || '' : '',
         paymentReceiver: localStorage.getItem('name'),
@@ -591,14 +593,14 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
 
     const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         setBtnDisable(true);
+        const fileData = await conterNumber();
         try {
             const date = new Date(values?.installmentDate);
             const formattedDate = date.toISOString().split('T')[0];
-
             const formattedValues = { ...values, installmentDate: formattedDate, dob: rowData?.dob, email: rowData?.email, mobileNumber: rowData?.mobileNumber, state: rowData?.state, };
             if (selected?.isEdit) {
                 const invoice = document.getElementById('invoice_digital');
-                const fileName = `${values?.name}-${isCounterNumber?.paymentNumber}.pdf`;
+                const fileName = `${fileData}.pdf`;
                 var opt = {
                     margin: 0,
                     filename: fileName,
@@ -645,7 +647,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                 }
             } else {
                 const invoice = document.getElementById('invoice_digital');
-                const fileName = `${values?.name}-${isCounterNumber?.paymentNumber}.pdf`;
+                const fileName = `${fileData}.pdf`;
                 var opt = {
                     margin: 0,
                     filename: fileName,
@@ -764,9 +766,10 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
         }
     }
 
-    const generatePDF = (data) => {
+    const generatePDF = async (data) => {
         const invoice = document.getElementById("invoice");
-        const fileName = `${data?.name}-${isCounterNumber?.paymentNumber}.pdf`;
+        const fileData = await conterNumber();
+        const fileName = `${fileData}.pdf`;
         var opt = {
             margin: 0,
             filename: fileName,
@@ -858,6 +861,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                 setIsDialogOpen={setIsDialogOpen}
                 url={url}
                 setIsFetch={setIsFetch}
+                fileDataNames={fileDataNames}
             />
             <Box >
                 <Dialog
@@ -1382,7 +1386,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-details">
                                                                     <div className="nav-detail">
                                                                         <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{isCounterNumber?.paymentNumber}</div>
+                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1517,7 +1521,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-details">
                                                                     <div className="nav-detail">
                                                                         <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{isCounterNumber?.paymentNumber}</div>
+                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1669,7 +1673,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-details">
                                                                     <div className="nav-detail">
                                                                         <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{isCounterNumber?.paymentNumber}</div>
+                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1804,7 +1808,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-details">
                                                                     <div className="nav-detail">
                                                                         <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{isCounterNumber?.paymentNumber}</div>
+                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>

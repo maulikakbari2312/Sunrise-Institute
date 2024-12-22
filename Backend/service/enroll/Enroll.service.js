@@ -190,7 +190,7 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
 
         counterNumbers.enrollNumber += 1;
         enroll.enrollNumber = counterNumbers.enrollNumber;
-        enroll.paymentSlipNumber = [`${Object.keys(data)[0]}/${Object.values(data)[0]}`];
+        enroll.paymentSlipNumber = [`${Object.keys(data)[0]}-${Object.values(data)[0]}`];
         // Save the updated document
 
         const newPaymentSlip = {};
@@ -205,7 +205,7 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
         newPaymentSlip.paymentDetails = (copyEnroll.paymentMethod == 'UPI' || copyEnroll.paymentMethod == 'Bank Transfer') ? copyEnroll.paymentDetails : 'Cash';
         newPaymentSlip.payInstallment = copyEnroll.payInstallment;
         newPaymentSlip.paymentReceiver = copyEnroll.paymentReceiver;
-        newPaymentSlip.paymentSlipNumber = `${Object.keys(data)[0]}/${Object.values(data)[0]}`;
+        newPaymentSlip.paymentSlipNumber = `${Object.keys(data)[0]}-${Object.values(data)[0]}`;
         newPaymentSlip.payInstallmentNumbers = Array.from({ length: copyEnroll.payInstallment }, (_, index) => index + 1);
         newPaymentSlip.payInstallmentDate = [...userInstallmentDate];
         newPaymentSlip.installmentAmount = enroll.installmentAmount;
@@ -308,7 +308,7 @@ exports.editBookNumber = async (isBranch, isCN = false) => {
     }
 };
 
-exports.settleEnroll = async (enroll, isAdmin, isBranch) => {
+exports.settleEnroll = async (enroll, isCN, isBranch) => {
     try {
         const data = await this.findBookNumber(isBranch, true);
         const findSettleEnrollStudent = await enrollModel.findOne({ tokenId: enroll?.token });
@@ -1377,14 +1377,14 @@ exports.findBookNumber = async (isBranch, isCN = false) => {
         // Increment each key value by 1
         if (isBranch) {
             if (isBranch == "Abrama, Mota Varachha") {
-                if (isCN) {
-                    returnValue = { sfCn: reversedEnrollPlain.sfCn += 1 };
+                if (isCN == true || isCN == "true") {
+                    returnValue = { 'sf-cn': reversedEnrollPlain.sfCn += 1 };
                 } else {
                     returnValue = { sf: reversedEnrollPlain.sf += 1 };
                 }
             } else if (isBranch == "ABC, Mota Varachha") {
-                if (isCN) {
-                    returnValue = { abcCn: reversedEnrollPlain.abcCn += 1 };
+                if (isCN == true || isCN == "true") {
+                    returnValue = { 'abc-cn': reversedEnrollPlain.abcCn += 1 };
                 } else {
                     returnValue = { abc: reversedEnrollPlain.abc += 1 };
                 }

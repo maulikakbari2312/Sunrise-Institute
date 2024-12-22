@@ -24,28 +24,31 @@ exports.createEnroll = async (req, res) => {
 
         // Save PDF file
         if (req.body.file && req.body.fileName) {
-            const base64Data = req.body.file.split(';base64,').pop();
+            const base64Data = req.body.file.split(";base64,").pop();
             const fileName = req.body.fileName;
-            const directoryPath = path.join(__dirname, '..', '..', 'public');
+            const directoryPath = path.join(__dirname, "..", "..", "public");
             const filePath = path.join(directoryPath, fileName);
 
-            // Check if directory exists, create if not
+            // Ensure the directory exists
             if (!fs.existsSync(directoryPath)) {
                 fs.mkdirSync(directoryPath, { recursive: true });
             }
 
             // Decode and write file
-            fs.writeFile(filePath, base64Data, { encoding: 'base64' }, async (err) => {
+            fs.writeFile(filePath, base64Data, { encoding: "base64" }, async (err) => {
                 if (err) {
                     console.error("Error saving PDF file:", err);
                     return res.status(500).json({ error: "Failed to save PDF file" });
                 }
+
+                // Call the enrollment service
                 const enrollData = await enrollService.createEnrollDetail(req.body, isAdmin, isBranch);
 
                 // Check if enrollment data is valid
                 if (!enrollData) {
                     return res.status(400).json({ error: "Invalid enrollment information" });
                 }
+
                 // Send response after file is saved
                 res.status(200).json(enrollData);
             });
@@ -53,7 +56,7 @@ exports.createEnroll = async (req, res) => {
             return res.status(400).json({ error: "Please provide file and file name" });
         }
     } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
         if (error.name === "ValidationError") {
             const errorMessages = Object.values(error.errors).map((err) => err.message);
             return res.status(400).json({ errorMessages });
@@ -67,12 +70,12 @@ exports.settleEnroll = async (req, res) => {
     const headers = req.headers["authorization"];
     const uservalid = await verifyUser(headers);
     if (uservalid === true) {
-        const isAdmin = req.params.admin
-        const isBranch = req.params.branch
+        const isCN = req.params.isCN;
+        const isBranch = req.params.branch;
         try {
             const enrollData = await enrollService.settleEnroll(
                 req.body,
-                isAdmin,
+                isCN,
                 isBranch
             );
 
