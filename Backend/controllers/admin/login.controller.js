@@ -159,7 +159,7 @@ exports.logIn = async (req, res) => {
             isBranch: user?.branch,
             email: user?.email,
             name: user?.name,
-            isAdmin: (email == 'cmsunriseinstitute.tech@gmail.com' && user["role"] === "Admin" ? 'master' : user["role"] === "Admin" ? true : false),
+            isAdmin: (email == process.env.ADMIN_EMAIL && user["role"] === "Admin" ? 'master' : user["role"] === "Admin" ? true : false),
         };
 
         res.status(200).send(response);

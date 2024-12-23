@@ -185,8 +185,16 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
 
         enroll.pendingFees = pendingFees;
 
-        const counterNumberArrays = await counterNumbersDetail.find();
-        const counterNumbers = counterNumberArrays[0];
+        const counterNumberArrays = await counterNumbersDetail.find();counterNumbers
+        let counterNumbers = counterNumberArrays[0];
+        if (!counterNumbers) {
+            counterNumbers = new counterNumbersDetail({
+                paymentNumber: 0,
+                enrollNumber: 0,
+                enquireNumber: 0,
+            });
+            await counterNumbers.save(); // Save the newly created document
+        }
 
         counterNumbers.enrollNumber += 1;
         enroll.enrollNumber = counterNumbers.enrollNumber;
@@ -273,34 +281,39 @@ Best regards,
 
 exports.editBookNumber = async (isBranch, isCN = false) => {
     try {
-        // Find the counter numbers detail
+        // Fetch the first document in the collection
         const findSettleEnroll = await counterNumbersDetail.find();
         const counterNumbers = findSettleEnroll[0];
-        if (isBranch == "Abrama, Mota Varachha") {
-            if (isCN) {
-                counterNumbers.sfCn += 1;
-            } else {
-                 counterNumbers.sf += 1;
-            }
-        } else if (isBranch == "ABC, Mota Varachha") {
-            if (isCN) {
-                counterNumbers.abcCn += 1;
-            } else {
-                bc: counterNumbers.abc += 1;
-            }
+
+        if (!counterNumbers) {
+            return {
+                status: 404,
+                message: "Counter Numbers not found",
+            };
         }
+
+        // Get the first 3 characters of the branch name, in lowercase
+        const branchKey = isBranch.slice(0, 3).toLowerCase();
+        const dynamicKey = (isCN == true || isCN == "true")? `${branchKey}Cn` : branchKey;
+
+        // Check if the key exists in the object
+        if (!(dynamicKey in counterNumbers)) {
+            // Initialize the key if it doesn't exist
+            counterNumbers[dynamicKey] = 0;
+        }
+
+        // Increment the value for the dynamic key
+        counterNumbers[dynamicKey] += 1;
 
         // Save the updated document
         await counterNumbers.save();
 
         return {
             status: 200,
-            message: message.IMMIGRATION_DATA_UPDATED,
+            message: "Counter Numbers successfully updated",
         };
     } catch (error) {
-        console.log('====================================');
-        console.log(error);
-        console.log('====================================');
+        console.error("Error:", error);
         return {
             status: 500,
             message: "Internal Server Error",
@@ -310,7 +323,6 @@ exports.editBookNumber = async (isBranch, isCN = false) => {
 
 exports.settleEnroll = async (enroll, isCN, isBranch) => {
     try {
-        const data = await this.findBookNumber(isBranch, true);
         const findSettleEnrollStudent = await enrollModel.findOne({ tokenId: enroll?.token });
         if (!findSettleEnrollStudent) {
             return {
@@ -318,7 +330,8 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
                 message: "Enrollment not found",
             };
         }
-
+        
+        const data = await this.findBookNumber(findSettleEnrollStudent?.enquireBranch, true);
         const settleEnrollDetail = new SettleEnrollDetail({
             ...findSettleEnrollStudent.toObject(),
             refundAmount: enroll?.refundAmount,
@@ -349,10 +362,10 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
         findSettleEnrollStudent.cGst = 0.09 * findSettleEnrollStudent.payFees;
         findSettleEnrollStudent.installmentAmount = ((isNaN(parseFloat(enroll.payFees)) ? 0 : parseFloat(enroll.payFees)) - (isNaN(parseFloat(enroll.refundAmount)) ? 0 : parseFloat(enroll.refundAmount))).toFixed(2);
         const counterNumberArrays = await counterNumbersDetail.find();
-        const counterNumbers = counterNumberArrays[0];
+        let counterNumbers = counterNumberArrays[0];
 
         counterNumbers.paymentNumber += 1;
-        findSettleEnrollStudent.paymentSlipNumber = `${Object.keys(data)[0]}/cn/${Object.values(data)[0]}`;
+        findSettleEnrollStudent.paymentSlipNumber = `${Object.keys(data)[0]}-cn-${Object.values(data)[0]}`;
         await paymentSlipDetail.updateMany(
             { tokenId: findSettleEnrollStudent.tokenId },
             { $set: { filterNone: true } }
@@ -368,12 +381,12 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
         newPaymentSlip.paymentDetails = 'Cash';
         newPaymentSlip.payInstallment = findSettleEnrollStudent.payInstallment;
         newPaymentSlip.paymentReceiver = enroll?.paymentReceiver;
-        newPaymentSlip.paymentSlipNumber = `${Object.keys(data)[0]}/cn/${Object.values(data)[0]}`;
+        newPaymentSlip.paymentSlipNumber = `${Object.keys(data)[0]}-cn-${Object.values(data)[0]}`;
         newPaymentSlip.payInstallmentNumbers = [1];
         newPaymentSlip.payInstallmentDate = findSettleEnrollStudent.userInstallmentDate;
         newPaymentSlip.installmentAmount = findSettleEnrollStudent.installmentAmount.toFixed(2);
         newPaymentSlip.paymentMethod = 'Settlement';
-        newPaymentSlip.enquireBranch = isBranch;
+        newPaymentSlip.enquireBranch = findSettleEnrollStudent?.enquireBranch;
         newPaymentSlip.grossPayment = findSettleEnrollStudent.payFees - (0.18 * findSettleEnrollStudent.payFees);
         newPaymentSlip.sGst = 0.09 * findSettleEnrollStudent.payFees;
         newPaymentSlip.cGst = 0.09 * findSettleEnrollStudent.payFees;
@@ -393,7 +406,7 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
             ...findSettleEnrollStudent.toObject(),
         });
         await completeEnrollDetail.save();
-        await this.editBookNumber(isBranch, true);
+        await this.editBookNumber(findSettleEnrollStudent?.enquireBranch, true);
         return {
             status: 200,
             message: message.IMMIGRATION_DATA_UPDATED,
@@ -830,7 +843,7 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
 
         data.pendingFees = pendingFees;
         const counterNumberArrays = await counterNumbersDetail.find();
-        const counterNumbers = counterNumberArrays[0];
+        let counterNumbers = counterNumberArrays[0];
 
         counterNumbers.paymentNumber += 1;
         data.paymentSlipNumber = [`${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`];
@@ -1032,7 +1045,7 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         const paymentReceiver = data.paymentReceiver;
         const paymentDetails = (data.paymentMethod == 'UPI' || data.paymentMethod == 'Bank Transfer') ? data.paymentDetails : 'Cash';
         const counterNumberArrays = await counterNumbersDetail.find();
-        const counterNumbers = counterNumberArrays[0];
+        let counterNumbers = counterNumberArrays[0];
 
         counterNumbers.paymentNumber += 1;
         if (enrollUser.paymentSlipNumber?.includes(`${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`)) {
@@ -1220,7 +1233,7 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         const enrollDataBase = await enrollModel.find({ tokenId: data.tokenId });
         const enrollUser = enrollDataBase[0];
         const counterNumberArrays = await counterNumbersDetail.find();
-        const counterNumbers = counterNumberArrays[0];
+        let counterNumbers = counterNumberArrays[0];
         counterNumbers.paymentNumber += 1;
         enrollUser.pendingFees = (enrollUser.pendingFees - data.partialPayment).toFixed(2);
         if (enrollUser.pendingFees < 0) {
@@ -1361,54 +1374,51 @@ exports.findEnroll = async (isAdmin, isBranch) => {
 };
 exports.findBookNumber = async (isBranch, isCN = false) => {
     try {
-        const counterNumbers = await counterNumbersDetail.find();
-        if (!counterNumbers || counterNumbers.length === 0) {
-            return {
-                status: 404,
-                message: message.IMMIGRATION_NOT_FOUND,
-            };
+        let counterNumbers = await counterNumbersDetail.findOne();
+        if (!counterNumbers) {
+            counterNumbers = new counterNumbersDetail({
+                paymentNumber: 0,
+                enrollNumber: 0,
+                enquireNumber: 0,
+            });
+            await counterNumbers.save(); // Save the newly created document
         }
-        const reversedEnroll = counterNumbers[0];
 
-        // Increment each key value by 1
-        // Convert reversedEnroll to a plain JavaScript object
-        const reversedEnrollPlain = reversedEnroll.toObject();
+        // Convert document to plain JavaScript object
+        const reversedEnrollPlain = counterNumbers.toObject();
         let returnValue = {};
-        // Increment each key value by 1
+        
         if (isBranch) {
-            if (isBranch == "Abrama, Mota Varachha") {
-                if (isCN == true || isCN == "true") {
-                    returnValue = { 'sf-cn': reversedEnrollPlain.sfCn += 1 };
-                } else {
-                    returnValue = { sf: reversedEnrollPlain.sf += 1 };
-                }
-            } else if (isBranch == "ABC, Mota Varachha") {
-                if (isCN == true || isCN == "true") {
-                    returnValue = { 'abc-cn': reversedEnrollPlain.abcCn += 1 };
-                } else {
-                    returnValue = { abc: reversedEnrollPlain.abc += 1 };
-                }
-            }
-        }
-        return returnValue;
+            // Get the first 3 characters of the branch name, in lowercase
+            const branchKey = isBranch.slice(0, 3).toLowerCase();
+            const dynamicKey = (isCN == true || isCN == "true") ? `${branchKey}Cn` : branchKey;
 
+            // Check if the key exists in the database, if not, initialize it
+            if (!(dynamicKey in reversedEnrollPlain)) {
+                reversedEnrollPlain[dynamicKey] = 0;
+                console.log("update");
+                
+                await counterNumbersDetail.updateOne({}, { [dynamicKey]: reversedEnrollPlain[dynamicKey] });
+            }
+
+            // Increment the value for the dynamic key
+            reversedEnrollPlain[dynamicKey] += 1;
+
+            // Update the document in the database
+
+            // Return the updated value
+            returnValue = { [dynamicKey]: reversedEnrollPlain[dynamicKey] };
+        }
+
+        return returnValue;
     } catch (error) {
-        console.log('====================================');
-        console.log(error, error instanceof mongoose.Error.ValidationError);
-        console.log('====================================');
+        console.error("Error:", error);
 
         if (error instanceof mongoose.Error.ValidationError) {
-            const errorMessages = [];
-
-            // Loop through the validation errors and push corresponding messages
-            for (const key in error.errors) {
-                if (error.errors.hasOwnProperty(key)) {
-                    errorMessages.push({
-                        field: key,
-                        message: error.errors[key].message,
-                    });
-                }
-            }
+            const errorMessages = Object.keys(error.errors).map(key => ({
+                field: key,
+                message: error.errors[key].message,
+            }));
 
             return {
                 status: 400,
@@ -1416,7 +1426,6 @@ exports.findBookNumber = async (isBranch, isCN = false) => {
                 errors: errorMessages,
             };
         } else {
-            console.error(error);  // Log the unexpected error for further investigation
             return {
                 status: 500,
                 message: "Internal Server Error",

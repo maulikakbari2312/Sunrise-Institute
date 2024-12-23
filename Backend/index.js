@@ -20,8 +20,8 @@ app.use("/Images", express.static("./Images"))
 const branchModel = require("./model/admin/Branch.modal");
 
 const corsOptions = {
-    // origin: process.env.FRONTEND_PORT,
-    origin: ['https://www.admin.sunriseinstitute.net', 'https://www.sunriseinstitute.net'],
+    origin: process.env.FRONTEND_PORT,
+    // origin: ['https://www.admin.sunriseinstitute.net', 'https://www.sunriseinstitute.net'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
@@ -92,6 +92,8 @@ Best regards,
         const encodedMsg = encodeURIComponent(birthdayMsg);
         const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=text&message=${encodedMsg}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
         // Make the HTTP POST request to send the birthday message
+        console.log("url", url);
+        
         const response = await axios.post(url);
 
         // Check if the request was successful

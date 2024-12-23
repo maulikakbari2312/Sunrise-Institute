@@ -27,7 +27,7 @@ export const useApi = () => {
         headers,
       };
       let editUrl = url;
-      if (url !== `/api/admin/UserList`) {
+      if (!url.includes(`/api/admin/UserList`)) {
         editUrl = `${url}/${isAdmin}/${isBranch}`
       }
 
@@ -120,7 +120,7 @@ export const useApi = () => {
         headers['Content-type'] = 'multipart/form-data'
       }
       let editUrl = url;
-      if (url !== !url.includes(`/api/admin/logIn`) && url !== !url.includes(`/api/admin/editUserList`)) {
+      if (!url.includes(`/api/admin/logIn`) && !url.includes(`/api/admin/editUserList`)) {
         editUrl = `${url}/${isAdmin}/${isBranch}`
       }
       const response = await axios.post(editUrl, requestData, { headers });
@@ -183,7 +183,7 @@ export const useApi = () => {
       let editUrl = url;
 
       // Check if the url does not match the specified values after replacing the UUID
-      if (url.replace(/\/[0-9a-f-]+$/i, '') !== !url.includes(`/api/admin/logIn`) && url.replace(/\/[0-9a-f-]+$/i, '') !== !url.includes(`/api/admin/editUserList`)) {
+      if (!url.includes(`/api/admin/logIn`) && !url.includes(`/api/admin/editUserList`)) {
         // If the condition is true, append /${isAdmin}/${isBranch} to the editUrl
         editUrl = `${url}/${isAdmin}/${isBranch}`;
       }
