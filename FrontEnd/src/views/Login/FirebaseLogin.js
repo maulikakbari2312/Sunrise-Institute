@@ -58,7 +58,12 @@ const FirebaseLogin = ({ ...rest }) => {
       }else{
         cm = false;
       }
-      const apiUrl = `${cm ? process.env.REACT_APP_HOST : process.env.REACT_APP_HOST_SECOND}/api/admin/logIn`;
+      let apiUrl = '';
+      if (cm) {
+        apiUrl = `${process.env.REACT_APP_HOST}/api/admin/logIn`
+      } else {
+        apiUrl = `${process.env.REACT_APP_HOST_SECOND}/api/admin/logIn`
+      }
       postApi(`${apiUrl}`, values, headers)
         .then(async (response) => {
           // You can access the response data using apiOtpResponse in your component
