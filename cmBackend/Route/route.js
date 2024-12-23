@@ -1,0 +1,23 @@
+exports.setUp = function (app) {
+    const immigration = require("./Enquire/Immigration.router");
+    const itCourses = require("./Enquire/ItCourses.router");
+    const competitiveExam = require("./Enquire/CompetitiveExam.router");
+    const enquire = require("./Enquire/enquire.router");
+    const login = require("./admin/login.router");
+    const course = require("./admin/course.router");
+    const branchData = require("./admin/branch.router");
+    const enroll = require("./enroll/enroll.router");
+    const remainder = require("./enroll/reminderDate.router");
+    const branch = require("./branch/branch.router");
+    app.use("/api/immigration", immigration);
+    app.use("/api/competitiveExam", competitiveExam);
+    app.use("/api/itCourses", itCourses);
+    app.use("/api/enquire", enquire);
+    app.use("/api/enroll", enroll);
+    app.use("/api/remainder", remainder);
+    app.use("/api/admin", login);
+    app.use("/api/admin", course);
+    app.use("/api/branch", branch);
+    app.use("/api/admin", branchData);
+};
+module.exports = exports;

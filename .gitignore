@@ -1,7 +1,11 @@
 # Ignore node_modules and build directories in BackEnd
 /BackEnd/node_modules
 /BackEnd/build
-/BackEnd/.env
+# /BackEnd/.env
+
+/cmBackEnd/node_modules
+/cmBackEnd/build
+# /cmBackEnd/.env
 
 # Ignore node_modules and build directories in FrontEnd
 /FrontEnd/node_modules
