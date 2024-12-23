@@ -185,7 +185,7 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
 
         enroll.pendingFees = pendingFees;
 
-        const counterNumberArrays = await counterNumbersDetail.find();counterNumbers
+        const counterNumberArrays = await counterNumbersDetail.find();
         let counterNumbers = counterNumberArrays[0];
         if (!counterNumbers) {
             counterNumbers = new counterNumbersDetail({
