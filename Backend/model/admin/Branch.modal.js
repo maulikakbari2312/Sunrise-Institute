@@ -18,15 +18,15 @@ const branchSchema = new mongoose.Schema({
         type: String,
         required: [true, "Branch GST Number is required"],
     },
-    iGst: {
+    igst: {
         type: Number,
         required: [true, "IGST is required"],
     },
-    cGst: {
+    cgst: {
         type: Number,
         required: [true, "CGST is required"],
     },
-    sGst: {
+    sgst: {
         type: Number,
         required: [true, "SGST is required"],
     },
