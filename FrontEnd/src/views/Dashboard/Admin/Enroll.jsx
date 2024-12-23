@@ -112,13 +112,6 @@ function Enroll() {
                 displayNone: true,
             },
             {
-                name: "Student Gst",
-                type: "text",
-                isNotRequired: true,
-                modelNone: true,
-                // displayNone: true,
-            },
-            {
                 name: "Enquire Branch",
                 type: "text",
                 modelNone: true

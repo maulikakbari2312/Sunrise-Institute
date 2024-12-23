@@ -71,13 +71,6 @@ function PaymentReport() {
                 modelNone: true,
             },
             {
-                name: "Student Gst",
-                type: "text",
-                isNotRequired: true,
-                modelNone: true,
-                // displayNone: true,
-            },
-            {
                 name: "Installment Date",
                 type: "text",
             },

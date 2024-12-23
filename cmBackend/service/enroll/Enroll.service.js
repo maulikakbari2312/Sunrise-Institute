@@ -281,43 +281,33 @@ Best regards,
 
 exports.editBookNumber = async (isBranch, isCN = false) => {
     try {
-        // Fetch the first document in the collection
         const findSettleEnroll = await counterNumbersDetail.find();
         const counterNumbers = findSettleEnroll[0];
 
         if (!counterNumbers) {
-            return {
-                status: 404,
-                message: "Counter Numbers not found",
-            };
+            return { status: 404, message: "Counter Numbers not found" };
         }
 
-        // Get the first 3 characters of the branch name, in lowercase
         const branchKey = isBranch.slice(0, 3).toLowerCase();
-        const dynamicKey = (isCN == true || isCN == "true")? `${branchKey}Cn` : branchKey;
+        const dynamicKey = isCN === true || isCN === "true" ? `${branchKey}Cn` : branchKey;
 
-        // Check if the key exists in the object
-        if (!(dynamicKey in counterNumbers)) {
-            // Initialize the key if it doesn't exist
-            counterNumbers[dynamicKey] = 0;
+        // Increment the dynamic field
+        const updatedCounterNumbers = await counterNumbersDetail.updateOne(
+            { _id: counterNumbers._id },
+            { $inc: { [dynamicKey]: 1 } }
+        );
+
+        if (updatedCounterNumbers.modifiedCount === 0) {
+            console.error("Failed to update the counter number.");
+            return { status: 500, message: "Failed to update counter number" };
         }
 
-        // Increment the value for the dynamic key
-        counterNumbers[dynamicKey] += 1;
+        console.log("Updated successfully");
 
-        // Save the updated document
-        await counterNumbers.save();
-
-        return {
-            status: 200,
-            message: "Counter Numbers successfully updated",
-        };
+        return { status: 200, message: "Counter Numbers successfully updated" };
     } catch (error) {
         console.error("Error:", error);
-        return {
-            status: 500,
-            message: "Internal Server Error",
-        };
+        return { status: 500, message: "Internal Server Error" };
     }
 };
 
@@ -364,7 +354,6 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
         const counterNumberArrays = await counterNumbersDetail.find();
         let counterNumbers = counterNumberArrays[0];
 
-        counterNumbers.paymentNumber += 1;
         findSettleEnrollStudent.paymentSlipNumber = `${Object.keys(data)[0]}-cn-${Object.values(data)[0]}`;
         await paymentSlipDetail.updateMany(
             { tokenId: findSettleEnrollStudent.tokenId },
@@ -845,7 +834,6 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
         const counterNumberArrays = await counterNumbersDetail.find();
         let counterNumbers = counterNumberArrays[0];
 
-        counterNumbers.paymentNumber += 1;
         data.paymentSlipNumber = [`${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`];
         // Save the updated document
         // await counterNumbers.save();
@@ -1047,7 +1035,6 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         const counterNumberArrays = await counterNumbersDetail.find();
         let counterNumbers = counterNumberArrays[0];
 
-        counterNumbers.paymentNumber += 1;
         if (enrollUser.paymentSlipNumber?.includes(`${Object.keys(bookNumber)[0]}/${Object.values(bookNumber)[0]}`)) {
             // If not included, return 404 status with a message
             return {
@@ -1234,7 +1221,6 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         const enrollUser = enrollDataBase[0];
         const counterNumberArrays = await counterNumbersDetail.find();
         let counterNumbers = counterNumberArrays[0];
-        counterNumbers.paymentNumber += 1;
         enrollUser.pendingFees = (enrollUser.pendingFees - data.partialPayment).toFixed(2);
         if (enrollUser.pendingFees < 0) {
             return {
