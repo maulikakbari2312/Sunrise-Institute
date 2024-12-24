@@ -14,6 +14,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { gridSpacing } from 'config';
 
 function PaymentSlipBook() {
+    const cm = localStorage.getItem('cm');
     const theme = useTheme();
     const { postApi, getApi } = useApi();
     const [data, setData] = useState(null);
@@ -24,6 +25,7 @@ function PaymentSlipBook() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.isAdmin);
     const [isUser, setIsUser] = useState(user);
+    const isAdmin = useSelector((state) => state.user?.isAdmin);
 
     useEffect(() => {
         setIsUser(user);
@@ -91,6 +93,7 @@ function PaymentSlipBook() {
         ]
     }
     const [branchData, setBranchData] = useState([]);
+    const isBranch = useSelector((state) => state.user?.userBranch);
     const fetchData = async () => {
         // setIsLoading(true);
         try {
@@ -298,6 +301,162 @@ function PaymentSlipBook() {
                         </Form>
                     )}
                 </Formik>
+                {
+                    isAdmin &&
+                    <Box display="flex" flexDirection="column">
+                        <Formik
+                            initialValues={{
+                                startDate: '',
+                                endDate: '',
+                                paymentType: '',
+                                enquireBranch: ''
+                            }}
+                            onSubmit={async (values, { setSubmitting, resetForm }) => {
+                                setBtnDisable(true);
+                                try {
+                                    let urls = `/api/enroll/download-slip-data/${isAdmin}/${isBranch}`;
+                                    if (cm == "true" || cm === true) {
+                                        urls = `${process.env.REACT_APP_HOST}${urls}`;
+                                    } else {
+                                        urls = `${process.env.REACT_APP_HOST_SECOND}${urls}`;
+                                    }
+                                    const response = await fetch(urls, {
+                                        method: 'POST',
+                                        body: JSON.stringify(values),
+                                        headers: {
+                                            'Content-type': 'application/json',
+                                            'authorization': localStorage.getItem('token')
+                                        }
+                                    });
+
+                                    if (!response.ok) {
+                                        throw new Error('Failed to download file');
+                                    }
+
+                                    const blob = await response.blob();
+                                    const url = window.URL.createObjectURL(blob);
+                                    const a = document.createElement('a');
+                                    a.href = url;
+                                    a.download = `slip-${values.startDate || new Date().toISOString().slice(0, 10)} to ${values?.endDate || new Date().toISOString().slice(0, 10)}.xlsx`;
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    // Cleanup
+                                    window.URL.revokeObjectURL(url);
+                                    document.body.removeChild(a);
+                                    setBtnDisable(false); // Re-enable the button regardless of success or failure
+                                    resetForm();
+                                } catch (error) {
+                                    toast.error(error?.message || "Please Try After Sometime");
+                                    setBtnDisable(false); // Re-enable the button regardless of success or failure
+                                    console.error(error);
+                                    // Handle error: You might want to show a notification to the user
+                                }
+                            }}
+
+                        >
+                            {(values) => (
+                                <Form>
+                                    {(isUser === "master" || isUser == 'true' || isUser == true) &&
+                                        <Grid container spacing={1} mt={3}>
+                                            <Grid item xs={12} lg={3} sm={6} md={4} >
+                                                <Field
+                                                    name="startDate"
+                                                    render={({ form }) => (
+                                                        <InputDateField
+                                                            name="startDate"
+                                                            placeholder="Enter Start Date"
+                                                            form={form}
+                                                            type="date"
+                                                        />
+                                                    )}
+                                                />
+                                                {/* Add other InputFields for additional form fields */}
+                                            </Grid>
+                                            <Grid item xs={12} lg={3} sm={6} md={4} >
+                                                <Field
+                                                    name='endDate'
+                                                    render={({ field, form }) => (
+                                                        <InputDateField
+                                                            name="endDate"
+                                                            placeholder="Enter End Date"
+                                                            form={form}
+                                                            type="date"
+                                                        />
+                                                    )}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} lg={3} sm={6} md={4} >
+                                                <Field
+                                                    name="paymentType"
+                                                    render={({ field, form }) => (
+                                                        <CustomSelectComponent
+                                                            name="paymentType"
+                                                            label="Select Slip Type"
+                                                            placeholder={`Enter Slip Type`}
+                                                            form={form}
+                                                            field={field}
+                                                            options={[
+                                                                {
+                                                                    label: 'CN',
+                                                                    value: 'Settlement'
+                                                                },
+                                                                {
+                                                                    label: 'Other',
+                                                                    value: 'other'
+                                                                },
+                                                            ]}
+                                                        />
+                                                    )}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} lg={3} sm={6} md={4}>
+                                                <Field
+                                                    name="enquireBranch"
+                                                    render={({ form }) => (
+                                                        <Field
+                                                            name='enquireBranch'
+                                                            render={({ field, form }) => (
+                                                                <CustomSelectComponent
+                                                                    name='enquireBranch'
+                                                                    label='Enter Enquire Branch'
+                                                                    placeholder={`Enter Enquire Branch`}
+                                                                    form={form}
+                                                                    field={field}
+                                                                    options={branchData}
+                                                                />
+                                                            )}
+                                                        />
+                                                    )}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} lg={3} sm={6} md={4} >
+                                                <Grid container justifyContent="flex-start" marginTop={2} marginLeft={2}>
+                                                    <Button type="submit" disabled={btnDisable} variant="contained" color="primary" sx={{ marginRight: 2 }}>
+                                                        Download
+                                                    </Button>
+                                                    <Field
+                                                        name="reset"
+                                                        render={({ form }) => (
+                                                            <Button
+                                                                type="reset"
+                                                                variant="contained"
+                                                                color="secondary"
+                                                                disabled={selected.isEdit && btnDisable}
+                                                                onClick={() => { form && form.resetForm(); }}
+                                                            >
+                                                                Reset
+                                                            </Button>
+                                                        )}
+                                                    />
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    }
+                                </Form>
+                            )}
+                        </Formik>
+                    </Box>
+                }
                 {isLoading == true ?
                     <Box display="flex" justifyContent="center" alignItems="center" textAlign="center" w="100%" mt={{ "xl": "40px", "sm": "10px" }}>
                         <CircularProgress />

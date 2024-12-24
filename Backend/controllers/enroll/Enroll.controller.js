@@ -400,6 +400,76 @@ exports.downloadEnrollData = async (req, res) => {
         res.status(401).json({ message: "User Not Valid" });
     }
 };
+exports.downloadSlipData = async (req, res) => {
+    const headers = req.headers["authorization"];
+    const uservalid = await verifyUser(headers);
+    if (uservalid === true) {
+        try {
+            const isAdmin = req.params.admin;
+            const isBranch = req.params.branch;
+            const findEnroll = await enrollService.downloadSlipData(req.body, isAdmin, isBranch);
+            if (findEnroll?.length > 0) {
+                const enrollments = findEnroll.map(enrollment => enrollment);
+
+                const workbook = new ExcelJS.Workbook();
+                const worksheet = workbook.addWorksheet('Enroll Data');
+
+                // Extract headers dynamically from the first object in the array
+                // const headers = Object.keys(findEnroll[0]);
+                const headers = [
+                    'name',
+                    'refundAmount',
+                    'settlementDate',
+                    'enrollDate',
+                    'state',
+                    'iGst',
+                    'sGst',
+                    'cGst',
+                    'payInstallmentFees',
+                    'course',
+                    'payFeesDate',
+                    'payFeesFormatFeesDate',
+                    'paymentDetails',
+                    'payInstallment',
+                    'paymentReceiver',
+                    'paymentSlipNumber',
+                    'payInstallmentNumbers',
+                ]
+                // Add headers
+                worksheet.addRow(headers);
+
+                // Add data
+                enrollments.forEach(enrollment => {
+                    const rowData = headers.map(header => enrollment[header]);
+                    worksheet.addRow(rowData);
+                });
+
+                // Generate Excel file
+                const buffer = await workbook.xlsx.writeBuffer();
+
+                // Send Excel file as response
+                res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                res.setHeader("Content-Disposition", "attachment; filename=enrollData.xlsx");
+                res.status(200).send(buffer);
+            } else {
+                res.status(405).send({ error: "Data Not Found" });
+            }
+        } catch (error) {
+            console.log('error', error);
+            if (error.name === "ValidationError") {
+                const errorMessages = Object.values(error.errors).map(
+                    (err) => err.message
+                );
+                res.status(400).json({ errorMessages });
+            } else {
+                res.status(500).json({ error: "Internal Server Error" });
+            }
+        }
+    }
+    else {
+        res.status(401).json({ message: "User Not Valid" });
+    }
+};
 
 exports.getCourseCompletionStudent = async (req, res) => {
     const headers = req.headers["authorization"];

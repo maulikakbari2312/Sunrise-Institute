@@ -24,6 +24,7 @@ function Enroll() {
     const isAdmin = useSelector((state) => state.user?.isAdmin);
     const state = useSelector((state) => state.selected?.selectData?.user);
     const [branchData, setBranchData] = useState([]);
+    const cm = localStorage.getItem('cm');
 
     useEffect(() => {
         setIsUser(user);
@@ -411,7 +412,12 @@ function Enroll() {
                     onSubmit={async (values, { setSubmitting, resetForm }) => {
                         setBtnDisable(true);
                         try {
-                            const urls = `/api/enroll/download-enroll-data/${isAdmin}/${isBranch}`;
+                            let urls = `/api/enroll/download-enroll-data/${isAdmin}/${isBranch}`;
+                            if (cm == "true" || cm === true) {
+                                urls = `${process.env.REACT_APP_HOST}${urls}`;
+                            } else {
+                                urls = `${process.env.REACT_APP_HOST_SECOND}${urls}`;
+                            }
                             const response = await fetch(urls, {
                                 method: 'POST',
                                 body: JSON.stringify(values),

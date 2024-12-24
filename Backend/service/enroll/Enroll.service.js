@@ -387,7 +387,7 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
         const counterNumberArrays = await counterNumbersDetail.find();
         let counterNumbers = counterNumberArrays[0];
 
-        findSettleEnrollStudent.paymentSlipNumber = `${Object.keys(data)[0]}-cn-${Object.values(data)[0]}`;
+        findSettleEnrollStudent.paymentSlipNumber = `${Object.keys(data)[0]}-${Object.values(data)[0]}`;
         await paymentSlipDetail.updateMany(
             { tokenId: findSettleEnrollStudent.tokenId },
             { $set: { filterNone: true } }
@@ -403,7 +403,7 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
         newPaymentSlip.paymentDetails = 'Cash';
         newPaymentSlip.payInstallment = findSettleEnrollStudent.payInstallment;
         newPaymentSlip.paymentReceiver = enroll?.paymentReceiver;
-        newPaymentSlip.paymentSlipNumber = `${Object.keys(data)[0]}-cn-${Object.values(data)[0]}`;
+        newPaymentSlip.paymentSlipNumber = `${Object.keys(data)[0]}-${Object.values(data)[0]}`;
         newPaymentSlip.payInstallmentNumbers = [1];
         newPaymentSlip.payInstallmentDate = findSettleEnrollStudent.userInstallmentDate;
         newPaymentSlip.installmentAmount = findSettleEnrollStudent.installmentAmount.toFixed(2);
@@ -416,6 +416,8 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
         newPaymentSlip.enquireType = findSettleEnrollStudent?.enquireType;
         newPaymentSlip.tokenId = findSettleEnrollStudent?.tokenId;
         newPaymentSlip.state = findSettleEnrollStudent.state;
+        newPaymentSlip.settlementDate = new Date();
+        newPaymentSlip.refundAmount = findSettleEnrollStudent.refundAmount;
         const paymentSlip = new paymentSlipDetail({
             ...newPaymentSlip,
         });
@@ -1814,7 +1816,108 @@ exports.downloadEnrollData = async (body, isAdmin, isBranch) => {
         }
     }
 };
+exports.downloadSlipData = async (body, isAdmin, isBranch) => {
+    try {
+        // Initialize startDate and endDate with default values
+        let startDate = new Date();
+        let endDate = new Date();
 
+        // Extracting startDate and endDate from the request body if provided
+        if (body.startDate) {
+            // Parse the date from yyyy-mm-dd format
+            const [year, month, day] = body.startDate.split('-').map(Number);
+            startDate = new Date(year, month - 1, day); // Month is 0-based index
+        }
+        if (body.endDate) {
+            // Parse the date from yyyy-mm-dd format
+            const [year, month, day] = body.endDate.split('-').map(Number);
+            endDate = new Date(year, month - 1, day); // Month is 0-based index
+        }
+
+        // Use current date as endDate if not provided
+        if (!body.endDate) {
+            endDate = new Date();
+        }
+
+        let matchQuery = {};
+        if (body.paymentType !== '') {
+            // Add filter for paymentMethod based on paymentType
+            if (body.paymentType === "Settlement") {
+                matchQuery.paymentMethod = "Settlement";
+            } else {
+                matchQuery.paymentMethod = { $ne: "Settlement" };
+            }
+        }
+
+        if (body.enquireBranch !== '') {
+            matchQuery.enquireBranch = body.enquireBranch;
+        }
+        const getEnroll = await paymentSlipDetail.aggregate([
+            {
+                $match: matchQuery
+            },
+            {
+                $addFields: {
+                    convertedDate: {
+                        $dateFromString: {
+                            dateString: "$settlementDate",
+                            format: "%d/%m/%Y" // Adjusted format specifier
+                        }
+                    }
+                }
+            },
+            {
+                $match: {
+                    convertedDate: {
+                        $gte: startDate,
+                        $lte: endDate
+                    }
+                }
+            }
+        ]);
+
+        if (!getEnroll || getEnroll.length === 0) {
+            return {
+                status: 404,
+                message: "Data Not Found", // Updated message
+            };
+        }
+
+        const reversedEnroll = getEnroll.reverse();
+
+        return reversedEnroll;
+    } catch (error) {
+        console.log('====================================');
+        console.log(error, error instanceof mongoose.Error.ValidationError);
+        console.log('====================================');
+
+        if (error instanceof mongoose.Error.ValidationError) {
+            const errorMessages = [];
+
+            // Loop through the validation errors and push corresponding messages
+            for (const key in error.errors) {
+                if (error.errors.hasOwnProperty(key)) {
+                    errorMessages.push({
+                        field: key,
+                        message: error.errors[key].message,
+                    });
+                }
+            }
+
+            return {
+                status: 400,
+                message: "Validation Error",
+                errors: errorMessages,
+            };
+        } else {
+            console.error(error);  // Log the unexpected error for further investigation
+            return {
+                status: 500,
+                message: "Internal Server Error",
+            };
+        }
+    }
+};
 
 // match dob date
 // exports.downloadEnrollData = async (body, isAdmin, isBranch) => {
