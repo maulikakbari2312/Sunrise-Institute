@@ -416,7 +416,7 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
         newPaymentSlip.enquireType = findSettleEnrollStudent?.enquireType;
         newPaymentSlip.tokenId = findSettleEnrollStudent?.tokenId;
         newPaymentSlip.state = findSettleEnrollStudent.state;
-        newPaymentSlip.settlementDate = new Date();
+        newPaymentSlip.settlementDate = new Date().toISOString();
         newPaymentSlip.refundAmount = findSettleEnrollStudent.refundAmount;
         const paymentSlip = new paymentSlipDetail({
             ...newPaymentSlip,
@@ -1818,35 +1818,25 @@ exports.downloadEnrollData = async (body, isAdmin, isBranch) => {
 };
 exports.downloadSlipData = async (body, isAdmin, isBranch) => {
     try {
-        // Initialize startDate and endDate with default values
-        let startDate = new Date();
-        let endDate = new Date();
-
         // Extracting startDate and endDate from the request body if provided
-        if (body.startDate) {
-            // Parse the date from yyyy-mm-dd format
-            const [year, month, day] = body.startDate.split('-').map(Number);
-            startDate = new Date(year, month - 1, day); // Month is 0-based index
-        }
-        if (body.endDate) {
-            // Parse the date from yyyy-mm-dd format
-            const [year, month, day] = body.endDate.split('-').map(Number);
-            endDate = new Date(year, month - 1, day); // Month is 0-based index
-        }
+        const startDate = (body.startDate ? new Date(body.startDate) : new Date());
 
         // Use current date as endDate if not provided
-        if (!body.endDate) {
-            endDate = new Date();
-        }
+        const endDate = body.endDate ? new Date(body.endDate) : new Date();
 
         let matchQuery = {};
-        if (body.paymentType !== '') {
-            // Add filter for paymentMethod based on paymentType
-            if (body.paymentType === "Settlement") {
-                matchQuery.paymentMethod = "Settlement";
-            } else {
-                matchQuery.paymentMethod = { $ne: "Settlement" };
-            }
+        if (body.paymentType === "Settlement") {
+            matchQuery.paymentMethod = "Settlement";
+            matchQuery.settlementDate = {
+                $gte: startDate?.toISOString(),
+                $lte: endDate?.toISOString()
+            };
+        } else {
+            matchQuery.paymentMethod = { $ne: "Settlement" };
+            matchQuery.payFeesFormatFeesDate = {
+                $gte: startDate?.toISOString(),
+                $lte: endDate?.toISOString()
+            };
         }
 
         if (body.enquireBranch !== '') {
@@ -1855,24 +1845,6 @@ exports.downloadSlipData = async (body, isAdmin, isBranch) => {
         const getEnroll = await paymentSlipDetail.aggregate([
             {
                 $match: matchQuery
-            },
-            {
-                $addFields: {
-                    convertedDate: {
-                        $dateFromString: {
-                            dateString: "$settlementDate",
-                            format: "%d/%m/%Y" // Adjusted format specifier
-                        }
-                    }
-                }
-            },
-            {
-                $match: {
-                    convertedDate: {
-                        $gte: startDate,
-                        $lte: endDate
-                    }
-                }
             }
         ]);
 
