@@ -683,7 +683,7 @@ function CompetitiveExam() {
                                                             <div className="nav-details">
                                                                 <div className="nav-detail">
                                                                     <div className="nav-title" style={{ width: '45px' }}>Date :</div>
-                                                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{new Date().toLocaleDateString('en-GB')}</div>
+                                                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' , minWidth: '70px' }}>{new Date().toLocaleDateString('en-GB')}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -694,7 +694,17 @@ function CompetitiveExam() {
                                                             </div>
                                                             <div className="nav-detail">
                                                                 <div className="nav-title" style={{ width: '61px' }}>Email Id:</div>
-                                                                <div className="nav-data" style={{ fontSize: '.75rem' }}>sunriseinstitute.tech@gmail.com</div>
+                                                                <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.branchEmail}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                                            <div className="nav-detail">
+                                                                <div className="nav-title">GSTIN:</div>
+                                                                <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                                            </div>
+                                                            <div className="nav-detail">
+                                                                <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                                                <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                                             </div>
                                                         </div>
                                                     </div>

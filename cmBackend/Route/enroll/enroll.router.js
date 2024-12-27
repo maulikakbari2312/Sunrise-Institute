@@ -28,6 +28,7 @@ router.post("/demoEnrollDetail/:admin/:branch", enrollController.createDemoEnrol
 router.get("/findDemoEnroll/:admin/:branch", enrollController.getDemoEnroll);
 router.delete("/deleteDemoEnroll/:tokenId/:admin/:branch", enrollController.deleteDemoEnroll);
 router.post("/download-enroll-data/:admin/:branch", enrollController.downloadEnrollData);
+router.post("/download-slip-data/:admin/:branch", enrollController.downloadSlipData);
 router.post("/settle-payment-data/:admin/:branch", enrollController.settlePaymentData);
 
 router.post("/create-gallery/:admin/:branch", galleryController.createGallery);

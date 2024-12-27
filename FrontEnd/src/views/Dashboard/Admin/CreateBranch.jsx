@@ -41,6 +41,10 @@ function CreateBranch() {
                 type: "text",
             },
             {
+                name: "Branch Email",
+                type: "text"
+            },
+            {
                 name: "IGST",
                 type: "number",
             },

@@ -120,6 +120,9 @@ const enrollPaymentSchema = new mongoose.Schema({
     grossPayment: {
         type: Number,
     },
+    iGst:{
+        type: Number,
+    },
     sGst: {
         type: Number,
     },

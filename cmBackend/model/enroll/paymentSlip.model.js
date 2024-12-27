@@ -77,12 +77,21 @@ const paymentSlip = new mongoose.Schema({
     grossPayment: {
         type: Number,
     },
+    iGst: {
+        type: Number,
+    },
     sGst: {
         type: Number,
     },
     cGst: {
         type: Number,
     },
+    settlementDate: {
+        type: String,
+    },
+    refundAmount: {
+        type: Number,
+    }
 });
 
 const paymentSlipDetail = new mongoose.model("paymentSlipDetail", paymentSlip);

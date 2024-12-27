@@ -318,7 +318,7 @@ exports.editBookNumber = async (isBranch, isCN = false) => {
         }
 
         const branchKey = isBranch.slice(0, 3).toLowerCase();
-        const dynamicKey = isCN === true || isCN === "true" ? `${branchKey}Cn` : branchKey;
+        const dynamicKey = isCN === true || isCN === "true" ? `${branchKey}-cn` : branchKey;
 
         // Increment the dynamic field
         const updatedCounterNumbers = await counterNumbersDetail.updateOne(

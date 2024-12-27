@@ -1386,7 +1386,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-details">
                                                                     <div className="nav-detail">
                                                                         <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
+                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>{fileDataNames}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1399,7 +1399,17 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 </div>
                                                                 <div className="nav-detail">
                                                                     <div className="nav-title" style={{ width: '61px' }}>Email Id:</div>
-                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>sunriseinstitute.tech@gmail.com</div>
+                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.branchEmail}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title">GSTIN:</div>
+                                                                    <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                                                </div>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1408,7 +1418,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                             </div>
                                             <div className='divider-form'></div>
                                             <div style={{ marginBottom: '5px' }}>
-                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }}>
+                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>
                                                     Fee Receipt
                                                 </h2>
                                             </div>
@@ -1417,7 +1427,25 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                     <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
                                                         <div className="receipt-right" style={{ width: '100%' }}>
                                                             <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0', fontWeight: '500', fontSize: '16px' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Full Name : </h4><div className="border-line-fileds"> {values?.values?.name}</div></p>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '40px', marginTop: '6px' }}>
+                                                            <div
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'space-between',
+                                                                    width: '100%',
+                                                                    height: '23px',
+                                                                    marginTop: '6px'
+                                                                }}
+                                                            >
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                                                    <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                                                </p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                                                    <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                                                    <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                                                </p>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4><div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div></p>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4><div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div></p>
                                                             </div>
@@ -1427,12 +1455,13 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                 <div className="receipt-header receipt-header-mid" style={{ width: '100%', marginBottom: '0' }}>
                                                     <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
                                                         <div className="receipt-right" style={{ width: '100%' }}>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '16px', marginTop: '6px' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}><h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4><div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div></p>
                                                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>{values?.values?.paymentMethod === 'UPI' ? 'Transactions ID :' : values?.values?.paymentMethod === 'Bank Transfer' ? 'Check No :' : 'Cash'} </h4><div className="border-line-fileds">{values?.values?.paymentDetails}</div></p>}
                                                             </div>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '40px', marginTop: '6px' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1450,28 +1479,72 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
 
                                                         <tr>
                                                             <td className="text-right">
-                                                                <p>
-                                                                    <strong>Total Amount: </strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong>Paid Amount: </strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong>Balance Due: </strong>
-                                                                </p>
+                                                                <p><strong>Paid Amount: </strong></p>
+                                                                <p><strong>IGST: </strong></p>
+                                                                <p><strong>SGST: </strong></p>
+                                                                <p><strong>CGST: </strong></p>
+                                                                <p><strong>Total: </strong></p>
                                                             </td>
                                                             <td>
+                                                                {/* Paid Amount */}
                                                                 <p>
-                                                                    <strong><i className="fa fa-inr"></i>{((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) - (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0))?.toFixed(2)}/-</strong>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {parseFloat(
+                                                                            (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0).toFixed(2).toFixed(2) -
+                                                                            parseFloat(
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0)) / 100
+                                                                                ) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)
+                                                                            ).toFixed(2)
+                                                                        )}/-
+                                                                    </strong>
                                                                 </p>
+                                                                {/* IGST */}
                                                                 <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? "0.00"
+                                                                            : parseFloat(
+                                                                                ((isMatchBranch?.igst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)
+                                                                            ).toFixed(2)}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* SGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? parseFloat(
+                                                                                ((isMatchBranch?.sgst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)
+                                                                            ).toFixed(2)
+                                                                            : "0.00"}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* CGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? parseFloat(
+                                                                                ((isMatchBranch?.cgst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)
+                                                                            ).toFixed(2)
+                                                                            : "0.00"}/-
+                                                                    </strong>
+                                                                </p>
+                                                                <p className='total-border-item'>
                                                                     <strong><i className="fa fa-inr"></i> {(!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)?.toFixed(2)}/-</strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong><i className="fa fa-inr"></i> {((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) - (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0) - (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0))?.toFixed(2)}/-</strong>
                                                                 </p>
                                                             </td>
                                                         </tr>
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1521,7 +1594,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-details">
                                                                     <div className="nav-detail">
                                                                         <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
+                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>{fileDataNames}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1534,7 +1607,17 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 </div>
                                                                 <div className="nav-detail">
                                                                     <div className="nav-title" style={{ width: '61px' }}>Email Id:</div>
-                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>sunriseinstitute.tech@gmail.com</div>
+                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.branchEmail}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title">GSTIN:</div>
+                                                                    <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                                                </div>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1543,7 +1626,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                             </div>
                                             <div className='divider-form'></div>
                                             <div style={{ marginBottom: '5px' }}>
-                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }}>
+                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>
                                                     Fee Receipt
                                                 </h2>
                                             </div>
@@ -1552,7 +1635,25 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                     <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
                                                         <div className="receipt-right" style={{ width: '100%' }}>
                                                             <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0', fontWeight: '500', fontSize: '16px' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Full Name : </h4><div className="border-line-fileds"> {values?.values?.name}</div></p>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '40px', marginTop: '6px' }}>
+                                                            <div
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'space-between',
+                                                                    width: '100%',
+                                                                    height: '23px',
+                                                                    marginTop: '6px'
+                                                                }}
+                                                            >
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                                                    <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                                                </p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                                                    <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                                                    <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                                                </p>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4><div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div></p>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4><div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div></p>
                                                             </div>
@@ -1562,12 +1663,13 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                 <div className="receipt-header receipt-header-mid" style={{ width: '100%', marginBottom: '0' }}>
                                                     <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
                                                         <div className="receipt-right" style={{ width: '100%' }}>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '16px', marginTop: '6px' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}><h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4><div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div></p>
                                                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>{values?.values?.paymentMethod === 'UPI' ? 'Transactions ID :' : values?.values?.paymentMethod === 'Bank Transfer' ? 'Check No :' : 'Cash'} </h4><div className="border-line-fileds">{values?.values?.paymentDetails}</div></p>}
                                                             </div>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '40px', marginTop: '6px' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1585,25 +1687,78 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
 
                                                         <tr>
                                                             <td className="text-right">
-                                                                <p>
-                                                                    <strong>Total Amount: </strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong>Paid Amount: </strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong>Balance Due: </strong>
-                                                                </p>
+                                                                <p><strong>Paid Amount: </strong></p>
+                                                                <p><strong>IGST: </strong></p>
+                                                                <p><strong>SGST: </strong></p>
+                                                                <p><strong>CGST: </strong></p>
+                                                                <p><strong>Total: </strong></p>
                                                             </td>
                                                             <td>
+                                                                {/* Paid Amount */}
                                                                 <p>
-                                                                    <strong><i className="fa fa-inr"></i>{((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) - (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0))?.toFixed(2)}/-</strong>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {parseFloat(
+                                                                            (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0).toFixed(2) -
+                                                                            parseFloat(
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0)) / 100
+                                                                                ) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)
+                                                                        )}/-
+                                                                    </strong>
                                                                 </p>
+                                                                {/* IGST */}
                                                                 <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? "0.00"
+                                                                            : parseFloat(
+                                                                                ((isMatchBranch?.igst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* SGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? parseFloat(
+                                                                                ((isMatchBranch?.sgst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)
+                                                                            : "0.00"}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* CGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? parseFloat(
+                                                                                ((isMatchBranch?.cgst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)
+                                                                            : "0.00"}/-
+                                                                    </strong>
+                                                                </p>
+                                                                <p className='total-border-item'>
                                                                     <strong><i className="fa fa-inr"></i> {(!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)?.toFixed(2)}/-</strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong><i className="fa fa-inr"></i> {((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) - (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0) - (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0))?.toFixed(2)}/-</strong>
                                                                 </p>
                                                             </td>
                                                         </tr>
@@ -1673,7 +1828,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-details">
                                                                     <div className="nav-detail">
                                                                         <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
+                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>{fileDataNames}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1686,7 +1841,17 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 </div>
                                                                 <div className="nav-detail">
                                                                     <div className="nav-title" style={{ width: '61px' }}>Email Id:</div>
-                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>sunriseinstitute.tech@gmail.com</div>
+                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.branchEmail}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title">GSTIN:</div>
+                                                                    <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                                                </div>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1695,7 +1860,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                             </div>
                                             <div className='divider-form'></div>
                                             <div style={{ marginBottom: '5px' }}>
-                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }}>
+                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>
                                                     Fee Receipt
                                                 </h2>
                                             </div>
@@ -1704,7 +1869,25 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                     <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
                                                         <div className="receipt-right" style={{ width: '100%' }}>
                                                             <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0', fontWeight: '500', fontSize: '16px' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Full Name : </h4><div className="border-line-fileds"> {values?.values?.name}</div></p>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '40px', marginTop: '6px' }}>
+                                                            <div
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'space-between',
+                                                                    width: '100%',
+                                                                    height: '23px',
+                                                                    marginTop: '6px'
+                                                                }}
+                                                            >
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                                                    <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                                                </p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                                                    <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                                                    <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                                                </p>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4><div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div></p>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4><div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div></p>
                                                             </div>
@@ -1714,12 +1897,13 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                 <div className="receipt-header receipt-header-mid" style={{ width: '100%', marginBottom: '0' }}>
                                                     <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
                                                         <div className="receipt-right" style={{ width: '100%' }}>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '16px', marginTop: '6px' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}><h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4><div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div></p>
                                                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>{values?.values?.paymentMethod === 'UPI' ? 'Transactions ID :' : values?.values?.paymentMethod === 'Bank Transfer' ? 'Check No :' : 'Cash'} </h4><div className="border-line-fileds">{values?.values?.paymentDetails}</div></p>}
                                                             </div>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '40px', marginTop: '6px' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1737,28 +1921,82 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
 
                                                         <tr>
                                                             <td className="text-right">
-                                                                <p>
-                                                                    <strong>Total Amount: </strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong>Paid Amount: </strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong>Balance Due: </strong>
-                                                                </p>
+                                                                <p><strong>Paid Amount: </strong></p>
+                                                                <p><strong>IGST: </strong></p>
+                                                                <p><strong>SGST: </strong></p>
+                                                                <p><strong>CGST: </strong></p>
+                                                                <p><strong>Total: </strong></p>
                                                             </td>
                                                             <td>
+                                                                {/* Paid Amount */}
                                                                 <p>
-                                                                    <strong><i className="fa fa-inr"></i>{((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) - (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0))?.toFixed(2)}/-</strong>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {parseFloat(
+                                                                            (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0).toFixed(2) -
+                                                                            parseFloat(
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0)) / 100
+                                                                                ) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)
+                                                                        )}/-
+                                                                    </strong>
                                                                 </p>
+                                                                {/* IGST */}
                                                                 <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? "0.00"
+                                                                            : parseFloat(
+                                                                                ((isMatchBranch?.igst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* SGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? parseFloat(
+                                                                                ((isMatchBranch?.sgst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)
+                                                                            : "0.00"}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* CGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? parseFloat(
+                                                                                ((isMatchBranch?.cgst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)
+                                                                            : "0.00"}/-
+                                                                    </strong>
+                                                                </p>
+                                                                <p className='total-border-item'>
                                                                     <strong><i className="fa fa-inr"></i> {(!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)?.toFixed(2)}/-</strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong><i className="fa fa-inr"></i> {((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) - (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0) - (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0))?.toFixed(2)}/-</strong>
                                                                 </p>
                                                             </td>
                                                         </tr>
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1778,7 +2016,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                 </div>
                                                 <div className='footer-divider-form'></div>
                                                 <div className='branch-address'>
-                                                {isMatchBranch?.branchAddress}
+                                                    {isMatchBranch?.branchAddress}
                                                 </div>
                                             </div>
                                         </div>
@@ -1808,7 +2046,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <div className="nav-details">
                                                                     <div className="nav-detail">
                                                                         <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>{fileDataNames}</div>
+                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>{fileDataNames}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1821,7 +2059,17 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 </div>
                                                                 <div className="nav-detail">
                                                                     <div className="nav-title" style={{ width: '61px' }}>Email Id:</div>
-                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>sunriseinstitute.tech@gmail.com</div>
+                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.branchEmail}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title">GSTIN:</div>
+                                                                    <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                                                </div>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1830,7 +2078,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                             </div>
                                             <div className='divider-form'></div>
                                             <div style={{ marginBottom: '5px' }}>
-                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }}>
+                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>
                                                     Fee Receipt
                                                 </h2>
                                             </div>
@@ -1839,7 +2087,25 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                     <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
                                                         <div className="receipt-right" style={{ width: '100%' }}>
                                                             <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0', fontWeight: '500', fontSize: '16px' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Full Name : </h4><div className="border-line-fileds"> {values?.values?.name}</div></p>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '40px', marginTop: '6px' }}>
+                                                            <div
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'space-between',
+                                                                    width: '100%',
+                                                                    height: '23px',
+                                                                    marginTop: '6px'
+                                                                }}
+                                                            >
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                                                    <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                                                </p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                                                    <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                                                    <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                                                </p>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4><div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div></p>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4><div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div></p>
                                                             </div>
@@ -1849,12 +2115,13 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                 <div className="receipt-header receipt-header-mid" style={{ width: '100%', marginBottom: '0' }}>
                                                     <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
                                                         <div className="receipt-right" style={{ width: '100%' }}>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '16px', marginTop: '6px' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}><h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4><div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div></p>
                                                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>{values?.values?.paymentMethod === 'UPI' ? 'Transactions ID :' : values?.values?.paymentMethod === 'Bank Transfer' ? 'Check No :' : 'Cash'} </h4><div className="border-line-fileds">{values?.values?.paymentDetails}</div></p>}
                                                             </div>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '40px', marginTop: '6px' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1872,25 +2139,78 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
 
                                                         <tr>
                                                             <td className="text-right">
-                                                                <p>
-                                                                    <strong>Total Amount: </strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong>Paid Amount: </strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong>Balance Due: </strong>
-                                                                </p>
+                                                                <p><strong>Paid Amount: </strong></p>
+                                                                <p><strong>IGST: </strong></p>
+                                                                <p><strong>SGST: </strong></p>
+                                                                <p><strong>CGST: </strong></p>
+                                                                <p><strong>Total: </strong></p>
                                                             </td>
                                                             <td>
+                                                                {/* Paid Amount */}
                                                                 <p>
-                                                                    <strong><i className="fa fa-inr"></i>{((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) - (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0))?.toFixed(2)}/-</strong>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {parseFloat(
+                                                                            (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0).toFixed(2) -
+                                                                            parseFloat(
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0)) / 100
+                                                                                ) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)
+                                                                        )}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* IGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? "0.00"
+                                                                            : parseFloat(
+                                                                                ((isMatchBranch?.igst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* SGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? parseFloat(
+                                                                                ((isMatchBranch?.sgst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)
+                                                                            : "0.00"}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* CGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? parseFloat(
+                                                                                ((isMatchBranch?.cgst || 0) / 100) *
+                                                                                (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                    ? parseFloat(values?.values?.payFees)
+                                                                                    : 0)
+                                                                            ).toFixed(2)
+                                                                            : "0.00"}/-
+                                                                    </strong>
                                                                 </p>
                                                                 <p>
                                                                     <strong><i className="fa fa-inr"></i> {(!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)?.toFixed(2)}/-</strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong><i className="fa fa-inr"></i> {((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) - (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0) - (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0))?.toFixed(2)}/-</strong>
                                                                 </p>
                                                             </td>
                                                         </tr>
@@ -1920,7 +2240,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                 </div>
                                                 <div className='footer-divider-form'></div>
                                                 <div className='branch-address'>
-                                                {isMatchBranch?.branchAddress}
+                                                    {isMatchBranch?.branchAddress}
                                                 </div>
                                             </div>
                                         </div>

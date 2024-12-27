@@ -67,7 +67,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
     const tempCount = async () => {
       await conterNumber();
     }
-  tempCount();
+    tempCount();
   }, [isDialogOpen]);
   // craete payment slip?
   useEffect(() => {
@@ -1761,7 +1761,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -1779,8 +1779,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -1788,8 +1798,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                       </div>
                       <div className="divider-form"></div>
-                      <div style={{ marginBottom: '5px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Fee Receipt</h2>
+                      <div style={{ marginBottom: '2px' }}>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header' >Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -1799,7 +1809,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -1813,15 +1823,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -1837,16 +1865,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '16px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%', margin: '0' }}>
                                   <h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4>
                                   <div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div>
                                 </p>
                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && (
-                                  <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}>
+                                  <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%', margin: '0' }}>
                                     <h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>
                                       {values?.values?.paymentMethod === 'UPI'
                                         ? 'Transactions ID :'
@@ -1863,14 +1891,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                               </div>
                             </div>
                           </div>
@@ -1887,38 +1916,80 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                           <tbody>
                             <tr>
                               <td className="text-right">
-                                <p>
-                                  <strong>Total Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Paid Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Balance Due: </strong>
-                                </p>
+                                <p><strong>Paid Amount: </strong></p>
+                                <p><strong>IGST: </strong></p>
+                                <p><strong>SGST: </strong></p>
+                                <p><strong>CGST: </strong></p>
+                                <p><strong>Total: </strong></p>
                               </td>
                               <td>
+                                {/* Paid Amount */}
                                 <p>
                                   <strong>
-                                    <i className="fa fa-inr"></i>
-                                    {((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) -
-                                      (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0))?.toFixed(2)}
-                                    /-
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {parseFloat(
+                                      (!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (
+                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                            : (isMatchBranch?.igst || 0)) / 100
+                                        ) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
+                                {/* IGST */}
                                 <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : parseFloat(
+                                        ((isMatchBranch?.igst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)}/-
+                                  </strong>
+                                </p>
+                                {/* SGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.sgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                {/* CGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.cgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                <p className='total-border-item'>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {(!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)?.toFixed(2)}/-
-                                  </strong>
-                                </p>
-                                <p>
-                                  <strong>
-                                    <i className="fa fa-inr"></i>{' '}
-                                    {((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) -
-                                      (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0) -
-                                      (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0))?.toFixed(2)}
-                                    /-
                                   </strong>
                                 </p>
                               </td>
@@ -1982,7 +2053,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -1992,7 +2063,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 <div className="nav-detail">
                                   <div className="nav-title">Mobile No:</div>
                                   <div className="nav-data">
-                                  {isMatchBranch?.branchPhoneNumber}
+                                    {isMatchBranch?.branchPhoneNumber}
                                   </div>
                                 </div>
                                 <div className="nav-detail">
@@ -2000,8 +2071,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -2009,8 +2090,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                       </div>
                       <div className="divider-form"></div>
-                      <div style={{ marginBottom: '5px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Fee Receipt</h2>
+                      <div style={{ marginBottom: '2px' }}>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -2020,7 +2101,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -2034,15 +2115,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -2058,16 +2157,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '16px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%', margin: '0' }}>
                                   <h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4>
                                   <div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div>
                                 </p>
                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && (
-                                  <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}>
+                                  <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%', margin: '0' }}>
                                     <h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>
                                       {values?.values?.paymentMethod === 'UPI'
                                         ? 'Transactions ID :'
@@ -2084,14 +2183,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                               </div>
                             </div>
                           </div>
@@ -2108,38 +2208,80 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                           <tbody>
                             <tr>
                               <td className="text-right">
-                                <p>
-                                  <strong>Total Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Paid Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Balance Due: </strong>
-                                </p>
+                                <p><strong>Paid Amount: </strong></p>
+                                <p><strong>IGST: </strong></p>
+                                <p><strong>SGST: </strong></p>
+                                <p><strong>CGST: </strong></p>
+                                <p><strong>Total: </strong></p>
                               </td>
                               <td>
+                                {/* Paid Amount */}
                                 <p>
                                   <strong>
-                                    <i className="fa fa-inr"></i>
-                                    {((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) -
-                                      (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0))?.toFixed(2)}
-                                    /-
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {parseFloat(
+                                      (!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (
+                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                            : (isMatchBranch?.igst || 0)) / 100
+                                        ) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
+                                {/* IGST */}
                                 <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : parseFloat(
+                                        ((isMatchBranch?.igst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)}/-
+                                  </strong>
+                                </p>
+                                {/* SGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.sgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                {/* CGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.cgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                <p className='total-border-item'>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {(!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)?.toFixed(2)}/-
-                                  </strong>
-                                </p>
-                                <p>
-                                  <strong>
-                                    <i className="fa fa-inr"></i>{' '}
-                                    {((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) -
-                                      (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0) -
-                                      (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0))?.toFixed(2)}
-                                    /-
                                   </strong>
                                 </p>
                               </td>
@@ -2165,7 +2307,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                         <div className="footer-divider-form"></div>
                         <div className="branch-address">
-                        {isMatchBranch?.branchAddress}
+                          {isMatchBranch?.branchAddress}
                         </div>
                       </div>
                     </div>
@@ -2220,7 +2362,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -2230,7 +2372,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 <div className="nav-detail">
                                   <div className="nav-title">Mobile No:</div>
                                   <div className="nav-data">
-                                  {isMatchBranch?.branchPhoneNumber}
+                                    {isMatchBranch?.branchPhoneNumber}
                                   </div>
                                 </div>
                                 <div className="nav-detail">
@@ -2238,8 +2380,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -2247,8 +2399,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                       </div>
                       <div className="divider-form"></div>
-                      <div style={{ marginBottom: '5px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Fee Receipt</h2>
+                      <div style={{ marginBottom: '2px' }}>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -2258,7 +2410,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -2272,15 +2424,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -2296,16 +2466,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '16px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%', margin: '0' }}>
                                   <h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4>
                                   <div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div>
                                 </p>
                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && (
-                                  <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}>
+                                  <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%', margin: '0' }}>
                                     <h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>
                                       {values?.values?.paymentMethod === 'UPI'
                                         ? 'Transactions ID :'
@@ -2322,14 +2492,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                               </div>
                             </div>
                           </div>
@@ -2346,38 +2517,80 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                           <tbody>
                             <tr>
                               <td className="text-right">
-                                <p>
-                                  <strong>Total Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Paid Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Balance Due: </strong>
-                                </p>
+                                <p><strong>Paid Amount: </strong></p>
+                                <p><strong>IGST: </strong></p>
+                                <p><strong>SGST: </strong></p>
+                                <p><strong>CGST: </strong></p>
+                                <p><strong>Total: </strong></p>
                               </td>
                               <td>
+                                {/* Paid Amount */}
                                 <p>
                                   <strong>
-                                    <i className="fa fa-inr"></i>
-                                    {((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) -
-                                      (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0))?.toFixed(2)}
-                                    /-
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {parseFloat(
+                                      (!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (
+                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                            : (isMatchBranch?.igst || 0)) / 100
+                                        ) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
+                                {/* IGST */}
                                 <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : parseFloat(
+                                        ((isMatchBranch?.igst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)}/-
+                                  </strong>
+                                </p>
+                                {/* SGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.sgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                {/* CGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.cgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                <p className='total-border-item'>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {(!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)?.toFixed(2)}/-
-                                  </strong>
-                                </p>
-                                <p>
-                                  <strong>
-                                    <i className="fa fa-inr"></i>{' '}
-                                    {((!isNaN(parseFloat(selectedCourse?.fees)) ? parseFloat(selectedCourse?.fees) : 0) -
-                                      (!isNaN(parseFloat(values?.values?.discount)) ? parseFloat(values?.values?.discount) : 0) -
-                                      (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0))?.toFixed(2)}
-                                    /-
                                   </strong>
                                 </p>
                               </td>
@@ -2402,13 +2615,13 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                               </div>
                             </div>
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'end', width: '100%', justifyContent: 'center', fontWeight: '600', marginTop: '6px' }}>
+                          <div style={{ display: 'flex', alignItems: 'end', width: '100%', justifyContent: 'center', fontWeight: '600', marginTop: '4px' }}>
                             *This is a Computer  Generated Copy.
                           </div>
                         </div>
                         <div className="footer-divider-form"></div>
                         <div className="branch-address">
-                        {isMatchBranch?.branchAddress}
+                          {isMatchBranch?.branchAddress}
                         </div>
                       </div>
                     </div>
@@ -2660,7 +2873,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -2670,7 +2883,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 <div className="nav-detail">
                                   <div className="nav-title">Mobile No:</div>
                                   <div className="nav-data">
-                                  {isMatchBranch?.branchPhoneNumber}
+                                    {isMatchBranch?.branchPhoneNumber}
                                   </div>
                                 </div>
                                 <div className="nav-detail">
@@ -2678,8 +2891,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -2688,7 +2911,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                       </div>
                       <div className="divider-form"></div>
                       <div style={{ marginBottom: '12px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Refund Fee Receipt</h2>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Refund Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -2698,7 +2921,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -2712,15 +2935,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -2730,15 +2971,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Enroll Date : </h4>
                                   <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.enrollDate}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Student Branch : </h4>
                                   <div className="border-line-fileds">{selected?.selectData?.user?.enquireBranch}</div>
                                 </p>
@@ -2748,10 +2989,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
+                                  height: '23px',
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Refund By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
@@ -2877,7 +3118,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                         <div className="footer-divider-form"></div>
                         <div className="branch-address">
-                        {isMatchBranch?.branchAddress}
+                          {isMatchBranch?.branchAddress}
                         </div>
                       </div>
                     </div>
@@ -2932,7 +3173,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -2942,7 +3183,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 <div className="nav-detail">
                                   <div className="nav-title">Mobile No:</div>
                                   <div className="nav-data">
-                                  {isMatchBranch?.branchPhoneNumber}
+                                    {isMatchBranch?.branchPhoneNumber}
                                   </div>
                                 </div>
                                 <div className="nav-detail">
@@ -2950,8 +3191,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -2960,7 +3211,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                       </div>
                       <div className="divider-form"></div>
                       <div style={{ marginBottom: '12px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Refund Fee Receipt</h2>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Refund Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -2970,7 +3221,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -2984,15 +3235,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -3002,15 +3271,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Enroll Date : </h4>
                                   <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.enrollDate}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Student Branch : </h4>
                                   <div className="border-line-fileds">{selected?.selectData?.user?.enquireBranch}</div>
                                 </p>
@@ -3020,10 +3289,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
+                                  height: '23px',
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Refund By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
@@ -3148,7 +3417,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                               </div>
                             </div>
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'end', width: '100%', justifyContent: 'center', fontWeight: '600', marginTop: '6px' }}>
+                          <div style={{ display: 'flex', alignItems: 'end', width: '100%', justifyContent: 'center', fontWeight: '600', marginTop: '4px' }}>
                             *This is a Computer  Generated Copy.
                           </div>
                         </div>
@@ -3829,7 +4098,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -3847,8 +4116,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -3856,8 +4135,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                       </div>
                       <div className="divider-form"></div>
-                      <div style={{ marginBottom: '5px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Fee Receipt</h2>
+                      <div style={{ marginBottom: '2px' }}>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -3867,7 +4146,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -3881,15 +4160,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -3905,16 +4202,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '16px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%', margin: '0' }}>
                                   <h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4>
                                   <div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div>
                                 </p>
                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && (
-                                  <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}>
+                                  <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%', margin: '0' }}>
                                     <h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>
                                       {values?.values?.paymentMethod === 'UPI'
                                         ? 'Transactions ID :'
@@ -3931,14 +4228,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                               </div>
                             </div>
                           </div>
@@ -3955,44 +4253,82 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                           <tbody>
                             <tr>
                               <td className="text-right">
-                                <p>
-                                  <strong>Total Amount Due: </strong>
-                                </p>
-                                <p>
-                                  <strong>Paid Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Balance Due: </strong>
-                                </p>
+                                <p><strong>Paid Amount: </strong></p>
+                                <p><strong>IGST: </strong></p>
+                                <p><strong>SGST: </strong></p>
+                                <p><strong>CGST: </strong></p>
+                                <p><strong>Total: </strong></p>
                               </td>
                               <td>
+                                {/* Paid Amount */}
                                 <p>
                                   <strong>
-                                    <i className="fa fa-inr"></i>
-                                    {(!isNaN(parseFloat(selected?.selectData?.user?.pendingFees))
-                                      ? parseFloat(selected?.selectData?.user?.pendingFees)
-                                      : 0)?.toFixed(2)}
-                                    /-
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {parseFloat(
+                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (
+                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                            : (isMatchBranch?.igst || 0)) / 100
+                                        ) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
+                                {/* IGST */}
                                 <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : parseFloat(
+                                        ((isMatchBranch?.igst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)}/-
+                                  </strong>
+                                </p>
+                                {/* SGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.sgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                {/* CGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.cgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                <p className='total-border-item'>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {(!isNaN(parseFloat(values?.values?.payInstallmentFees))
                                       ? parseFloat(values?.values?.payInstallmentFees)
                                       : 0)?.toFixed(2)}
-                                    /-
-                                  </strong>
-                                </p>
-                                <p>
-                                  <strong>
-                                    <i className="fa fa-inr"></i>{' '}
-                                    {((!isNaN(parseFloat(selected?.selectData?.user?.pendingFees))
-                                      ? parseFloat(selected?.selectData?.user?.pendingFees)
-                                      : 0) -
-                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                        : 0))?.toFixed(2)}
                                     /-
                                   </strong>
                                 </p>
@@ -4057,7 +4393,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -4067,7 +4403,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 <div className="nav-detail">
                                   <div className="nav-title">Mobile No:</div>
                                   <div className="nav-data">
-                                  {isMatchBranch?.branchPhoneNumber}
+                                    {isMatchBranch?.branchPhoneNumber}
                                   </div>
                                 </div>
                                 <div className="nav-detail">
@@ -4075,8 +4411,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -4084,8 +4430,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                       </div>
                       <div className="divider-form"></div>
-                      <div style={{ marginBottom: '5px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Fee Receipt</h2>
+                      <div style={{ marginBottom: '2px' }}>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -4095,7 +4441,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -4109,15 +4455,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -4133,16 +4497,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '16px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%', margin: '0' }}>
                                   <h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4>
                                   <div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div>
                                 </p>
                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && (
-                                  <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}>
+                                  <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%', margin: '0' }}>
                                     <h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>
                                       {values?.values?.paymentMethod === 'UPI'
                                         ? 'Transactions ID :'
@@ -4159,14 +4523,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                               </div>
                             </div>
                           </div>
@@ -4183,44 +4548,82 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                           <tbody>
                             <tr>
                               <td className="text-right">
-                                <p>
-                                  <strong>Total Amount Due: </strong>
-                                </p>
-                                <p>
-                                  <strong>Paid Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Balance Due: </strong>
-                                </p>
+                                <p><strong>Paid Amount: </strong></p>
+                                <p><strong>IGST: </strong></p>
+                                <p><strong>SGST: </strong></p>
+                                <p><strong>CGST: </strong></p>
+                                <p><strong>Total: </strong></p>
                               </td>
                               <td>
+                                {/* Paid Amount */}
                                 <p>
                                   <strong>
-                                    <i className="fa fa-inr"></i>
-                                    {(!isNaN(parseFloat(selected?.selectData?.user?.pendingFees))
-                                      ? parseFloat(selected?.selectData?.user?.pendingFees)
-                                      : 0)?.toFixed(2)}
-                                    /-
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {parseFloat(
+                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (
+                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                            : (isMatchBranch?.igst || 0)) / 100
+                                        ) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
+                                {/* IGST */}
                                 <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : parseFloat(
+                                        ((isMatchBranch?.igst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)}/-
+                                  </strong>
+                                </p>
+                                {/* SGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.sgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                {/* CGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.cgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                <p className='total-border-item'>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {(!isNaN(parseFloat(values?.values?.payInstallmentFees))
                                       ? parseFloat(values?.values?.payInstallmentFees)
                                       : 0)?.toFixed(2)}
-                                    /-
-                                  </strong>
-                                </p>
-                                <p>
-                                  <strong>
-                                    <i className="fa fa-inr"></i>{' '}
-                                    {((!isNaN(parseFloat(selected?.selectData?.user?.pendingFees))
-                                      ? parseFloat(selected?.selectData?.user?.pendingFees)
-                                      : 0) -
-                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                        : 0))?.toFixed(2)}
                                     /-
                                   </strong>
                                 </p>
@@ -4302,7 +4705,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -4320,8 +4723,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -4329,8 +4742,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                       </div>
                       <div className="divider-form"></div>
-                      <div style={{ marginBottom: '5px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Fee Receipt</h2>
+                      <div style={{ marginBottom: '2px' }}>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -4340,7 +4753,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -4354,15 +4767,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -4378,16 +4809,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '16px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%', margin: '0' }}>
                                   <h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4>
                                   <div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div>
                                 </p>
                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && (
-                                  <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}>
+                                  <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%', margin: '0' }}>
                                     <h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>
                                       {values?.values?.paymentMethod === 'UPI'
                                         ? 'Transactions ID :'
@@ -4404,14 +4835,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                               </div>
                             </div>
                           </div>
@@ -4428,27 +4860,77 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                           <tbody>
                             <tr>
                               <td className="text-right">
-                                <p>
-                                  <strong>Total Amount Due: </strong>
-                                </p>
-                                <p>
-                                  <strong>Paid Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Balance Due: </strong>
-                                </p>
+                                <p><strong>Paid Amount: </strong></p>
+                                <p><strong>IGST: </strong></p>
+                                <p><strong>SGST: </strong></p>
+                                <p><strong>CGST: </strong></p>
+                                <p><strong>Total: </strong></p>
                               </td>
                               <td>
+                                {/* Paid Amount */}
                                 <p>
                                   <strong>
-                                    <i className="fa fa-inr"></i>
-                                    {(!isNaN(parseFloat(selected?.selectData?.user?.pendingFees))
-                                      ? parseFloat(selected?.selectData?.user?.pendingFees)
-                                      : 0)?.toFixed(2)}
-                                    /-
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {parseFloat(
+                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (
+                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                            : (isMatchBranch?.igst || 0)) / 100
+                                        ) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
+                                {/* IGST */}
                                 <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : parseFloat(
+                                        ((isMatchBranch?.igst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)}/-
+                                  </strong>
+                                </p>
+                                {/* SGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.sgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                {/* CGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.cgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                <p className='total-border-item'>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {(!isNaN(parseFloat(values?.values?.payInstallmentFees))
@@ -4457,20 +4939,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     /-
                                   </strong>
                                 </p>
-                                <p>
-                                  <strong>
-                                    <i className="fa fa-inr"></i>{' '}
-                                    {((!isNaN(parseFloat(selected?.selectData?.user?.pendingFees))
-                                      ? parseFloat(selected?.selectData?.user?.pendingFees)
-                                      : 0) -
-                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                        : 0))?.toFixed(2)}
-                                    /-
-                                  </strong>
-                                </p>
                               </td>
                             </tr>
+
                           </tbody>
                         </table>
                       </div>
@@ -4491,13 +4962,13 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                               </div>
                             </div>
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'end', width: '100%', justifyContent: 'center', fontWeight: '600', marginTop: '6px' }}>
+                          <div style={{ display: 'flex', alignItems: 'end', width: '100%', justifyContent: 'center', fontWeight: '600', marginTop: '4px' }}>
                             *This is a Computer  Generated Copy.
                           </div>
                         </div>
                         <div className="footer-divider-form"></div>
                         <div className="branch-address">
-                        {isMatchBranch?.branchAddress}
+                          {isMatchBranch?.branchAddress}
                         </div>
                       </div>
                     </div>
@@ -5019,7 +5490,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -5037,8 +5508,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -5046,8 +5527,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                       </div>
                       <div className="divider-form"></div>
-                      <div style={{ marginBottom: '5px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Fee Receipt</h2>
+                      <div style={{ marginBottom: '2px' }}>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -5057,7 +5538,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -5071,15 +5552,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -5095,16 +5594,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '16px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%', margin: '0' }}>
                                   <h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4>
                                   <div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div>
                                 </p>
                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && (
-                                  <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}>
+                                  <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%', margin: '0' }}>
                                     <h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>
                                       {values?.values?.paymentMethod === 'UPI'
                                         ? 'Transactions ID :'
@@ -5121,14 +5620,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                               </div>
                             </div>
                           </div>
@@ -5145,40 +5645,80 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                           <tbody>
                             <tr>
                               <td className="text-right">
-                                <p>
-                                  <strong>Total Amount Due: </strong>
-                                </p>
-                                <p>
-                                  <strong>Paid Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Balance Due: </strong>
-                                </p>
+                                <p><strong>Paid Amount: </strong></p>
+                                <p><strong>IGST: </strong></p>
+                                <p><strong>SGST: </strong></p>
+                                <p><strong>CGST: </strong></p>
+                                <p><strong>Total: </strong></p>
                               </td>
                               <td>
+                                {/* Paid Amount */}
                                 <p>
                                   <strong>
-                                    <i className="fa fa-inr"></i>
-                                    {(!isNaN(parseFloat(values?.values?.duePartialPayment))
-                                      ? parseFloat(values?.values?.duePartialPayment)
-                                      : 0)?.toFixed(2)}
-                                    /-
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {parseFloat(
+                                      (!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (
+                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                            : (isMatchBranch?.igst || 0)) / 100
+                                        ) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
+                                {/* IGST */}
                                 <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : parseFloat(
+                                        ((isMatchBranch?.igst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)}/-
+                                  </strong>
+                                </p>
+                                {/* SGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.sgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                {/* CGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.cgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                <p className='total-border-item'>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {(!isNaN(parseFloat(values?.values?.partialPayment)) ? parseFloat(values?.values?.partialPayment) : 0)?.toFixed(2)}/-
-                                  </strong>
-                                </p>
-                                <p>
-                                  <strong>
-                                    <i className="fa fa-inr"></i>{' '}
-                                    {((!isNaN(parseFloat(values?.values?.duePartialPayment))
-                                      ? parseFloat(values?.values?.duePartialPayment)
-                                      : 0) -
-                                      (!isNaN(parseFloat(values?.values?.partialPayment)) ? parseFloat(values?.values?.partialPayment) : 0))?.toFixed(2)}
-                                    /-
                                   </strong>
                                 </p>
                               </td>
@@ -5242,7 +5782,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -5260,8 +5800,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -5269,8 +5819,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                       </div>
                       <div className="divider-form"></div>
-                      <div style={{ marginBottom: '5px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Fee Receipt</h2>
+                      <div style={{ marginBottom: '2px' }}>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -5280,7 +5830,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -5294,15 +5844,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -5318,16 +5886,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '16px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%', margin: '0' }}>
                                   <h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4>
                                   <div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div>
                                 </p>
                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && (
-                                  <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}>
+                                  <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%', margin: '0' }}>
                                     <h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>
                                       {values?.values?.paymentMethod === 'UPI'
                                         ? 'Transactions ID :'
@@ -5344,14 +5912,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                               </div>
                             </div>
                           </div>
@@ -5368,40 +5937,80 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                           <tbody>
                             <tr>
                               <td className="text-right">
-                                <p>
-                                  <strong>Total Amount Due: </strong>
-                                </p>
-                                <p>
-                                  <strong>Paid Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Balance Due: </strong>
-                                </p>
+                                <p><strong>Paid Amount: </strong></p>
+                                <p><strong>IGST: </strong></p>
+                                <p><strong>SGST: </strong></p>
+                                <p><strong>CGST: </strong></p>
+                                <p><strong>Total: </strong></p>
                               </td>
                               <td>
+                                {/* Paid Amount */}
                                 <p>
                                   <strong>
-                                    <i className="fa fa-inr"></i>
-                                    {(!isNaN(parseFloat(values?.values?.duePartialPayment))
-                                      ? parseFloat(values?.values?.duePartialPayment)
-                                      : 0).toFixed(2)}
-                                    /-
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {parseFloat(
+                                      (!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (
+                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                            : (isMatchBranch?.igst || 0)) / 100
+                                        ) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
+                                {/* IGST */}
                                 <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : parseFloat(
+                                        ((isMatchBranch?.igst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)}/-
+                                  </strong>
+                                </p>
+                                {/* SGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.sgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                {/* CGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.cgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                <p className='total-border-item'>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {(!isNaN(parseFloat(values?.values?.partialPayment)) ? parseFloat(values?.values?.partialPayment) : 0)?.toFixed(2)}/-
-                                  </strong>
-                                </p>
-                                <p>
-                                  <strong>
-                                    <i className="fa fa-inr"></i>{' '}
-                                    {((!isNaN(parseFloat(values?.values?.duePartialPayment))
-                                      ? parseFloat(values?.values?.duePartialPayment)
-                                      : 0) -
-                                      (!isNaN(parseFloat(values?.values?.partialPayment)) ? parseFloat(values?.values?.partialPayment) : 0))?.toFixed(2)}
-                                    /-
                                   </strong>
                                 </p>
                               </td>
@@ -5482,7 +6091,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <div className="nav-title" style={{ width: '100px' }}>
                                       Receipt No :
                                     </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' }}>
+                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
                                       {fileDataNames}
                                     </div>
                                   </div>
@@ -5500,8 +6109,18 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     Email Id:
                                   </div>
                                   <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    sunriseinstitute.tech@gmail.com
+                                    {isMatchBranch?.branchEmail}
                                   </div>
+                                </div>
+                              </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                <div className="nav-detail">
+                                  <div className="nav-title">GSTIN:</div>
+                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                </div>
+                                <div className="nav-detail">
+                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
                                 </div>
                               </div>
                             </div>
@@ -5509,8 +6128,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                         </div>
                       </div>
                       <div className="divider-form"></div>
-                      <div style={{ marginBottom: '5px' }}>
-                        <h2 style={{ textAlign: 'center', marginBottom: '0' }}>Fee Receipt</h2>
+                      <div style={{ marginBottom: '2px' }}>
+                        <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
                       <div className="row">
                         <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
@@ -5520,7 +6139,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 style={{
                                   display: 'flex',
                                   alignItems: 'center',
-                                  height: '15px',
+                                  height: '23px',
                                   margin: '1px 0',
                                   fontWeight: '500',
                                   fontSize: '16px'
@@ -5534,15 +6153,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
+                                  <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                  <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
+                                  <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                  <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                </p>
+                              </div>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                                  width: '100%',
+                                  height: '23px',
+                                  marginTop: '4px'
+                                }}
+                              >
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4>
                                   <div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div>
                                 </p>
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%' }}>
                                   <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4>
                                   <div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div>
                                 </p>
@@ -5558,16 +6195,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '16px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%', margin: '0' }}>
                                   <h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4>
                                   <div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div>
                                 </p>
                                 {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && (
-                                  <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}>
+                                  <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '45%', margin: '0' }}>
                                     <h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>
                                       {values?.values?.paymentMethod === 'UPI'
                                         ? 'Transactions ID :'
@@ -5584,14 +6221,15 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   display: 'flex',
                                   justifyContent: 'space-between',
                                   width: '100%',
-                                  height: '40px',
-                                  marginTop: '6px'
+                                  height: '23px',
+                                  marginTop: '4px'
                                 }}
                               >
-                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '23px', width: '55%' }}>
                                   <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4>
                                   <div className="border-line-fileds mr-6p">{name}</div>
                                 </p>
+                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                               </div>
                             </div>
                           </div>
@@ -5608,40 +6246,80 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                           <tbody>
                             <tr>
                               <td className="text-right">
-                                <p>
-                                  <strong>Total Amount Due: </strong>
-                                </p>
-                                <p>
-                                  <strong>Paid Amount: </strong>
-                                </p>
-                                <p>
-                                  <strong>Balance Due: </strong>
-                                </p>
+                                <p><strong>Paid Amount: </strong></p>
+                                <p><strong>IGST: </strong></p>
+                                <p><strong>SGST: </strong></p>
+                                <p><strong>CGST: </strong></p>
+                                <p><strong>Total: </strong></p>
                               </td>
                               <td>
+                                {/* Paid Amount */}
                                 <p>
                                   <strong>
-                                    <i className="fa fa-inr"></i>
-                                    {(!isNaN(parseFloat(values?.values?.duePartialPayment))
-                                      ? parseFloat(values?.values?.duePartialPayment)
-                                      : 0)?.toFixed(2)}
-                                    /-
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {parseFloat(
+                                      (!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (
+                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                            : (isMatchBranch?.igst || 0)) / 100
+                                        ) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
+                                {/* IGST */}
                                 <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : parseFloat(
+                                        ((isMatchBranch?.igst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)}/-
+                                  </strong>
+                                </p>
+                                {/* SGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.sgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                {/* CGST */}
+                                <p>
+                                  <strong>
+                                    <i className="fa fa-inr"></i>{' '}
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? parseFloat(
+                                        ((isMatchBranch?.cgst || 0) / 100) *
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0)
+                                      ).toFixed(2)
+                                      : "0.00"}/-
+                                  </strong>
+                                </p>
+                                <p className='total-border-item'>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {(!isNaN(parseFloat(values?.values?.partialPayment)) ? parseFloat(values?.values?.partialPayment) : 0)?.toFixed(2)}/-
-                                  </strong>
-                                </p>
-                                <p>
-                                  <strong>
-                                    <i className="fa fa-inr"></i>{' '}
-                                    {((!isNaN(parseFloat(values?.values?.duePartialPayment))
-                                      ? parseFloat(values?.values?.duePartialPayment)
-                                      : 0) -
-                                      (!isNaN(parseFloat(values?.values?.partialPayment)) ? parseFloat(values?.values?.partialPayment) : 0))?.toFixed(2)}
-                                    /-
                                   </strong>
                                 </p>
                               </td>
@@ -5666,7 +6344,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                               </div>
                             </div>
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'end', width: '100%', justifyContent: 'center', fontWeight: '600', marginTop: '6px' }}>
+                          <div style={{ display: 'flex', alignItems: 'end', width: '100%', justifyContent: 'center', fontWeight: '600', marginTop: '4px' }}>
                             *This is a Computer  Generated Copy.
                           </div>
                         </div>

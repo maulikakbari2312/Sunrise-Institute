@@ -38,6 +38,10 @@ const branchSchema = new mongoose.Schema({
         type: String,
         required: [true, "Whatsapp KEY is required"]
     },
+    branchEmail: {
+        type: String,
+        required: [true, "Whatsapp KEY is required"]
+    },
     tokenId: {
         type: String,
         default: () => uuidv4(),
