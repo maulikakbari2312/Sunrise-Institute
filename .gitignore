@@ -10,7 +10,6 @@
 # Ignore node_modules and build directories in FrontEnd
 /FrontEnd/node_modules
 /FrontEnd/build
-/FrontEnd/.env
 
 # Ignore node_modules and build directories in BackEnd
 BackEnd/node_modules/
