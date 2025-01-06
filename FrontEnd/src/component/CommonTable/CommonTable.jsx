@@ -784,6 +784,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
         email: rowData?.email,
         mobileNumber: rowData?.mobileNumber,
         state: rowData?.state,
+        address: rowData?.address
       };
       if (selected?.isEdit) {
         const invoice = document.getElementById('invoice_digital');
@@ -958,7 +959,8 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
           ...formattedValues,
           enrollDate: new Date(),
           tokenId: selected?.selectData?.user?.tokenId,
-          installmentAmount: selected?.selectData?.user?.installmentAmount
+          installmentAmount: selected?.selectData?.user?.installmentAmount,
+          state: selected?.selectData?.user?.state,
         })
           .then(async (response) => {
             toast.success(response?.message || 'New Data ADD successful!');

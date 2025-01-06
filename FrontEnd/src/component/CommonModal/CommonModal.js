@@ -49,6 +49,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                 } else {
                     url = `/api/admin/findcourse/Immigration`
                 }
+                const branchUrl = `/api/admin/branchList`;
                 (async () => {
                     try {
                         const response = await getApi(url);
@@ -57,6 +58,15 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                 return response.pageItems?.filter((item) => item?.courseName === selected?.selectData?.user?.course);
                             });
                         }
+                        const branchResponse = await getApi(branchUrl);
+                        const branchData = branchResponse?.pageItems.map(branch => ({
+                            label: branch.branchName,
+                            value: branch.branchName,
+                            ...branch
+                        }));
+                        setBranchData(branchData);
+                        const matchedBranch = branchData.find(branch => branch.branchName === isBranch);
+                        setIsMatchBranch(matchedBranch);
                     } catch (error) {
                         toast.error(error?.message || "Please Try After Sometime");
                     }
