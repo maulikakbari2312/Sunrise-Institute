@@ -776,7 +776,7 @@ function Immigration() {
                                                     </div>
                                                     <div className="receipt-right" style={{ width: '100%', marginTop: '13px' }}>
                                                         <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0', marginTop: '13px' }}><h4 style={{ width: '150px', minWidth: '150px', maxWidth: '150px' }}>Enquire For :</h4><div className="border-line-fileds"> {Array.isArray(values?.values?.enquireFor) && values?.values?.enquireFor.join(', ')}</div></p>
-                                                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '40px', marginTop: '-5px' }}>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '40px', paddingTop: '5px' }}>
                                                             <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '150px', minWidth: '150px', maxWidth: '150px' }}>Date of Birth :</h4><div className="border-line-fileds mr-6p">{formatDate(values?.values?.dob)}</div></p>
                                                             <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '150px', minWidth: '150px', maxWidth: '150px' }}>Passport :</h4><div className="border-line-fileds">{values?.values?.passport}</div></p>
                                                         </div>
@@ -804,7 +804,7 @@ function Immigration() {
                                                         </div>
                                                     )}
                                                     <div className="receipt-right" style={{ width: '100%', marginTop: '5px' }}>
-                                                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '22px', marginTop: '-5px' }}>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '22px', paddingTop: '5px' }}>
                                                             <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '150px', minWidth: '150px', maxWidth: '150px' }}>Reference :</h4><div className="border-line-fileds mr-6p">{Array.isArray(values?.values?.reference) && values?.values?.reference.join(', ')}</div></p>
                                                             {(values?.values?.referenceName && values?.values?.reference?.includes('Reference')) && (
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '150px', minWidth: '150px', maxWidth: '150px' }}>Reference Name :</h4><div className="border-line-fileds">{

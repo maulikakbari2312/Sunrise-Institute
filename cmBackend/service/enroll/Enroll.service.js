@@ -1427,8 +1427,8 @@ exports.findBookNumber = async (isBranch, isCN = false) => {
         
         if (isBranch) {
             // Get the first 3 characters of the branch name, in lowercase
-            const branchKey = isBranch.slice(0, 3).toLowerCase();
-            const dynamicKey = (isCN == true || isCN == "true") ? `${branchKey}Cn` : branchKey;
+            const branchKey = isBranch.slice(0, 3).toUpperCase();
+            const dynamicKey = (isCN == true || isCN == "true") ? `${branchKey}-CN` : branchKey;
 
             // Check if the key exists in the database, if not, initialize it
             if (!(dynamicKey in reversedEnrollPlain)) {

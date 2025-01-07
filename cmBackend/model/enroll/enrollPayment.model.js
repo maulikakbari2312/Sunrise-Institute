@@ -129,6 +129,9 @@ const enrollPaymentSchema = new mongoose.Schema({
     cGst: {
         type: Number,
     },
+    address: {
+        type: String,
+    }
 });
 
 const EnrollPaymentDetail = new mongoose.model("EnrollPaymentDetail", enrollPaymentSchema);
