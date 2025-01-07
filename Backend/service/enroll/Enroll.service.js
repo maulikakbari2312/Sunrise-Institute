@@ -317,8 +317,8 @@ exports.editBookNumber = async (isBranch, isCN = false) => {
             return { status: 404, message: "Counter Numbers not found" };
         }
 
-        const branchKey = isBranch.slice(0, 3).toLowerCase();
-        const dynamicKey = isCN === true || isCN === "true" ? `${branchKey}-cn` : branchKey;
+        const branchKey = isBranch.slice(0, 3).toUpperCase();
+        const dynamicKey = isCN === true || isCN === "true" ? `${branchKey}-CN` : branchKey;
 
         // Increment the dynamic field
         const updatedCounterNumbers = await counterNumbersDetail.updateOne(
