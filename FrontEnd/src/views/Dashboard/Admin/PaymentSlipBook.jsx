@@ -308,7 +308,7 @@ function PaymentSlipBook() {
                             initialValues={{
                                 startDate: '',
                                 endDate: '',
-                                paymentType: '',
+                                paymentType: 'other',
                                 enquireBranch: ''
                             }}
                             onSubmit={async (values, { setSubmitting, resetForm }) => {
@@ -397,11 +397,11 @@ function PaymentSlipBook() {
                                                             field={field}
                                                             options={[
                                                                 {
-                                                                    label: 'CN',
+                                                                    label: 'Cancel',
                                                                     value: 'Settlement'
                                                                 },
                                                                 {
-                                                                    label: 'Other',
+                                                                    label: 'Payed',
                                                                     value: 'other'
                                                                 },
                                                             ]}
