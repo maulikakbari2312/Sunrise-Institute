@@ -1,3 +1,4 @@
+require("dotenv").config();
 const router = require("express").Router();
 const immigrationController = require("../../controllers/Enquire/Immigration.controller");
 

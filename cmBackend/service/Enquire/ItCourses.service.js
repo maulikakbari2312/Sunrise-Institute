@@ -1,3 +1,4 @@
+require("dotenv").config();
 const message = require("../../common/error.message");
 const itCoursesModel = require("../../model/Enquire/ItCourses.model");
 const logInDetail = require("../../model/admin/login.model");

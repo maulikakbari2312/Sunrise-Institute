@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const message = require("../../common/error.message");
 const galleryModelDetail = require("../../model/enroll/gallery.model");

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { verifyUser } = require("../../common/utils");
 const branchStaffService = require("../../service/Branch/Branch.service");
 exports.getBranchStaff = async (req, res) => {

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const socketIo = require('socket.io');
 const http = require("http");
@@ -5,7 +6,6 @@ const app = express();
 const logInSchema = require('./model/admin/login.model');
 const enrollModel = require("./model/enroll/enrollPayment.model");
 const cron = require('node-cron');
-require("dotenv").config();
 var cors = require('cors');
 require("./server")
 const moment = require('moment-timezone');

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { default: mongoose } = require("mongoose");
 const message = require("../../common/error.message");
 const immigrationModel = require("../../model/Enquire/Immigration.model");

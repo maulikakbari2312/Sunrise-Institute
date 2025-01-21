@@ -1,3 +1,4 @@
+require("dotenv").config();
 const router = require("express").Router();
 const enrollController = require("../../controllers/enroll/Enroll.controller");
 const galleryController = require("../../controllers/enroll/gallery.controller");

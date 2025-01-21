@@ -1,3 +1,4 @@
+require("dotenv").config();
 const router = require("express").Router();
 const courseController = require("../../controllers/admin/Branch.controller");
 

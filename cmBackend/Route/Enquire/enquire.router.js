@@ -1,3 +1,4 @@
+require("dotenv").config();
 const router = require("express").Router();
 const enquireController = require("../../controllers/Enquire/enquireController.controller");
 

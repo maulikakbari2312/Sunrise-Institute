@@ -1,3 +1,4 @@
+require("dotenv").config();
 const message = {
     ENQUIRE_IMMIGRATION_CREATED: "Enquiry for created successfully",
     INVALID_TOKEN: "Invalid token provided",

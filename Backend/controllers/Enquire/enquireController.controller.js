@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { verifyUser } = require("../../common/utils");
 const enquireService = require("../../service/Enquire/Enquire.service");
 exports.getEnquire = async (req, res) => {

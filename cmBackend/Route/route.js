@@ -1,3 +1,4 @@
+require("dotenv").config();
 exports.setUp = function (app) {
     const immigration = require("./Enquire/Immigration.router");
     const itCourses = require("./Enquire/ItCourses.router");

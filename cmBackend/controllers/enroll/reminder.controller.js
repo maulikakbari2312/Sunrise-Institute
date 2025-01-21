@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { verifyUser } = require("../../common/utils");
 const reminder = require("../../service/enroll/reminderDate.service");
 exports.createReminder = async (req, res) => {

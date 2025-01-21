@@ -1,3 +1,4 @@
+require("dotenv").config();
 const httpStatus = require("http-status");
 const message = require("../../common/error.message");
 const { decodeToken } = require("../../common/utils");

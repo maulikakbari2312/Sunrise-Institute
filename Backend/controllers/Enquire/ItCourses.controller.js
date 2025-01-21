@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { verifyUser } = require("../../common/utils");
 const itCoursesService = require("../../service/Enquire/ItCourses.service");
 exports.createItCourses = async (req, res) => {

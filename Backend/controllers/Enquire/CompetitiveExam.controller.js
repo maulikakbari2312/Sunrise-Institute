@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { verifyUser } = require("../../common/utils");
 const competitiveExamService = require("../../service/Enquire/CompetitiveExam.service");
 exports.createCompetitiveExam = async (req, res) => {
