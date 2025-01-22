@@ -20,7 +20,8 @@ app.use("/Images", express.static("./Images"))
 const branchModel = require("./model/admin/Branch.modal");
 
 const corsOptions = {
-    origin: process.env.FRONTEND_PORT,
+    // origin: process.env.FRONTEND_PORT,
+    origin: ['https://master.sunriseinstitute.net', 'https://www.sunriseinstitute.net'],
     // origin: ['https://www.admin.sunriseinstitute.net', 'https://www.sunriseinstitute.net'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
@@ -34,7 +35,7 @@ const server = http.createServer(app);  // Use the same HTTP server instance
 const io = socketIo(server, {
     pingTimeout: 60000,
     cors: {
-        origin: process.env.FRONTEND_PORT,
+        origin: "https://master.sunriseinstitute.net",
         methods: ['GET', 'POST'],
         credentials: true,
     },
@@ -47,6 +48,7 @@ function routeSetup() {
 routeSetup();
 
 const PORT = process.env.PORT;
+
 server.listen(PORT, (err) => {
     if (err) console.log(err);
     console.log(`Server is running on port ${PORT}`);
