@@ -13,9 +13,11 @@ import * as actionTypes from 'store/action/actions';
 import { useSocket } from 'layout/SocketContext';
 import CloseIcon from '@mui/icons-material/Close';
 import Logo from "../../../assets/images/logoSunrise.png";
+import cmLogo from "../../../assets/images/cmlogoSunrise.png"
 import SunLogo from "../../../assets/images/SunLogo.png";
 import html2pdf from "html2pdf.js";
 function ItCourses() {
+    const cm = localStorage.getItem('cm');
     const [course, setCourse] = useState([]);
     const [branchStaff, setBanchStaff] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -597,7 +599,7 @@ function ItCourses() {
                                                     }}>
                                                         <img
                                                             style={{ width: '100%', height: '100%' }}
-                                                            src={Logo}
+                                                            src={cm == true || cm == "true" ? cmLogo : Logo}
                                                         />
                                                     </div>
                                                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>

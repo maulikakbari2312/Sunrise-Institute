@@ -15,11 +15,13 @@ import * as actionTypes from 'store/action/actions';
 import { Field, Form, Formik } from "formik";
 import * as Yup from 'yup';
 import Logo from "../../assets/images/logoSunrise.png"
+import cmLogo from "../../assets/images/cmlogoSunrise.png"
 import SunLogo from "../../assets/images/SunLogo.png"
 import DigitalImage from '../../assets/images/copy.jpg';
 import html2pdf from "html2pdf.js";
 
 const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFetch, deleteUrl, isPagination = true, }) => {
+    const cm = localStorage.getItem('cm');
     const { deleteApi, putApi, postApi, getApi } = useApi();
     const [course, setCourse] = useState([]);
     const [courseData, setCourseData] = useState([]);
@@ -1370,215 +1372,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                         }}>
                                                             <img
                                                                 style={{ width: '100%', height: '100%' }}
-                                                                src={Logo}
-                                                            />
-                                                        </div>
-                                                        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                                                    <div className='sun-text'>
-                                                                        <img
-                                                                            style={{ width: '100%', height: '100%' }}
-                                                                            src={SunLogo}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                                <div className="nav-details">
-                                                                    <div className="nav-detail">
-                                                                        <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
-                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>{fileDataNames}</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                                                <div className="nav-detail">
-                                                                    <div className="nav-title">Mobile No:</div>
-                                                                    <div className="nav-data">{
-                                                                        isMatchBranch?.branchPhoneNumber
-                                                                    }</div>
-                                                                </div>
-                                                                <div className="nav-detail">
-                                                                    <div className="nav-title" style={{ width: '61px' }}>Email Id:</div>
-                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.branchEmail}</div>
-                                                                </div>
-                                                            </div>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                                                <div className="nav-detail">
-                                                                    <div className="nav-title">GSTIN:</div>
-                                                                    <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                                                </div>
-                                                                <div className="nav-detail">
-                                                                    <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='divider-form'></div>
-                                            <div style={{ marginBottom: '5px' }}>
-                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>
-                                                    Fee Receipt
-                                                </h2>
-                                            </div>
-                                            <div className="row">
-                                                <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
-                                                    <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
-                                                        <div className="receipt-right" style={{ width: '100%' }}>
-                                                            <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0', fontWeight: '500', fontSize: '16px' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Full Name : </h4><div className="border-line-fileds"> {values?.values?.name}</div></p>
-                                                            <div
-                                                                style={{
-                                                                    display: 'flex',
-                                                                    justifyContent: 'space-between',
-                                                                    width: '100%',
-                                                                    height: '23px',
-                                                                    marginTop: '6px'
-                                                                }}
-                                                            >
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
-                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
-                                                                    <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
-                                                                </p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
-                                                                    <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
-                                                                    <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
-                                                                </p>
-                                                            </div>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4><div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div></p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4><div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="receipt-header receipt-header-mid" style={{ width: '100%', marginBottom: '0' }}>
-                                                    <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
-                                                        <div className="receipt-right" style={{ width: '100%' }}>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}><h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4><div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div></p>
-                                                                {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>{values?.values?.paymentMethod === 'UPI' ? 'Transactions ID :' : values?.values?.paymentMethod === 'Bank Transfer' ? 'Check No :' : 'Cash'} </h4><div className="border-line-fileds">{values?.values?.paymentDetails}</div></p>}
-                                                            </div>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <table className="table table-bordered w-100">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Description</th>
-                                                            <th>Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                        <tr>
-                                                            <td className="text-right">
-                                                                <p><strong>Paid Amount: </strong></p>
-                                                                <p><strong>IGST: </strong></p>
-                                                                <p><strong>SGST: </strong></p>
-                                                                <p><strong>CGST: </strong></p>
-                                                                <p><strong>Total: </strong></p>
-                                                            </td>
-                                                            <td>
-                                                                {/* Paid Amount */}
-                                                                <p>
-                                                                    <strong>
-                                                                        <i className="fa fa-inr"></i>{' '}
-                                                                        {parseFloat(
-                                                                            (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0).toFixed(2).toFixed(2) -
-                                                                            parseFloat(
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0)) / 100
-                                                                                ) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)
-                                                                            ).toFixed(2)
-                                                                        )}/-
-                                                                    </strong>
-                                                                </p>
-                                                                {/* IGST */}
-                                                                <p>
-                                                                    <strong>
-                                                                        <i className="fa fa-inr"></i>{' '}
-                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? "0.00"
-                                                                            : parseFloat(
-                                                                                ((isMatchBranch?.igst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)
-                                                                            ).toFixed(2)}/-
-                                                                    </strong>
-                                                                </p>
-                                                                {/* SGST */}
-                                                                <p>
-                                                                    <strong>
-                                                                        <i className="fa fa-inr"></i>{' '}
-                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? parseFloat(
-                                                                                ((isMatchBranch?.sgst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)
-                                                                            ).toFixed(2)
-                                                                            : "0.00"}/-
-                                                                    </strong>
-                                                                </p>
-                                                                {/* CGST */}
-                                                                <p>
-                                                                    <strong>
-                                                                        <i className="fa fa-inr"></i>{' '}
-                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? parseFloat(
-                                                                                ((isMatchBranch?.cgst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)
-                                                                            ).toFixed(2)
-                                                                            : "0.00"}/-
-                                                                    </strong>
-                                                                </p>
-                                                                <p className='total-border-item'>
-                                                                    <strong><i className="fa fa-inr"></i> {(!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)?.toFixed(2)}/-</strong>
-                                                                </p>
-                                                            </td>
-                                                        </tr>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                            <div className="row">
-                                                <div className="receipt-header receipt-header-mid receipt-footer" style={{ margin: '2px 0px 24px' }}>
-                                                    <div className="col-xs-8 col-sm-8 col-md-8 text-left">
-                                                        <div className="receipt-right">
-                                                            <p style={{ margin: '0' }}><b>Date :</b> {new Date().toLocaleDateString('en-GB')}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-xs-4 col-sm-4 col-md-4">
-                                                        <div className="receipt-left">
-                                                            <h2 style={{ margin: '0' }}>Signature</h2>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className='footer-divider-form'></div>
-                                                <div className='branch-address'>
-                                                    {isMatchBranch?.branchAddress}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="container" >
-                                            <div className="row">
-                                                <div className="receipt-header">
-                                                    <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
-                                                        <div style={{
-                                                            width: '120px',
-                                                            height: '100%'
-                                                        }}>
-                                                            <img
-                                                                style={{ width: '100%', height: '100%' }}
-                                                                src={Logo}
+                                                                src={cm == true || cm == "true" ? cmLogo : Logo} 
                                                             />
                                                         </div>
                                                         <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
@@ -1703,14 +1497,16 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                                 ? parseFloat(values?.values?.payFees)
                                                                                 : 0).toFixed(2) -
                                                                             parseFloat(
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0)) / 100
-                                                                                ) *
                                                                                 (!isNaN(parseFloat(values?.values?.payFees))
                                                                                     ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
+                                                                                    : 0) / (100 +
+                                                                                        (
+                                                                                            (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                                : (isMatchBranch?.igst || 0))
+                                                                                        )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                            : (isMatchBranch?.igst || 0))
                                                                             ).toFixed(2)
                                                                         )}/-
                                                                     </strong>
@@ -1721,12 +1517,9 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                         <i className="fa fa-inr"></i>{' '}
                                                                         {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
                                                                             ? "0.00"
-                                                                            : parseFloat(
-                                                                                ((isMatchBranch?.igst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees))
-                                                                                    ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
-                                                                            ).toFixed(2)}/-
+                                                                            : (((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                                                     </strong>
                                                                 </p>
                                                                 {/* SGST */}
@@ -1734,12 +1527,9 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                     <strong>
                                                                         <i className="fa fa-inr"></i>{' '}
                                                                         {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? parseFloat(
-                                                                                ((isMatchBranch?.sgst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees))
-                                                                                    ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
-                                                                            ).toFixed(2)
+                                                                            ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
                                                                             : "0.00"}/-
                                                                     </strong>
                                                                 </p>
@@ -1748,12 +1538,221 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                     <strong>
                                                                         <i className="fa fa-inr"></i>{' '}
                                                                         {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? parseFloat(
-                                                                                ((isMatchBranch?.cgst || 0) / 100) *
+                                                                            ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                            : "0.00"}/-
+                                                                    </strong>
+                                                                </p>
+                                                                <p className='total-border-item'>
+                                                                    <strong><i className="fa fa-inr"></i> {(!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)?.toFixed(2)}/-</strong>
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="receipt-header receipt-header-mid receipt-footer" style={{ margin: '2px 0px 24px' }}>
+                                                    <div className="col-xs-8 col-sm-8 col-md-8 text-left">
+                                                        <div className="receipt-right">
+                                                            <p style={{ margin: '0' }}><b>Date :</b> {new Date().toLocaleDateString('en-GB')}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-xs-4 col-sm-4 col-md-4">
+                                                        <div className="receipt-left">
+                                                            <h2 style={{ margin: '0' }}>Signature</h2>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className='footer-divider-form'></div>
+                                                <div className='branch-address'>
+                                                    {isMatchBranch?.branchAddress}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="container" >
+                                            <div className="row">
+                                                <div className="receipt-header">
+                                                    <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                                                        <div style={{
+                                                            width: '120px',
+                                                            height: '100%'
+                                                        }}>
+                                                            <img
+                                                                style={{ width: '100%', height: '100%' }}
+                                                                src={cm == true || cm == "true" ? cmLogo : Logo} 
+                                                            />
+                                                        </div>
+                                                        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
+                                                                    <div className='sun-text'>
+                                                                        <img
+                                                                            style={{ width: '100%', height: '100%' }}
+                                                                            src={SunLogo}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="nav-details">
+                                                                    <div className="nav-detail">
+                                                                        <div className="nav-title" style={{ width: '100px' }}>Receipt No :</div>
+                                                                        <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>{fileDataNames}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title">Mobile No:</div>
+                                                                    <div className="nav-data">{
+                                                                        isMatchBranch?.branchPhoneNumber
+                                                                    }</div>
+                                                                </div>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title" style={{ width: '61px' }}>Email Id:</div>
+                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.branchEmail}</div>
+                                                                </div>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title">GSTIN:</div>
+                                                                    <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
+                                                                </div>
+                                                                <div className="nav-detail">
+                                                                    <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
+                                                                    <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className='divider-form'></div>
+                                            <div style={{ marginBottom: '5px' }}>
+                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>
+                                                    Fee Receipt
+                                                </h2>
+                                            </div>
+                                            <div className="row">
+                                                <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
+                                                    <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
+                                                        <div className="receipt-right" style={{ width: '100%' }}>
+                                                            <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0', fontWeight: '500', fontSize: '16px' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Full Name : </h4><div className="border-line-fileds"> {values?.values?.name}</div></p>
+                                                            <div
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    justifyContent: 'space-between',
+                                                                    width: '100%',
+                                                                    height: '23px',
+                                                                    marginTop: '6px'
+                                                                }}
+                                                            >
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
+                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
+                                                                    <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                                                </p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
+                                                                    <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                                                    <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
+                                                                </p>
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4><div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div></p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4><div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="receipt-header receipt-header-mid" style={{ width: '100%', marginBottom: '0' }}>
+                                                    <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
+                                                        <div className="receipt-right" style={{ width: '100%' }}>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}><h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4><div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div></p>
+                                                                {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>{values?.values?.paymentMethod === 'UPI' ? 'Transactions ID :' : values?.values?.paymentMethod === 'Bank Transfer' ? 'Check No :' : 'Cash'} </h4><div className="border-line-fileds">{values?.values?.paymentDetails}</div></p>}
+                                                            </div>
+                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <table className="table table-bordered w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Description</th>
+                                                            <th>Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td className="text-right">
+                                                                <p><strong>Paid Amount: </strong></p>
+                                                                <p><strong>IGST: </strong></p>
+                                                                <p><strong>SGST: </strong></p>
+                                                                <p><strong>CGST: </strong></p>
+                                                                <p><strong>Total: </strong></p>
+                                                            </td>
+                                                            <td>
+                                                                {/* Paid Amount */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {parseFloat(
+                                                                            (!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0).toFixed(2) -
+                                                                            parseFloat(
                                                                                 (!isNaN(parseFloat(values?.values?.payFees))
                                                                                     ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
+                                                                                    : 0) / (100 +
+                                                                                        (
+                                                                                            (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                                : (isMatchBranch?.igst || 0))
+                                                                                        )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                            : (isMatchBranch?.igst || 0))
                                                                             ).toFixed(2)
+                                                                        )}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* IGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? "0.00"
+                                                                            : (((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* SGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
+                                                                            : "0.00"}/-
+                                                                    </strong>
+                                                                </p>
+                                                                {/* CGST */}
+                                                                <p>
+                                                                    <strong>
+                                                                        <i className="fa fa-inr"></i>{' '}
+                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                            ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
                                                                             : "0.00"}/-
                                                                     </strong>
                                                                 </p>
@@ -1812,7 +1811,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                         }}>
                                                             <img
                                                                 style={{ width: '100%', height: '100%' }}
-                                                                src={Logo}
+                                                                src={cm == true || cm == "true" ? cmLogo : Logo} 
                                                             />
                                                         </div>
                                                         <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
@@ -1937,14 +1936,16 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                                 ? parseFloat(values?.values?.payFees)
                                                                                 : 0).toFixed(2) -
                                                                             parseFloat(
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0)) / 100
-                                                                                ) *
                                                                                 (!isNaN(parseFloat(values?.values?.payFees))
                                                                                     ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
+                                                                                    : 0) / (100 +
+                                                                                        (
+                                                                                            (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                                : (isMatchBranch?.igst || 0))
+                                                                                        )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                            : (isMatchBranch?.igst || 0))
                                                                             ).toFixed(2)
                                                                         )}/-
                                                                     </strong>
@@ -1953,14 +1954,12 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <p>
                                                                     <strong>
                                                                         <i className="fa fa-inr"></i>{' '}
+
                                                                         {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
                                                                             ? "0.00"
-                                                                            : parseFloat(
-                                                                                ((isMatchBranch?.igst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees))
-                                                                                    ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
-                                                                            ).toFixed(2)}/-
+                                                                            : (((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                                                     </strong>
                                                                 </p>
                                                                 {/* SGST */}
@@ -1968,12 +1967,9 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                     <strong>
                                                                         <i className="fa fa-inr"></i>{' '}
                                                                         {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? parseFloat(
-                                                                                ((isMatchBranch?.sgst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees))
-                                                                                    ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
-                                                                            ).toFixed(2)
+                                                                            ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
                                                                             : "0.00"}/-
                                                                     </strong>
                                                                 </p>
@@ -1982,12 +1978,9 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                     <strong>
                                                                         <i className="fa fa-inr"></i>{' '}
                                                                         {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? parseFloat(
-                                                                                ((isMatchBranch?.cgst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees))
-                                                                                    ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
-                                                                            ).toFixed(2)
+                                                                            ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
                                                                             : "0.00"}/-
                                                                     </strong>
                                                                 </p>
@@ -2030,7 +2023,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                         }}>
                                                             <img
                                                                 style={{ width: '100%', height: '100%' }}
-                                                                src={Logo}
+                                                                src={cm == true || cm == "true" ? cmLogo : Logo} 
                                                             />
                                                         </div>
                                                         <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
@@ -2155,14 +2148,16 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                                 ? parseFloat(values?.values?.payFees)
                                                                                 : 0).toFixed(2) -
                                                                             parseFloat(
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0)) / 100
-                                                                                ) *
                                                                                 (!isNaN(parseFloat(values?.values?.payFees))
                                                                                     ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
+                                                                                    : 0) / (100 +
+                                                                                        (
+                                                                                            (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                                : (isMatchBranch?.igst || 0))
+                                                                                        )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                            : (isMatchBranch?.igst || 0))
                                                                             ).toFixed(2)
                                                                         )}/-
                                                                     </strong>
@@ -2171,14 +2166,12 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                 <p>
                                                                     <strong>
                                                                         <i className="fa fa-inr"></i>{' '}
+
                                                                         {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
                                                                             ? "0.00"
-                                                                            : parseFloat(
-                                                                                ((isMatchBranch?.igst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees))
-                                                                                    ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
-                                                                            ).toFixed(2)}/-
+                                                                            : (((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                                                     </strong>
                                                                 </p>
                                                                 {/* SGST */}
@@ -2186,12 +2179,9 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                     <strong>
                                                                         <i className="fa fa-inr"></i>{' '}
                                                                         {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? parseFloat(
-                                                                                ((isMatchBranch?.sgst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees))
-                                                                                    ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
-                                                                            ).toFixed(2)
+                                                                            ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
                                                                             : "0.00"}/-
                                                                     </strong>
                                                                 </p>
@@ -2200,12 +2190,9 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                                     <strong>
                                                                         <i className="fa fa-inr"></i>{' '}
                                                                         {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? parseFloat(
-                                                                                ((isMatchBranch?.cgst || 0) / 100) *
-                                                                                (!isNaN(parseFloat(values?.values?.payFees))
-                                                                                    ? parseFloat(values?.values?.payFees)
-                                                                                    : 0)
-                                                                            ).toFixed(2)
+                                                                            ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                                                                ? parseFloat(values?.values?.payFees)
+                                                                                : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
                                                                             : "0.00"}/-
                                                                     </strong>
                                                                 </p>

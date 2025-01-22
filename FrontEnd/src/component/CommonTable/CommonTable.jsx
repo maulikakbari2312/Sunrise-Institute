@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import Logo from '../../assets/images/logoSunrise.png';
-import BackgroundImage from '../../assets/images/logoSunrise.png';
+import cmLogo from "../../assets/images/cmlogoSunrise.png"
 import SunLogo from '../../assets/images/SunLogo.png';
 import RefundImage from '../../assets/images/refund.jpg';
 import DigitalImage from '../../assets/images/copy.jpg';
@@ -25,6 +25,7 @@ import DateRangeIcon from '@mui/icons-material/DateRange';
 import html2pdf from 'html2pdf.js';
 import axios from 'axios';
 const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFetch, deleteUrl, isPagination = true, setAddGallery }) => {
+  const cm = localStorage.getItem('cm');
   const { deleteApi, putApi, postApi, getApi } = useApi();
   const [course, setCourse] = useState([]);
   const [courseData, setCourseData] = useState([]);
@@ -1749,7 +1750,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -1934,14 +1935,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                         ? parseFloat(values?.values?.payFees)
                                         : 0).toFixed(2) -
                                       parseFloat(
-                                        (
-                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                            : (isMatchBranch?.igst || 0)) / 100
-                                        ) *
                                         (!isNaN(parseFloat(values?.values?.payFees))
                                           ? parseFloat(values?.values?.payFees)
-                                          : 0)
+                                          : 0) / (100 +
+                                            (
+                                              (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                : (isMatchBranch?.igst || 0))
+                                            )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                              ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                              : (isMatchBranch?.igst || 0))
                                       ).toFixed(2)
                                     )}/-
                                   </strong>
@@ -1952,12 +1955,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
                                       ? "0.00"
-                                      : parseFloat(
-                                        ((isMatchBranch?.igst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                          ? parseFloat(values?.values?.payFees)
-                                          : 0)
-                                      ).toFixed(2)}/-
+                                      : (((!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -1965,12 +1965,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                          ? parseFloat(values?.values?.payFees)
-                                          : 0)
-                                      ).toFixed(2)
+                                      ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
                                       : "0.00"}/-
                                   </strong>
                                 </p>
@@ -1979,12 +1976,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                          ? parseFloat(values?.values?.payFees)
-                                          : 0)
-                                      ).toFixed(2)
+                                      ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
                                       : "0.00"}/-
                                   </strong>
                                 </p>
@@ -2041,7 +2035,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -2226,14 +2220,16 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                         ? parseFloat(values?.values?.payFees)
                                         : 0).toFixed(2) -
                                       parseFloat(
-                                        (
-                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                            : (isMatchBranch?.igst || 0)) / 100
-                                        ) *
                                         (!isNaN(parseFloat(values?.values?.payFees))
                                           ? parseFloat(values?.values?.payFees)
-                                          : 0)
+                                          : 0) / (100 +
+                                            (
+                                              (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                : (isMatchBranch?.igst || 0))
+                                            )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                              ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                              : (isMatchBranch?.igst || 0))
                                       ).toFixed(2)
                                     )}/-
                                   </strong>
@@ -2244,12 +2240,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
                                       ? "0.00"
-                                      : parseFloat(
-                                        ((isMatchBranch?.igst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                          ? parseFloat(values?.values?.payFees)
-                                          : 0)
-                                      ).toFixed(2)}/-
+                                      : (((!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -2257,12 +2250,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                          ? parseFloat(values?.values?.payFees)
-                                          : 0)
-                                      ).toFixed(2)
+                                      ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
                                       : "0.00"}/-
                                   </strong>
                                 </p>
@@ -2271,12 +2261,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                          ? parseFloat(values?.values?.payFees)
-                                          : 0)
-                                      ).toFixed(2)
+                                      ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
                                       : "0.00"}/-
                                   </strong>
                                 </p>
@@ -2350,7 +2337,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -2531,20 +2518,22 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                      (!isNaN(parseFloat(values?.values?.payFees))
-                                        ? parseFloat(values?.values?.payFees)
-                                        : 0).toFixed(2) -
-                                      parseFloat(
-                                        (
-                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                            : (isMatchBranch?.igst || 0)) / 100
-                                        ) *
-                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                          ? parseFloat(values?.values?.payFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                    )}/-
+                                                                    (!isNaN(parseFloat(values?.values?.payFees))
+                                                                        ? parseFloat(values?.values?.payFees)
+                                                                        : 0).toFixed(2) -
+                                                                    parseFloat(
+                                                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                                                            ? parseFloat(values?.values?.payFees)
+                                                                            : 0) / (100 +
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0))
+                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                    : (isMatchBranch?.igst || 0))
+                                                                    ).toFixed(2)
+                                                                )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
@@ -2553,12 +2542,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
                                       ? "0.00"
-                                      : parseFloat(
-                                        ((isMatchBranch?.igst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                          ? parseFloat(values?.values?.payFees)
-                                          : 0)
-                                      ).toFixed(2)}/-
+                                      : (((!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -2566,13 +2552,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                          ? parseFloat(values?.values?.payFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                                                        ? parseFloat(values?.values?.payFees)
+                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
+                                                                    : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -2580,13 +2563,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                          ? parseFloat(values?.values?.payFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                                                    ? parseFloat(values?.values?.payFees)
+                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -2861,7 +2841,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -3161,7 +3141,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -4086,7 +4066,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -4267,34 +4247,34 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                        : 0).toFixed(2) -
-                                      parseFloat(
-                                        (
-                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                            : (isMatchBranch?.igst || 0)) / 100
-                                        ) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                    )}/-
+                                                                    (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0).toFixed(2) -
+                                                                    parseFloat(
+                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                            ? parseFloat(values?.values?.payInstallmentFees)
+                                                                            : 0) / (100 +
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0))
+                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                    : (isMatchBranch?.igst || 0))
+                                                                    ).toFixed(2)
+                                                                )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
                                 <p>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
-                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? "0.00"
-                                      : parseFloat(
-                                        ((isMatchBranch?.igst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)}/-
+                                    
+{selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                    ? "0.00"
+                                                                    : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                    ? parseFloat(values?.values?.payInstallmentFees)
+                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -4302,13 +4282,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
+                                                                    : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -4316,13 +4293,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                    ? parseFloat(values?.values?.payInstallmentFees)
+                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -4381,7 +4355,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -4562,20 +4536,22 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                        : 0).toFixed(2) -
-                                      parseFloat(
-                                        (
-                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                            : (isMatchBranch?.igst || 0)) / 100
-                                        ) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                    )}/-
+                                                                    (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0).toFixed(2) -
+                                                                    parseFloat(
+                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                            ? parseFloat(values?.values?.payInstallmentFees)
+                                                                            : 0) / (100 +
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0))
+                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                    : (isMatchBranch?.igst || 0))
+                                                                    ).toFixed(2)
+                                                                )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
@@ -4583,13 +4559,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? "0.00"
-                                      : parseFloat(
-                                        ((isMatchBranch?.igst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)}/-
+                                                                    ? "0.00"
+                                                                    : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                    ? parseFloat(values?.values?.payInstallmentFees)
+                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -4597,13 +4570,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
+                                                                    : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -4611,13 +4581,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                    ? parseFloat(values?.values?.payInstallmentFees)
+                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -4693,7 +4660,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -4874,34 +4841,34 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                        : 0).toFixed(2) -
-                                      parseFloat(
-                                        (
-                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                            : (isMatchBranch?.igst || 0)) / 100
-                                        ) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                    )}/-
+                                                                    (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0).toFixed(2) -
+                                                                    parseFloat(
+                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                            ? parseFloat(values?.values?.payInstallmentFees)
+                                                                            : 0) / (100 +
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0))
+                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                    : (isMatchBranch?.igst || 0))
+                                                                    ).toFixed(2)
+                                                                )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
                                 <p>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
-                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? "0.00"
-                                      : parseFloat(
-                                        ((isMatchBranch?.igst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)}/-
+                                    
+{selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                    ? "0.00"
+                                                                    : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                    ? parseFloat(values?.values?.payInstallmentFees)
+                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -4909,13 +4876,11 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
+                                                                    : "0.00"}/-
+                                                                    
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -4923,13 +4888,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                          ? parseFloat(values?.values?.payInstallmentFees)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                    ? parseFloat(values?.values?.payInstallmentFees)
+                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -5478,7 +5440,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -5659,34 +5621,35 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                      (!isNaN(parseFloat(values?.values?.partialPayment))
-                                        ? parseFloat(values?.values?.partialPayment)
-                                        : 0).toFixed(2) -
-                                      parseFloat(
-                                        (
-                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                            : (isMatchBranch?.igst || 0)) / 100
-                                        ) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)
-                                    )}/-
+                                                                    (!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                        ? parseFloat(values?.values?.partialPayment)
+                                                                        : 0).toFixed(2) -
+                                                                    parseFloat(
+                                                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                            ? parseFloat(values?.values?.partialPayment)
+                                                                            : 0) / (100 +
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0))
+                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                    : (isMatchBranch?.igst || 0))
+                                                                    ).toFixed(2)
+                                                                )}/-
+
                                   </strong>
                                 </p>
                                 {/* IGST */}
                                 <p>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
-                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? "0.00"
-                                      : parseFloat(
-                                        ((isMatchBranch?.igst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)}/-
+                                    
+{selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                    ? "0.00"
+                                                                    : (((!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                    ? parseFloat(values?.values?.partialPayment)
+                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -5694,13 +5657,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                        ? parseFloat(values?.values?.partialPayment)
+                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
+                                                                    : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -5708,13 +5668,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                    ? parseFloat(values?.values?.partialPayment)
+                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -5770,7 +5727,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -5951,34 +5908,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                      (!isNaN(parseFloat(values?.values?.partialPayment))
-                                        ? parseFloat(values?.values?.partialPayment)
-                                        : 0).toFixed(2) -
-                                      parseFloat(
-                                        (
-                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                            : (isMatchBranch?.igst || 0)) / 100
-                                        ) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)
-                                    )}/-
+                                                                    (!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                        ? parseFloat(values?.values?.partialPayment)
+                                                                        : 0).toFixed(2) -
+                                                                    parseFloat(
+                                                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                            ? parseFloat(values?.values?.partialPayment)
+                                                                            : 0) / (100 +
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0))
+                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                    : (isMatchBranch?.igst || 0))
+                                                                    ).toFixed(2)
+                                                                )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
                                 <p>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
-                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? "0.00"
-                                      : parseFloat(
-                                        ((isMatchBranch?.igst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)}/-
+{selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                    ? "0.00"
+                                                                    : (((!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                    ? parseFloat(values?.values?.partialPayment)
+                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -5986,13 +5942,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                        ? parseFloat(values?.values?.partialPayment)
+                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
+                                                                    : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -6000,13 +5953,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                    ? parseFloat(values?.values?.partialPayment)
+                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -6079,7 +6029,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 height: '100%'
                               }}
                             >
-                              <img style={{ width: '100%', height: '100%' }} src={Logo} />
+                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -6260,20 +6210,22 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                      (!isNaN(parseFloat(values?.values?.partialPayment))
-                                        ? parseFloat(values?.values?.partialPayment)
-                                        : 0).toFixed(2) -
-                                      parseFloat(
-                                        (
-                                          (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                            : (isMatchBranch?.igst || 0)) / 100
-                                        ) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)
-                                    )}/-
+                                                                    (!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                        ? parseFloat(values?.values?.partialPayment)
+                                                                        : 0).toFixed(2) -
+                                                                    parseFloat(
+                                                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                            ? parseFloat(values?.values?.partialPayment)
+                                                                            : 0) / (100 +
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0))
+                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                    : (isMatchBranch?.igst || 0))
+                                                                    ).toFixed(2)
+                                                                )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
@@ -6281,13 +6233,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? "0.00"
-                                      : parseFloat(
-                                        ((isMatchBranch?.igst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)}/-
+                                                                    ? "0.00"
+                                                                    : (((!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                    ? parseFloat(values?.values?.partialPayment)
+                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -6295,13 +6244,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                        ? parseFloat(values?.values?.partialPayment)
+                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
+                                                                    : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -6309,13 +6255,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? parseFloat(
-                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                          ? parseFloat(values?.values?.partialPayment)
-                                          : 0)
-                                      ).toFixed(2)
-                                      : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
+                                                                    ? parseFloat(values?.values?.partialPayment)
+                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>

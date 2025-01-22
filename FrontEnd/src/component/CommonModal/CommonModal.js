@@ -8,6 +8,7 @@ import { InputField, CustomSelectComponent, InputRadioGroup, InputDateField } fr
 import { toast } from "react-toastify";
 import { useApi } from 'network/api';
 import Logo from "../../assets/images/logoSunrise.png"
+import cmLogo from "../../assets/images/cmlogoSunrise.png"
 import SunLogo from "../../assets/images/SunLogo.png"
 import DigitalImage from '../../assets/images/copy.jpg';
 import html2pdf from "html2pdf.js";
@@ -24,6 +25,8 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [branchData, setBranchData] = useState([]);
     const [isMatchBranch, setIsMatchBranch] = useState({});
+    const cm = localStorage.getItem('cm');
+
     function formatDateSplit(inputDate) {
 
         var dateComponents = inputDate?.split('-');
@@ -597,7 +600,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                 }}>
                                                     <img
                                                         style={{ width: '100%', height: '100%' }}
-                                                        src={Logo}
+                                                        src={cm == true || cm == "true" ? cmLogo : Logo}
                                                     />
                                                 </div>
                                                 <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
@@ -719,14 +722,16 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                                         ? parseFloat(values?.values?.payInstallmentFees)
                                                                         : 0).toFixed(2) -
                                                                     parseFloat(
-                                                                        (
-                                                                            (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                : (isMatchBranch?.igst || 0)) / 100
-                                                                        ) *
                                                                         (!isNaN(parseFloat(values?.values?.payInstallmentFees))
                                                                             ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
+                                                                            : 0) / (100 +
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0))
+                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                    : (isMatchBranch?.igst || 0))
                                                                     ).toFixed(2)
                                                                 )}/-
                                                             </strong>
@@ -736,24 +741,18 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                             <strong><i className="fa fa-inr"></i>
                                                                 {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
                                                                     ? "0.00"
-                                                                    : parseFloat(
-                                                                        ((isMatchBranch?.igst || 0) / 100) *
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
-                                                                    ).toFixed(2)}/-
+                                                                    : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                    ? parseFloat(values?.values?.payInstallmentFees)
+                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                                             </strong>
                                                         </p>
                                                         {/* Calculate SGST */}
                                                         <p>
                                                             <strong><i className="fa fa-inr"></i>
                                                                 {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? parseFloat(
-                                                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
-                                                                    ).toFixed(2)
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
                                                                     : "0.00"}/-
                                                             </strong>
                                                         </p>
@@ -761,13 +760,10 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                         <p>
                                                             <strong><i className="fa fa-inr"></i>
                                                                 {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? parseFloat(
-                                                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
-                                                                    ).toFixed(2)
-                                                                    : "0.00"}/-
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                    ? parseFloat(values?.values?.payInstallmentFees)
+                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                : "0.00"}/-
                                                             </strong>
                                                         </p>
                                                         <p className='total-border-item'>
@@ -808,7 +804,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                 }}>
                                                     <img
                                                         style={{ width: '100%', height: '100%' }}
-                                                        src={Logo}
+                                                        src={cm == true || cm == "true" ? cmLogo : Logo}
                                                     />
                                                 </div>
                                                 <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
@@ -930,14 +926,16 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                                         ? parseFloat(values?.values?.payInstallmentFees)
                                                                         : 0).toFixed(2) -
                                                                     parseFloat(
-                                                                        (
-                                                                            (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                : (isMatchBranch?.igst || 0)) / 100
-                                                                        ) *
                                                                         (!isNaN(parseFloat(values?.values?.payInstallmentFees))
                                                                             ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
+                                                                            : 0) / (100 +
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0))
+                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                    : (isMatchBranch?.igst || 0))
                                                                     ).toFixed(2)
                                                                 )}/-
                                                             </strong>
@@ -947,38 +945,29 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                             <strong><i className="fa fa-inr"></i>
                                                                 {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
                                                                     ? "0.00"
-                                                                    : parseFloat(
-                                                                        ((isMatchBranch?.igst || 0) / 100) *
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
-                                                                    ).toFixed(2)}/-
+                                                                    : ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0).toFixed(2)}/-
                                                             </strong>
                                                         </p>
                                                         {/* SGST */}
                                                         <p>
                                                             <strong><i className="fa fa-inr"></i>
-                                                                {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? parseFloat(
-                                                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
-                                                                    ).toFixed(2)
+                                                            {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
                                                                     : "0.00"}/-
                                                             </strong>
                                                         </p>
                                                         {/* CGST */}
                                                         <p>
                                                             <strong><i className="fa fa-inr"></i>
-                                                                {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? parseFloat(
-                                                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
-                                                                    ).toFixed(2)
-                                                                    : "0.00"}/-
+                                                            {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                    ? parseFloat(values?.values?.payInstallmentFees)
+                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                : "0.00"}/-
                                                             </strong>
                                                         </p>
                                                         <p className='total-border-item'>
@@ -1036,7 +1025,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                 }}>
                                                     <img
                                                         style={{ width: '100%', height: '100%' }}
-                                                        src={Logo}
+                                                        src={cm == true || cm == "true" ? cmLogo : Logo}
                                                     />
                                                 </div>
                                                 <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
@@ -1154,19 +1143,21 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                         {/* Paid Amount */}
                                                         <p>
                                                             <strong><i className="fa fa-inr"></i>
-                                                                {parseFloat(
+                                                            {parseFloat(
                                                                     (!isNaN(parseFloat(values?.values?.payInstallmentFees))
                                                                         ? parseFloat(values?.values?.payInstallmentFees)
                                                                         : 0).toFixed(2) -
                                                                     parseFloat(
-                                                                        (
-                                                                            (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                : (isMatchBranch?.igst || 0)) / 100
-                                                                        ) *
                                                                         (!isNaN(parseFloat(values?.values?.payInstallmentFees))
                                                                             ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
+                                                                            : 0) / (100 +
+                                                                                (
+                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                        : (isMatchBranch?.igst || 0))
+                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                                                    : (isMatchBranch?.igst || 0))
                                                                     ).toFixed(2)
                                                                 )}/-
                                                             </strong>
@@ -1176,38 +1167,29 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                             <strong><i className="fa fa-inr"></i>
                                                                 {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
                                                                     ? "0.00"
-                                                                    : parseFloat(
-                                                                        ((isMatchBranch?.igst || 0) / 100) *
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
-                                                                    ).toFixed(2)}/-
+                                                                    : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                                             </strong>
                                                         </p>
                                                         {/* SGST */}
                                                         <p>
                                                             <strong><i className="fa fa-inr"></i>
-                                                                {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? parseFloat(
-                                                                        ((isMatchBranch?.sgst || 0) / 100) *
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
-                                                                    ).toFixed(2)
+                                                            {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
                                                                     : "0.00"}/-
                                                             </strong>
                                                         </p>
                                                         {/* CGST */}
                                                         <p>
                                                             <strong><i className="fa fa-inr"></i>
-                                                                {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? parseFloat(
-                                                                        ((isMatchBranch?.cgst || 0) / 100) *
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0)
-                                                                    ).toFixed(2)
-                                                                    : "0.00"}/-
+                                                            {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                                                    ? parseFloat(values?.values?.payInstallmentFees)
+                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                                                : "0.00"}/-
                                                             </strong>
                                                         </p>
                                                         <p className='total-border-item'>
