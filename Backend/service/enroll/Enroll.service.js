@@ -32,16 +32,14 @@ async function handleGST(branchName, state, fees) {
     const matchedBranch = getBranch.find(branch => branch.branchName === branchName);
     
     // Convert matchedBranch values to numbers (if they are strings) before calculations
-    const cGst = matchedBranch.cgst;
-    const sGst = matchedBranch.sgst;
     const iGst = matchedBranch.igst;  // Default to 0 if iGst is missing
-    let cGstBase = (fees / (100 + cGst)) * cGst;
-    let sGstBase = (fees / (100 + sGst)) * sGst;
+    let cGstBase = (fees / (100 + iGst)) * iGst;
+    let sGstBase = (fees / (100 + iGst)) * iGst;
     let iGstBase = (fees / (100 + iGst)) * iGst;
     if (state.toLowerCase() == "gujarat") {
         return {
-            cGst: fees * cGstBase / 100,
-            sGst: fees * sGstBase / 100,
+            cGst: (fees * cGstBase / 100) / 2,
+            sGst: (fees * sGstBase / 100) / 2,
             iGst: 0,
         }
     } else {

@@ -344,9 +344,9 @@
 .container {
   width: 95%;
   max-width: 100%;
-  margin: 1% 2.5%;
+  margin: .2% 2.5%;
   background-color: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid #000;
   padding: 15px 15px 5px 15px;
   border-radius: 5px;
 }
@@ -357,9 +357,15 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  position: relative;
 }
 .receipt-header-mid{
   margin-bottom: 0px !important;
+}
+.nav-receipt{
+  position: absolute;
+  right: -19px;
+  top: -15px;
 }
 
 .receipt-headers {
@@ -463,19 +469,40 @@ table th {
 
 .branch-address {
   width: 100%;
-  font-size: 11px;
   font-weight: 600;
   display: flex;
   justify-content: center;
 }
 
 .divider-form {
-  width: 100%;
-  align-items: center;
+  background: #000;
+  color: white;
+  font-weight: 500;
   display: flex;
-  height: 2px;
-  margin: 3px 0 3px 0;
-  border-bottom: 1px solid #80808069;
+  justify-content: center;
+  line-height: 24px;
+  text-transform: uppercase;
+  gap: 6px;
+  display: flex;
+    justify-content: space-between;
+    padding: 0 12px;
+}
+.parent-divider-div{
+  display: flex;
+  gap: 5px;
+}
+
+
+.branch-address{
+  background: #000;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  line-height: 24px;
+  text-transform: uppercase;
+  gap: 6px;
+  font-size: 14px;
 }
 .footer-divider-form {
   width: 100%;
@@ -484,6 +511,39 @@ table th {
   height: 2px;
   margin: 10px 0 5px 0;
   border-bottom: 1px solid #80808069;
+}
+.logo-text-wrraper{
+  flex-direction: column;
+    width: 100%;
+    margin-left: 10px;
+    font-size: 44px;
+    text-transform: uppercase;
+    color: #000;
+    display: flex;
+    align-items: end;
+    font-weight: 600;
+    font-family: Times new roman;
+    margin-top: 28px;
+}
+.receipt-header{
+  padding: 0 24px;
+}
+.pvt-ltd{
+  font-size: 32px;
+}
+.logo-text div{
+  height: 30px;
+}
+.logo-img-png{
+  width: 130px !important; height: 100px !important;
+  position: absolute;
+  left: 24px;
+  top: -10px;
+}
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
 }
 
 .sun-text{

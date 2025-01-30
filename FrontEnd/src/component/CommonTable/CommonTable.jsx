@@ -1733,74 +1733,41 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '2px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header' >Fee Receipt</h2>
                       </div>
@@ -1965,9 +1932,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                      ? ((((!isNaN(parseFloat(values?.values?.payFees))
                                         ? parseFloat(values?.values?.payFees)
-                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
                                       : "0.00"}/-
                                   </strong>
                                 </p>
@@ -1976,9 +1943,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                      ? ((((!isNaN(parseFloat(values?.values?.payFees))
                                         ? parseFloat(values?.values?.payFees)
-                                        : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
                                       : "0.00"}/-
                                   </strong>
                                 </p>
@@ -2018,74 +1985,41 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '2px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
@@ -2250,9 +2184,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                      ? ((((!isNaN(parseFloat(values?.values?.payFees))
                                         ? parseFloat(values?.values?.payFees)
-                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
                                       : "0.00"}/-
                                   </strong>
                                 </p>
@@ -2261,9 +2195,9 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                      ? ((!isNaN(parseFloat(values?.values?.payFees))
+                                      ? ((((!isNaN(parseFloat(values?.values?.payFees))
                                         ? parseFloat(values?.values?.payFees)
-                                        : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
                                       : "0.00"}/-
                                   </strong>
                                 </p>
@@ -2320,74 +2254,42 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '2px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
@@ -2518,22 +2420,22 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                                                    (!isNaN(parseFloat(values?.values?.payFees))
-                                                                        ? parseFloat(values?.values?.payFees)
-                                                                        : 0).toFixed(2) -
-                                                                    parseFloat(
-                                                                        (!isNaN(parseFloat(values?.values?.payFees))
-                                                                            ? parseFloat(values?.values?.payFees)
-                                                                            : 0) / (100 +
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0))
-                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                    : (isMatchBranch?.igst || 0))
-                                                                    ).toFixed(2)
-                                                                )}/-
+                                      (!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (!isNaN(parseFloat(values?.values?.payFees))
+                                          ? parseFloat(values?.values?.payFees)
+                                          : 0) / (100 +
+                                            (
+                                              (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                : (isMatchBranch?.igst || 0))
+                                            )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                              ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                              : (isMatchBranch?.igst || 0))
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
@@ -2552,10 +2454,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.payFees))
-                                                                        ? parseFloat(values?.values?.payFees)
-                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
-                                                                    : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -2563,10 +2465,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.payFees))
-                                                                    ? parseFloat(values?.values?.payFees)
-                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
-                                                                : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.payFees))
+                                        ? parseFloat(values?.values?.payFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -2804,7 +2706,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     </Box>
                   </Box>
                 </DialogContent>
-                <div className="col-md-12 receipt-datas" style={{ display: 'none' }}>
+                <div className="col-md-12 receipt-datas" >
                   <div id="invoice" style={{ position: 'relative', height: '100%', width: '100%' }}>
                     <div
                       style={{
@@ -2824,74 +2726,42 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '12px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Refund Fee Receipt</h2>
                       </div>
@@ -3124,74 +2994,42 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '12px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Refund Fee Receipt</h2>
                       </div>
@@ -4044,79 +3882,46 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     </Box>
                   </Box>
                 </DialogContent>
-                <div className="col-md-12" style={{ display: 'none' }}>
+                <div className="col-md-12" style={{ display: 'none' }} >
                   <div id="invoice">
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '2px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
@@ -4247,34 +4052,34 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                                                    (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                                                        : 0).toFixed(2) -
-                                                                    parseFloat(
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0) / (100 +
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0))
-                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                    : (isMatchBranch?.igst || 0))
-                                                                    ).toFixed(2)
-                                                                )}/-
+                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0) / (100 +
+                                            (
+                                              (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                : (isMatchBranch?.igst || 0))
+                                            )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                              ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                              : (isMatchBranch?.igst || 0))
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
                                 <p>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
-                                    
-{selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? "0.00"
-                                                                    : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                    ? parseFloat(values?.values?.payInstallmentFees)
-                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
+
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -4282,10 +4087,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
-                                                                    : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -4293,10 +4098,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                    ? parseFloat(values?.values?.payInstallmentFees)
-                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
-                                                                : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -4338,74 +4143,41 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '2px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
@@ -4536,22 +4308,22 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                                                    (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                                                        : 0).toFixed(2) -
-                                                                    parseFloat(
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0) / (100 +
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0))
-                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                    : (isMatchBranch?.igst || 0))
-                                                                    ).toFixed(2)
-                                                                )}/-
+                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0) / (100 +
+                                            (
+                                              (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                : (isMatchBranch?.igst || 0))
+                                            )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                              ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                              : (isMatchBranch?.igst || 0))
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
@@ -4559,10 +4331,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? "0.00"
-                                                                    : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                    ? parseFloat(values?.values?.payInstallmentFees)
-                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
+                                      ? "0.00"
+                                      : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -4570,10 +4342,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
-                                                                    : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -4581,10 +4353,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                    ? parseFloat(values?.values?.payInstallmentFees)
-                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
-                                                                : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -4643,74 +4415,41 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '2px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
@@ -4841,34 +4580,34 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                                                    (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                                                        : 0).toFixed(2) -
-                                                                    parseFloat(
-                                                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                            ? parseFloat(values?.values?.payInstallmentFees)
-                                                                            : 0) / (100 +
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0))
-                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                    : (isMatchBranch?.igst || 0))
-                                                                    ).toFixed(2)
-                                                                )}/-
+                                      (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                          ? parseFloat(values?.values?.payInstallmentFees)
+                                          : 0) / (100 +
+                                            (
+                                              (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                : (isMatchBranch?.igst || 0))
+                                            )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                              ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                              : (isMatchBranch?.igst || 0))
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
                                 <p>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
-                                    
-{selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? "0.00"
-                                                                    : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                    ? parseFloat(values?.values?.payInstallmentFees)
-                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
+
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : (((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -4876,11 +4615,11 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                        ? parseFloat(values?.values?.payInstallmentFees)
-                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
-                                                                    : "0.00"}/-
-                                                                    
+                                      ? ((((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
+
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -4888,10 +4627,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.payInstallmentFees))
-                                                                    ? parseFloat(values?.values?.payInstallmentFees)
-                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
-                                                                : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.payInstallmentFees))
+                                        ? parseFloat(values?.values?.payInstallmentFees)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -5418,79 +5157,46 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     )}
                   </Box>
                 </DialogContent>
-                <div className="col-md-12" style={{ display: 'none' }}>
+                <div className="col-md-12" style={{ display: 'none' }} >
                   <div id="invoice">
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '2px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
@@ -5621,22 +5327,22 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                                                    (!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                        ? parseFloat(values?.values?.partialPayment)
-                                                                        : 0).toFixed(2) -
-                                                                    parseFloat(
-                                                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                            ? parseFloat(values?.values?.partialPayment)
-                                                                            : 0) / (100 +
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0))
-                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                    : (isMatchBranch?.igst || 0))
-                                                                    ).toFixed(2)
-                                                                )}/-
+                                      (!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0) / (100 +
+                                            (
+                                              (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                : (isMatchBranch?.igst || 0))
+                                            )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                              ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                              : (isMatchBranch?.igst || 0))
+                                      ).toFixed(2)
+                                    )}/-
 
                                   </strong>
                                 </p>
@@ -5644,12 +5350,12 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                 <p>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
-                                    
-{selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? "0.00"
-                                                                    : (((!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                    ? parseFloat(values?.values?.partialPayment)
-                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
+
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : (((!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -5657,10 +5363,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                        ? parseFloat(values?.values?.partialPayment)
-                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
-                                                                    : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -5668,10 +5374,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                    ? parseFloat(values?.values?.partialPayment)
-                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
-                                                                : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -5710,74 +5416,41 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '2px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
@@ -5908,33 +5581,33 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                                                    (!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                        ? parseFloat(values?.values?.partialPayment)
-                                                                        : 0).toFixed(2) -
-                                                                    parseFloat(
-                                                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                            ? parseFloat(values?.values?.partialPayment)
-                                                                            : 0) / (100 +
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0))
-                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                    : (isMatchBranch?.igst || 0))
-                                                                    ).toFixed(2)
-                                                                )}/-
+                                      (!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0) / (100 +
+                                            (
+                                              (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                : (isMatchBranch?.igst || 0))
+                                            )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                              ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                              : (isMatchBranch?.igst || 0))
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
                                 <p>
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
-{selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? "0.00"
-                                                                    : (((!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                    ? parseFloat(values?.values?.partialPayment)
-                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
+                                    {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                      ? "0.00"
+                                      : (((!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -5942,10 +5615,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                        ? parseFloat(values?.values?.partialPayment)
-                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
-                                                                    : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -5953,10 +5626,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                    ? parseFloat(values?.values?.partialPayment)
-                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
-                                                                : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>
@@ -6012,74 +5685,41 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     <div className="container">
                       <div className="row">
                         <div className="receipt-header">
-                          <div
-                            style={{
-                              width: '100%',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              marginButtom: '10px',
-                              height: '80px',
-                              alignItems: 'center',
-                              display: 'flex'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: '120px',
-                                height: '100%'
-                              }}
-                            >
-                              <img style={{ width: '100%', height: '100%' }} src={cm == true || cm == "true" ? cmLogo : Logo} />
+                          <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
+                            <div style={{
+                              width: '120px',
+                              height: '100%'
+                            }}>
+                              <img
+                                style={{ width: '100%', height: '100%' }}
+                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
+                              />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                  <div className="sun-text">
-                                    <img style={{ width: '100%', height: '100%' }} src={SunLogo} />
-                                  </div>
-                                </div>
-                                <div className="nav-details">
-                                  <div className="nav-detail">
-                                    <div className="nav-title" style={{ width: '100px' }}>
-                                      Receipt No :
-                                    </div>
-                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%', minWidth: '70px' }}>
-                                      {fileDataNames}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">Mobile No:</div>
-                                  <div className="nav-data">
-                                    {isMatchBranch?.branchPhoneNumber}
-                                  </div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>
-                                    Email Id:
-                                  </div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>
-                                    {isMatchBranch?.branchEmail}
-                                  </div>
-                                </div>
-                              </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                <div className="nav-detail">
-                                  <div className="nav-title">GSTIN:</div>
-                                  <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                </div>
-                                <div className="nav-detail">
-                                  <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                  <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                </div>
+                            <div className='logo-text-wrraper'>
+                              <div className='logo-text'>
+                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                <div className="pvt-ltd">pvt ltd.</div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="divider-form"></div>
+                      <div className='divider-form'>
+                        <div className='parent-divider-div'>
+                          <div>
+                            GSTIN :
+                          </div>
+                          <div>{isMatchBranch?.branchGSTNumber}</div>
+                        </div>
+                        <div className='parent-divider-div'>
+                          <div>
+                            Receipt No :
+                          </div>
+                          <div>
+                            {fileDataNames}
+                          </div>
+                        </div>
+                      </div>
                       <div style={{ marginBottom: '2px' }}>
                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>Fee Receipt</h2>
                       </div>
@@ -6210,22 +5850,22 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {parseFloat(
-                                                                    (!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                        ? parseFloat(values?.values?.partialPayment)
-                                                                        : 0).toFixed(2) -
-                                                                    parseFloat(
-                                                                        (!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                            ? parseFloat(values?.values?.partialPayment)
-                                                                            : 0) / (100 +
-                                                                                (
-                                                                                    (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                        ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                        : (isMatchBranch?.igst || 0))
-                                                                                )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                    ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                    : (isMatchBranch?.igst || 0))
-                                                                    ).toFixed(2)
-                                                                )}/-
+                                      (!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0).toFixed(2) -
+                                      parseFloat(
+                                        (!isNaN(parseFloat(values?.values?.partialPayment))
+                                          ? parseFloat(values?.values?.partialPayment)
+                                          : 0) / (100 +
+                                            (
+                                              (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                                : (isMatchBranch?.igst || 0))
+                                            )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
+                                              ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
+                                              : (isMatchBranch?.igst || 0))
+                                      ).toFixed(2)
+                                    )}/-
                                   </strong>
                                 </p>
                                 {/* IGST */}
@@ -6233,10 +5873,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? "0.00"
-                                                                    : (((!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                    ? parseFloat(values?.values?.partialPayment)
-                                                                    : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
+                                      ? "0.00"
+                                      : (((!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
                                   </strong>
                                 </p>
                                 {/* SGST */}
@@ -6244,10 +5884,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                        ? parseFloat(values?.values?.partialPayment)
-                                                                        : 0) / ((isMatchBranch?.sgst || 0) + 100)) * (isMatchBranch?.sgst || 0).toFixed(2)
-                                                                    : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 {/* CGST */}
@@ -6255,10 +5895,10 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                                   <strong>
                                     <i className="fa fa-inr"></i>{' '}
                                     {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                    ? ((!isNaN(parseFloat(values?.values?.partialPayment))
-                                                                    ? parseFloat(values?.values?.partialPayment)
-                                                                    : 0) / ((isMatchBranch?.cgst || 0) + 100)) * (isMatchBranch?.cgst || 0).toFixed(2)
-                                                                : "0.00"}/-
+                                      ? ((((!isNaN(parseFloat(values?.values?.partialPayment))
+                                        ? parseFloat(values?.values?.partialPayment)
+                                        : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
+                                      : "0.00"}/-
                                   </strong>
                                 </p>
                                 <p className='total-border-item'>

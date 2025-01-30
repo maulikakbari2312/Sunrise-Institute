@@ -669,51 +669,27 @@ function CompetitiveExam() {
                                                     }}>
                                                         <img
                                                             style={{ width: '100%', height: '100%' }}
-                                                            src={cm == true || cm == "true" ? cmLogo : Logo}
+                                                            className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
                                                         />
                                                     </div>
-                                                    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', marginLeft: '10px' }}>
-                                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                            <div style={{ width: '85%', display: 'flex', justifyContent: 'center', marginLeft: '50px' }}>
-                                                                <div className='sun-text'>
-                                                                    <img
-                                                                        style={{ width: '100%', height: '100%' }}
-                                                                        src={SunLogo}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <div className="nav-details">
-                                                                <div className="nav-detail">
-                                                                    <div className="nav-title" style={{ width: '45px' }}>Date :</div>
-                                                                    <div className="nav-data" style={{ fontWeight: '500', fontSize: '1rem', width: '35%' , minWidth: '70px' }}>{new Date().toLocaleDateString('en-GB')}</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                                            <div className="nav-detail">
-                                                                <div className="nav-title">Mobile No:</div>
-                                                                <div className="nav-data">{isMatchBranch?.branchPhoneNumber}</div>
-                                                            </div>
-                                                            <div className="nav-detail">
-                                                                <div className="nav-title" style={{ width: '61px' }}>Email Id:</div>
-                                                                <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.branchEmail}</div>
-                                                            </div>
-                                                        </div>
-                                                        <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0 65px' }}>
-                                                            <div className="nav-detail">
-                                                                <div className="nav-title">GSTIN:</div>
-                                                                <div className="nav-data">{isMatchBranch?.branchGSTNumber}</div>
-                                                            </div>
-                                                            <div className="nav-detail">
-                                                                <div className="nav-title" style={{ width: '61px' }}>PAN No:</div>
-                                                                <div className="nav-data" style={{ fontSize: '.75rem' }}>{isMatchBranch?.pan}</div>
-                                                            </div>
+                                                    <div className='logo-text-wrraper'>
+                                                        <div className='logo-text'>
+                                                            <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
+                                                            <div className="pvt-ltd">pvt ltd.</div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className='divider-form'></div>
+                                        <div className='divider-form'>
+                                            <div className='parent-divider-div'>
+                                                <div>
+                                                    GSTIN :
+                                                </div>
+                                                <div>{isMatchBranch?.branchGSTNumber}</div>
+                                            </div>
+
+                                        </div>
                                         <div style={{ marginBottom: '5px' }}>
                                             <h2 style={{ textAlign: 'center', marginBottom: '0' }}>
                                                 Competitive Exam Enquire
