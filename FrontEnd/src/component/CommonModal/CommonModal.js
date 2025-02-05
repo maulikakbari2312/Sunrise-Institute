@@ -630,7 +630,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                     </div>
                                     <div style={{ marginBottom: '5px' }}>
                                         <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>
-                                            Fee Receipt
+                                            Fee Receipt <span className='office-use-only'> (office use only)</span>
                                         </h2>
                                     </div>
                                     <div className="row">
@@ -641,18 +641,28 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                     <div
                                                         style={{
                                                             display: 'flex',
-                                                            justifyContent: 'space-between',
+                                                            flexDirection: 'column', // Stack elements if needed
                                                             width: '100%',
-                                                            height: '23px',
                                                             marginTop: '6px'
                                                         }}
                                                     >
-                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
-                                                            <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
-                                                            <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                                        <p style={{ display: 'flex', alignItems: 'flex-start', width: '100%' }}>
+                                                            <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address:</h4>
+                                                            <div
+                                                                className="border-line-fileds"
+                                                                style={{
+                                                                    flex: 1, // Takes full width
+                                                                    whiteSpace: 'pre-wrap', // Allows wrapping for multiple lines
+                                                                    wordBreak: 'break-word',
+                                                                    height: 'auto',
+                                                                    lineHeight: '1.4', // Better spacing for multiple lines
+                                                                }}
+                                                            >
+                                                                {selected?.selectData?.user?.address}
+                                                            </div>
                                                         </p>
-                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
-                                                            <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                                        <p style={{ display: 'flex', alignItems: 'flex-start', width: '100%', marginTop: '6px' }}>
+                                                            <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>State:</h4>
                                                             <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
                                                         </p>
                                                     </div>
@@ -672,7 +682,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                     </div>
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                         <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
-                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.[0]?.hsn}</div></p>
+                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code : </h4><div className="border-line-fileds">{selectedCourse?.[0]?.hsn}</div></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -825,24 +835,6 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                             <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
                                                 <div className="receipt-right" style={{ width: '100%' }}>
                                                     <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0', fontWeight: '500', fontSize: '16px' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Full Name : </h4><div className="border-line-fileds"> {values?.values?.name}</div></p>
-                                                    <div
-                                                        style={{
-                                                            display: 'flex',
-                                                            justifyContent: 'space-between',
-                                                            width: '100%',
-                                                            height: '23px',
-                                                            marginTop: '6px'
-                                                        }}
-                                                    >
-                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
-                                                            <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
-                                                            <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
-                                                        </p>
-                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
-                                                            <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
-                                                            <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
-                                                        </p>
-                                                    </div>
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                         <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4><div className="border-line-fileds mr-6p">{selectedCourse?.[0]?.courseName}</div></p>
                                                         <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4><div className="border-line-fileds">{selectedCourse?.[0]?.courseDuration} Months</div></p>
@@ -859,7 +851,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                     </div>
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                         <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
-                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.[0]?.hsn}</div></p>
+                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code : </h4><div className="border-line-fileds">{selectedCourse?.[0]?.hsn}</div></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1032,18 +1024,28 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                     <div
                                                         style={{
                                                             display: 'flex',
-                                                            justifyContent: 'space-between',
+                                                            flexDirection: 'column', // Stack elements if needed
                                                             width: '100%',
-                                                            height: '23px',
                                                             marginTop: '6px'
                                                         }}
                                                     >
-                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
-                                                            <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
-                                                            <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                                        <p style={{ display: 'flex', alignItems: 'flex-start', width: '100%' }}>
+                                                            <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address:</h4>
+                                                            <div
+                                                                className="border-line-fileds"
+                                                                style={{
+                                                                    flex: 1, // Takes full width
+                                                                    whiteSpace: 'pre-wrap', // Allows wrapping for multiple lines
+                                                                    wordBreak: 'break-word',
+                                                                    height: 'auto',
+                                                                    lineHeight: '1.4', // Better spacing for multiple lines
+                                                                }}
+                                                            >
+                                                                {selected?.selectData?.user?.address}
+                                                            </div>
                                                         </p>
-                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
-                                                            <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                                        <p style={{ display: 'flex', alignItems: 'flex-start', width: '100%', marginTop: '6px' }}>
+                                                            <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>State:</h4>
                                                             <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
                                                         </p>
                                                     </div>
@@ -1063,7 +1065,7 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                     </div>
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                         <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
-                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.[0]?.hsn}</div></p>
+                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code : </h4><div className="border-line-fileds">{selectedCourse?.[0]?.hsn}</div></p>
                                                     </div>
                                                 </div>
                                             </div>

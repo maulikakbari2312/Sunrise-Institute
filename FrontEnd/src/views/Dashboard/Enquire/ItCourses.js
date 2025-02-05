@@ -638,7 +638,20 @@ function ItCourses() {
                                                         </div>
                                                     </div>
                                                     <div className="receipt-right" style={{ width: '100%', marginTop: '0px' }}>
-                                                        <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0' }}><h4 style={{ width: '150px', minWidth: '150px', maxWidth: '150px' }}>Address : </h4><div className="border-line-fileds"> {values?.values?.address}</div></p>
+                                                        <p style={{ display: 'flex', alignItems: 'flex-start', margin: '1px 0', flexWrap: 'wrap' }}>
+                                                            <h4 style={{ width: '150px', minWidth: '150px', maxWidth: '150px' }}>Address:</h4>
+                                                            <div
+                                                                className="border-line-fileds"
+                                                                style={{
+                                                                    flex: 1,  // Takes full available space
+                                                                    whiteSpace: 'pre-wrap', // Allows text wrapping
+                                                                    wordBreak: 'break-word', // Prevents overflow issues
+                                                                    lineHeight: '1.4', // Better spacing for multiple lines
+                                                                }}
+                                                            >
+                                                                {values?.values?.address}
+                                                            </div>
+                                                        </p>
                                                     </div>
                                                     <div className="receipt-right" style={{ width: '100%', marginTop: '13px' }}>
                                                         <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0' }}><h4 style={{ width: '150px', minWidth: '150px', maxWidth: '150px' }}>Education :</h4><div className="border-line-fileds">{values?.values?.education}</div></p>

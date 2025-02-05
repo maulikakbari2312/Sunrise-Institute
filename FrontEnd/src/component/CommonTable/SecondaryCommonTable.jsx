@@ -1402,7 +1402,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                             </div>
                                             <div style={{ marginBottom: '5px' }}>
                                                 <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>
-                                                    Fee Receipt
+                                                    Fee Receipt <span className='office-use-only'> (office use only)</span>
                                                 </h2>
                                             </div>
                                             <div className="row">
@@ -1413,18 +1413,28 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                             <div
                                                                 style={{
                                                                     display: 'flex',
-                                                                    justifyContent: 'space-between',
+                                                                    flexDirection: 'column', // Stack elements if needed
                                                                     width: '100%',
-                                                                    height: '23px',
                                                                     marginTop: '6px'
                                                                 }}
                                                             >
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
-                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
-                                                                    <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                                                <p style={{ display: 'flex', alignItems: 'flex-start', width: '100%' }}>
+                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address:</h4>
+                                                                    <div
+                                                                        className="border-line-fileds"
+                                                                        style={{
+                                                                            flex: 1, // Takes full width
+                                                                            whiteSpace: 'pre-wrap', // Allows wrapping for multiple lines
+                                                                            wordBreak: 'break-word',
+                                                                            height: 'auto',
+                                                                            lineHeight: '1.2', // Better spacing for multiple lines
+                                                                        }}
+                                                                    >
+                                                                        {selected?.selectData?.user?.address}
+                                                                    </div>
                                                                 </p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
-                                                                    <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                                                <p style={{ display: 'flex', alignItems: 'flex-start', width: '100%', marginTop: '6px' }}>
+                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>State:</h4>
                                                                     <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
                                                                 </p>
                                                             </div>
@@ -1444,7 +1454,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                             </div>
                                                             <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code : </h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1602,24 +1612,6 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                     <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
                                                         <div className="receipt-right" style={{ width: '100%' }}>
                                                             <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0', fontWeight: '500', fontSize: '16px' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Full Name : </h4><div className="border-line-fileds"> {values?.values?.name}</div></p>
-                                                            <div
-                                                                style={{
-                                                                    display: 'flex',
-                                                                    justifyContent: 'space-between',
-                                                                    width: '100%',
-                                                                    height: '23px',
-                                                                    marginTop: '6px'
-                                                                }}
-                                                            >
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
-                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
-                                                                    <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
-                                                                </p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
-                                                                    <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
-                                                                    <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
-                                                                </p>
-                                                            </div>
                                                             <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4><div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div></p>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4><div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div></p>
@@ -1636,7 +1628,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                             </div>
                                                             <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code : </h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1814,18 +1806,28 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                             <div
                                                                 style={{
                                                                     display: 'flex',
-                                                                    justifyContent: 'space-between',
+                                                                    flexDirection: 'column', // Stack elements if needed
                                                                     width: '100%',
-                                                                    height: '23px',
                                                                     marginTop: '6px'
                                                                 }}
                                                             >
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
-                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
-                                                                    <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
+                                                                <p style={{ display: 'flex', alignItems: 'flex-start', width: '100%' }}>
+                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address:</h4>
+                                                                    <div
+                                                                        className="border-line-fileds"
+                                                                        style={{
+                                                                            flex: 1, // Takes full width
+                                                                            whiteSpace: 'pre-wrap', // Allows wrapping for multiple lines
+                                                                            wordBreak: 'break-word',
+                                                                            height: 'auto',
+                                                                            lineHeight: '1.2', // Better spacing for multiple lines
+                                                                        }}
+                                                                    >
+                                                                        {selected?.selectData?.user?.address}
+                                                                    </div>
                                                                 </p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
-                                                                    <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
+                                                                <p style={{ display: 'flex', alignItems: 'flex-start', width: '100%', marginTop: '6px' }}>
+                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>State:</h4>
                                                                     <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
                                                                 </p>
                                                             </div>
@@ -1845,7 +1847,7 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                             </div>
                                                             <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
                                                                 <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
+                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code : </h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1948,205 +1950,6 @@ const SecondaryCommonTable = ({ error, isError, isLoading, data, tableTitle, url
                                                         <div className="receipt-left">
                                                             <h2 style={{ margin: '0' }}>Signature</h2>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div className='footer-divider-form'></div>
-                                                <div className='branch-address'>
-                                                    {isMatchBranch?.branchAddress}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="container" >
-                                            <div className="row">
-                                                <div className="receipt-header">
-                                                    <div style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', marginButtom: '10px', height: '80px', alignItems: 'center', display: 'flex' }}>
-                                                        <div style={{
-                                                            width: '120px',
-                                                            height: '100%'
-                                                        }}>
-                                                            <img
-                                                                style={{ width: '100%', height: '100%' }}
-                                                                className="logo-img-png" src={cm == true || cm == "true" ? cmLogo : Logo}
-                                                            />
-                                                        </div>
-                                                        <div className='logo-text-wrraper'>
-                                                            <div className='logo-text'>
-                                                                <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
-                                                                <div className="pvt-ltd">pvt ltd.</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='divider-form'>
-                                                <div className='parent-divider-div'>
-                                                    <div>
-                                                        GSTIN :
-                                                    </div>
-                                                    <div>{isMatchBranch?.branchGSTNumber}</div>
-                                                </div>
-                                                <div className='parent-divider-div'>
-                                                    <div>
-                                                        Receipt No :
-                                                    </div>
-                                                    <div>
-                                                        {fileDataNames}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div style={{ marginBottom: '5px' }}>
-                                                <h2 style={{ textAlign: 'center', marginBottom: '0' }} className='fees-header'>
-                                                    Fee Receipt
-                                                </h2>
-                                            </div>
-                                            <div className="row">
-                                                <div className="receipt-header receipt-header-mid" style={{ width: '100%' }}>
-                                                    <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
-                                                        <div className="receipt-right" style={{ width: '100%' }}>
-                                                            <p style={{ display: 'flex', alignItems: 'center', height: '15px', margin: '1px 0', fontWeight: '500', fontSize: '16px' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Full Name : </h4><div className="border-line-fileds"> {values?.values?.name}</div></p>
-                                                            <div
-                                                                style={{
-                                                                    display: 'flex',
-                                                                    justifyContent: 'space-between',
-                                                                    width: '100%',
-                                                                    height: '23px',
-                                                                    marginTop: '6px'
-                                                                }}
-                                                            >
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}>
-                                                                    <h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Address : </h4>
-                                                                    <div className="border-line-fileds mr-6p">{selected?.selectData?.user?.address}</div>
-                                                                </p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}>
-                                                                    <h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>State : </h4>
-                                                                    <div className="border-line-fileds">{selected?.selectData?.user?.state}</div>
-                                                                </p>
-                                                            </div>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Course Name : </h4><div className="border-line-fileds mr-6p">{selectedCourse?.courseName}</div></p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%' }}><h4 style={{ width: '140px', minWidth: '140px', maxWidth: '140px' }}>Course Duration : </h4><div className="border-line-fileds">{selectedCourse?.courseDuration} Months</div></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="receipt-header receipt-header-mid" style={{ width: '100%', marginBottom: '0' }}>
-                                                    <div className="col-xs-8 col-sm-8 col-md-8 text-left" style={{ width: '100%' }}>
-                                                        <div className="receipt-right" style={{ width: '100%' }}>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%', margin: '0' }}><h4 style={{ margin: '0', width: '125px', minWidth: '125px', maxWidth: '125px' }}>Payment Mode : </h4><div className={`border-line-fileds mr-6p `}>{values?.values?.paymentMethod}</div></p>
-                                                                {(values?.values?.paymentMethod === 'UPI' || values?.values?.paymentMethod === 'Bank Transfer') && <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>{values?.values?.paymentMethod === 'UPI' ? 'Transactions ID :' : values?.values?.paymentMethod === 'Bank Transfer' ? 'Check No :' : 'Cash'} </h4><div className="border-line-fileds">{values?.values?.paymentDetails}</div></p>}
-                                                            </div>
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '23px', marginTop: '6px' }}>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '55%' }}><h4 style={{ width: '125px', minWidth: '125px', maxWidth: '125px' }}>Received By : </h4><div className="border-line-fileds mr-6p">{name}</div></p>
-                                                                <p style={{ display: 'flex', alignItems: 'center', height: '15px', width: '45%', margin: '0' }}><h4 style={{ margin: '0', width: '140px', minWidth: '140px', maxWidth: '140px' }}>HSN Code</h4><div className="border-line-fileds">{selectedCourse?.hsn}</div></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <table className="table table-bordered w-100">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Description</th>
-                                                            <th>Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                        <tr>
-                                                            <td className="text-right">
-                                                                <p><strong>Paid Amount: </strong></p>
-                                                                <p><strong>IGST: </strong></p>
-                                                                <p><strong>SGST: </strong></p>
-                                                                <p><strong>CGST: </strong></p>
-                                                                <p><strong>Total: </strong></p>
-                                                            </td>
-                                                            <td>
-                                                                {/* Paid Amount */}
-                                                                <p>
-                                                                    <strong>
-                                                                        <i className="fa fa-inr"></i>{' '}
-                                                                        {parseFloat(
-                                                                            (!isNaN(parseFloat(values?.values?.payFees))
-                                                                                ? parseFloat(values?.values?.payFees)
-                                                                                : 0).toFixed(2) -
-                                                                            parseFloat(
-                                                                                (!isNaN(parseFloat(values?.values?.payFees))
-                                                                                    ? parseFloat(values?.values?.payFees)
-                                                                                    : 0) / (100 +
-                                                                                        (
-                                                                                            (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                                ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                                : (isMatchBranch?.igst || 0))
-                                                                                        )) * (selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                                            ? ((isMatchBranch?.sgst || 0) + (isMatchBranch?.cgst || 0))
-                                                                                            : (isMatchBranch?.igst || 0))
-                                                                            ).toFixed(2)
-                                                                        )}/-
-                                                                    </strong>
-                                                                </p>
-                                                                {/* IGST */}
-                                                                <p>
-                                                                    <strong>
-                                                                        <i className="fa fa-inr"></i>{' '}
-
-                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? "0.00"
-                                                                            : (((!isNaN(parseFloat(values?.values?.payFees))
-                                                                                ? parseFloat(values?.values?.payFees)
-                                                                                : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)).toFixed(2)}/-
-                                                                    </strong>
-                                                                </p>
-                                                                {/* SGST */}
-                                                                <p>
-                                                                    <strong>
-                                                                        <i className="fa fa-inr"></i>{' '}
-                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? ((((!isNaN(parseFloat(values?.values?.payFees))
-                                                                                ? parseFloat(values?.values?.payFees)
-                                                                                : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
-                                                                            : "0.00"}/-
-                                                                    </strong>
-                                                                </p>
-                                                                {/* CGST */}
-                                                                <p>
-                                                                    <strong>
-                                                                        <i className="fa fa-inr"></i>{' '}
-                                                                        {selected?.selectData?.user?.state?.toLowerCase() === "gujarat".toLowerCase()
-                                                                            ? ((((!isNaN(parseFloat(values?.values?.payFees))
-                                                                                ? parseFloat(values?.values?.payFees)
-                                                                                : 0) / ((isMatchBranch?.igst || 0) + 100)) * (isMatchBranch?.igst || 0)) / 2).toFixed(2)
-                                                                            : "0.00"}/-
-                                                                    </strong>
-                                                                </p>
-                                                                <p>
-                                                                    <strong><i className="fa fa-inr"></i> {(!isNaN(parseFloat(values?.values?.payFees)) ? parseFloat(values?.values?.payFees) : 0)?.toFixed(2)}/-</strong>
-                                                                </p>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                            <div className="row">
-                                                <div className="receipt-header receipt-header-mid receipt-footer" style={{ margin: '2px 0px 10px', display: 'flex', flexDirection: 'column' }}>
-                                                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                                                        <div className="col-xs-8 col-sm-8 col-md-8 text-left">
-                                                            <div className="receipt-right">
-                                                                <p style={{ margin: '0' }}>
-                                                                    <b>Date :</b> {new Date().toLocaleDateString('en-GB')}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-xs-4 col-sm-4 col-md-4">
-                                                            <div className="receipt-left">
-                                                                <h2 style={{ margin: '0' }}>Signature</h2>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div style={{ display: 'flex', alignItems: 'end', width: '100%', justifyContent: 'center', fontWeight: '600', marginTop: '6px' }}>
-                                                        *This is a Computer  Generated Copy.
                                                     </div>
                                                 </div>
                                                 <div className='footer-divider-form'></div>

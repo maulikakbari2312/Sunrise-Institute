@@ -347,7 +347,7 @@
   margin: .2% 2.5%;
   background-color: #fff;
   border: 1px solid #000;
-  padding: 15px 15px 5px 15px;
+  padding: 5px 15px 5px 15px;
   border-radius: 5px;
 }
 
@@ -526,7 +526,7 @@ table th {
     margin-top: 28px;
 }
 .receipt-header{
-  padding: 0 24px;
+  padding: 0 0px;
 }
 .pvt-ltd{
   font-size: 32px;
@@ -631,4 +631,9 @@ table th {
 .picture__image img {
   height: 100%;
   width: 100%;
+}
+
+.office-use-only{
+  font-size: 10px !important;
+  font-weight: 500 !important;
 }
