@@ -2708,7 +2708,7 @@ const CommonTable = ({ error, isError, isLoading, data, tableTitle, url, setIsFe
                     </Box>
                   </Box>
                 </DialogContent>
-                <div className="col-md-12 receipt-datas" >
+                <div className="col-md-12 receipt-datas" style={{ display: "none" }}>
                   <div id="invoice" style={{ position: 'relative', height: '100%', width: '100%' }}>
                     <div
                       style={{
