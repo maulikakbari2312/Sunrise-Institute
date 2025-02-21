@@ -604,9 +604,9 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                     />
                                                 </div>
                                                 <div className='logo-text-wrraper'>
-                                                    <div className='logo-text'>
+                                                    <div className={cm == "true" ? "logo-text" : "logo-text without-cm"}>
                                                         <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
-                                                        <div className="pvt-ltd">pvt ltd.</div>
+                                                        <div className="pvt-ltd">{cm == "true" ? "pvt ltd." : null}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -801,9 +801,9 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                     />
                                                 </div>
                                                 <div className='logo-text-wrraper'>
-                                                    <div className='logo-text'>
+                                                    <div className={cm == "true" ? "logo-text" : "logo-text without-cm"}>
                                                         <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
-                                                        <div className="pvt-ltd">pvt ltd.</div>
+                                                        <div className="pvt-ltd">{cm == "true" ? "pvt ltd." : null}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -987,9 +987,9 @@ function CommonModal({ isDialogOpen, setIsDialogOpen, url, setIsFetch, fileDataN
                                                     />
                                                 </div>
                                                 <div className='logo-text-wrraper'>
-                                                    <div className='logo-text'>
+                                                    <div className={cm == "true" ? "logo-text" : "logo-text without-cm"}>
                                                         <div>{cm == true || cm == "true" ? "cm sunrise institute" : "sunrise institute"}</div>
-                                                        <div className="pvt-ltd">pvt ltd.</div>
+                                                        <div className="pvt-ltd">{cm == "true" ? "pvt ltd." : null}</div>
                                                     </div>
                                                 </div>
                                             </div>
