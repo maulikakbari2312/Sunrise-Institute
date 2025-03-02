@@ -421,7 +421,6 @@ exports.downloadSlipData = async (req, res) => {
                     'name',
                     'refundAmount',
                     'settlementDate',
-                    'enrollDate',
                     'state',
                     'iGst',
                     'sGst',

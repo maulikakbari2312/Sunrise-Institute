@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { default: mongoose } = require("mongoose");
 const message = require("../../common/error.message");
 const logInDetail = require("../../model/admin/login.model");
 
