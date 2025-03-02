@@ -38,8 +38,8 @@ async function handleGST(branchName, state, fees) {
     let iGstBase = (fees / (100 + iGst)) * iGst;
     if (state.toLowerCase() == "gujarat") {
         return {
-            cGst: (fees * cGstBase / 100) / 2,
-            sGst: (fees * sGstBase / 100) / 2,
+            cGst: cGstBase / 2,
+            sGst: sGstBase / 2,
             iGst: 0,
         }
     } else {
