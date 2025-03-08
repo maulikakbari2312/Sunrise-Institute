@@ -38,18 +38,32 @@ async function handleGST(branchName, state, fees) {
     let iGstBase = (fees / (100 + iGst)) * iGst;
     if (state.toLowerCase() == "gujarat") {
         return {
-            cGst: cGstBase / 2,
-            sGst: sGstBase / 2,
+            cGst: parseFloat((cGstBase / 2).toFixed(2)),
+            sGst: parseFloat((sGstBase / 2).toFixed(2)),
             iGst: 0,
         }
     } else {
         return {
-            iGst: iGstBase,
+            iGst: parseFloat((iGstBase).toFixed(2)),
             cGst: 0,
             sGst: 0,
         }
     }
 }
+
+async function handleTotalGST(branchName, state, fees) {
+    const getBranch = await branchModel.find();
+    // Find the branch object that matches the enrolled branch
+    const matchedBranch = getBranch.find(branch => branch.branchName === branchName);
+    
+    // Convert matchedBranch values to numbers (if they are strings) before calculations
+    const iGst = matchedBranch.igst;
+    const gstAmount = (fees / (100 + iGst)) * iGst;
+    
+    // Round the result to 2 decimal places and return as a number
+    return parseFloat(gstAmount.toFixed(2));
+}
+
 function convertDateFormat(inputDate) {
     // Split the input date into year, month, and day
     var dateParts = inputDate.split('-');
@@ -115,7 +129,7 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
         enroll.totalFees = isNaN(totalFeeswithoutd) ? 0 : totalFeeswithoutd;
         // Handle NaN in installmentAmount
         const installmentAmount = ((totalFees / (parseFloat(enroll.installment) || 0)));
-        enroll.grossPayment = payFees - (0.18 * payFees);
+        enroll.grossPayment = payFees - (await handleTotalGST(isBranch, copyEnroll.state, payFees));
         const gstValues = await handleGST(isBranch, copyEnroll.state, payFees);
 
         enroll.cGst = gstValues.cGst;
@@ -230,7 +244,8 @@ exports.createEnrollDetail = async (enroll, isAdmin, isBranch) => {
         // Save the updated document
 
         const newPaymentSlip = {};
-        newPaymentSlip.grossPayment = payFees - (0.18 * payFees);
+        newPaymentSlip.grossPayment = payFees - (await handleTotalGST(isBranch, copyEnroll.state, payFees));
+        // newPaymentSlip.grossPayment = payFees - (0.18 * payFees);
         // Set the values to enroll
         newPaymentSlip.cGst = gstValues.cGst;
         newPaymentSlip.sGst = gstValues.sGst;
@@ -273,9 +288,13 @@ Best regards,
 *Sunrise Institute*
 `;
             const encodedMsg = encodeURIComponent(enrollMsg);
-            const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=media&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${enroll?.fileName}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
-            await axios.post(url);
+            try {
+                const url = `${process.env.WHATSAPP_URL}?number=91${enroll.mobileNumber}&type=media&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${enroll?.fileName}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
+                await axios.post(url);
+            } catch {
+
+            }
         } catch (error) {
             console.log('====================================');
             console.log(error);
@@ -377,7 +396,7 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
         findSettleEnrollStudent.paymentDetails = ['Cash'];
         findSettleEnrollStudent.discount = (isNaN(parseFloat(enroll.refundAmount)) ? 0 : parseFloat(enroll.refundAmount));
         findSettleEnrollStudent.payFees = (isNaN(parseFloat(enroll.payFees)) ? 0 : parseFloat(enroll.payFees)) - (isNaN(parseFloat(enroll.refundAmount)) ? 0 : parseFloat(enroll.refundAmount));
-        findSettleEnrollStudent.grossPayment = findSettleEnrollStudent.payFees - (0.18 * findSettleEnrollStudent.payFees);
+        findSettleEnrollStudent.grossPayment = findSettleEnrollStudent.payFees - (await handleTotalGST(findSettleEnrollStudent?.enquireBranch, findSettleEnrollStudent.state, findSettleEnrollStudent.payFees));
         const gstValues = await handleGST(findSettleEnrollStudent?.enquireBranch, findSettleEnrollStudent.state, findSettleEnrollStudent.payFees);
 
         // Set the values to enroll
@@ -410,7 +429,7 @@ exports.settleEnroll = async (enroll, isCN, isBranch) => {
         newPaymentSlip.installmentAmount = findSettleEnrollStudent.installmentAmount.toFixed(2);
         newPaymentSlip.paymentMethod = 'Settlement';
         newPaymentSlip.enquireBranch = findSettleEnrollStudent?.enquireBranch;
-        newPaymentSlip.grossPayment = findSettleEnrollStudent.payFees - (0.18 * findSettleEnrollStudent.payFees);
+        newPaymentSlip.grossPayment = findSettleEnrollStudent.payFees - await handleTotalGST(findSettleEnrollStudent?.enquireBranch, findSettleEnrollStudent.state, findSettleEnrollStudent.payFees);
         newPaymentSlip.cGst = gstValues.cGst;
         newPaymentSlip.sGst = gstValues.sGst;
         newPaymentSlip.iGst = gstValues.iGst;
@@ -950,7 +969,7 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
             data.payInstallment = 1;
         }
         data.installmentDate = convertDateFormat(data.installmentDate);
-        data.grossPayment = payFees - (0.18 * payFees);
+        data.grossPayment = payFees - await handleTotalGST(isBranch, copyData.state, payFees);
         const gstValues = await handleGST(isBranch, copyData.state, payFees);
 
         // Set the values to enroll
@@ -973,7 +992,7 @@ exports.editEnrollDetail = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.installmentAmount = data.installmentAmount;
         newPaymentSlip.paymentMethod = copyData.paymentMethod;
         newPaymentSlip.enquireBranch = isBranch;
-        newPaymentSlip.grossPayment = payFees - (0.18 * payFees);
+        newPaymentSlip.grossPayment = copyData.payFees - await handleTotalGST(isBranch, copyData.state, copyData.payFees);
         newPaymentSlip.cGst = gstValues.cGst;
         newPaymentSlip.sGst = gstValues.sGst;
         newPaymentSlip.iGst = gstValues.iGst;
@@ -994,9 +1013,13 @@ Best regards,
 *Sunrise Institute*
 `;
             const encodedMsg = encodeURIComponent(enrollMsg);
-            const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${encodedMsg}&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
             // Make the HTTP POST request to send the birthday message
-            await axios.post(url);
+            try {
+                const url = `${process.env.WHATSAPP_URL}?number=91${msgData.mobileNumber}&type=media&message=${encodedMsg}&message=${encodedMsg}&media_url=${process.env.MEDIA_URL}/${data?.fileName}&instance_id=${instanceId}&authorization=${process.env.ACCESS_TOKEN}`;
+                await axios.post(url);
+            } catch {
+
+            }
         } catch (error) {
             console.log('====================================');
             console.log(error);
@@ -1129,7 +1152,7 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         data.totalPendingInstallment = data.installment - data.payInstallment;
 
         data.installmentDate = enrollUser?.installmentDate;
-        data.grossPayment = data.payFees - (0.18 * data.payFees);
+        data.grossPayment = data.payFees - await handleTotalGST(isBranch, copyEnroll.state, data.payFees);
         const gstValues = await handleGST(isBranch, copyEnroll.state, data.payFees);
 
         // Set the values to enroll
@@ -1166,10 +1189,11 @@ exports.editEnrollDetailPayment = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.paymentMethod = copyEnroll.paymentMethod;
         newPaymentSlip.tokenId = token;
         newPaymentSlip.enquireBranch = isBranch;
-        newPaymentSlip.grossPayment = copyEnroll.payInstallmentFees - (0.18 * copyEnroll.payInstallmentFees);
-        newPaymentSlip.cGst = gstValues.cGst;
-        newPaymentSlip.sGst = gstValues.sGst;
-        newPaymentSlip.iGst = gstValues.iGst;
+        newPaymentSlip.grossPayment = copyEnroll.payInstallmentFees - await handleTotalGST(isBranch, copyEnroll.state, copyEnroll.payInstallmentFees);
+        const gstValues1 = await handleGST(isBranch, copyEnroll.state, copyEnroll.payInstallmentFees);
+        newPaymentSlip.cGst = gstValues1.cGst;
+        newPaymentSlip.sGst = gstValues1.sGst;
+        newPaymentSlip.iGst = gstValues1.iGst;
         newPaymentSlip.enquireType = enrollUser?.enquireType;
 
         const findUser = await enrollModel.findOne(
@@ -1279,7 +1303,7 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         enrollUser.payInstallmentDate.push('Partial Payment');
         enrollUser.paymentReceiver.push(data.paymentReceiver);
         enrollUser.paymentDetails.push((data.paymentMethod == 'UPI' || data.paymentMethod == 'Bank Transfer') ? data.paymentDetails : 'Cash');
-        enrollUser.grossPayment = enrollUser.payFees - (0.18 * enrollUser.payFees);
+        enrollUser.grossPayment = enrollUser.payFees - await handleTotalGST(isBranch, copyEnroll.state, enrollUser.payFees);
         const gstValues = await handleGST(isBranch, copyEnroll.state, enrollUser.payFees);
 
         // Set the values to enroll
@@ -1319,11 +1343,12 @@ exports.payPartialPayment = async (data, token, isAdmin, isBranch) => {
         newPaymentSlip.paymentMethod = data.paymentMethod;
         newPaymentSlip.tokenId = data.tokenId;
         newPaymentSlip.enquireBranch = isBranch;
-        newPaymentSlip.grossPayment = copyEnroll.partialPayment - (0.18 * copyEnroll.partialPayment);
+        const gstValues1 = await handleGST(isBranch, copyEnroll.state, data.partialPayment.toFixed(2));
+        newPaymentSlip.grossPayment = copyEnroll.partialPayment - await handleTotalGST(isBranch, copyEnroll.state, data.partialPayment.toFixed(2));
         // Set the values to enroll
-        newPaymentSlip.cGst = gstValues.cGst;
-        newPaymentSlip.sGst = gstValues.sGst;
-        newPaymentSlip.iGst = gstValues.iGst;
+        newPaymentSlip.cGst = gstValues1.cGst;
+        newPaymentSlip.sGst = gstValues1.sGst;
+        newPaymentSlip.iGst = gstValues1.iGst;
         newPaymentSlip.state = copyEnroll.state;
         newPaymentSlip.enquireType = enrollUser?.enquireType;
         const paymentSlip = new paymentSlipDetail({
